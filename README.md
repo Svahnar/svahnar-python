@@ -1,6 +1,6 @@
 # Svahnar Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/svahnar.svg)](https://pypi.org/project/svahnar/)
+[![PyPI version](https://img.shields.io/pypi/v/SVAHNAR.svg)](https://pypi.org/project/SVAHNAR/)
 
 The Svahnar Python library provides convenient access to the Svahnar REST API from any Python 3.8+
 application. The library includes type definitions for all request params and response fields,
@@ -20,7 +20,7 @@ pip install git+ssh://git@github.com/stainless-sdks/svahnar-python.git
 ```
 
 > [!NOTE]
-> Once this package is [published to PyPI](https://app.stainless.com/docs/guides/publish), this will become: `pip install --pre svahnar`
+> Once this package is [published to PyPI](https://app.stainless.com/docs/guides/publish), this will become: `pip install --pre SVAHNAR`
 
 ## Usage
 
@@ -28,7 +28,7 @@ The full API of this library can be found in [api.md](api.md).
 
 ```python
 import os
-from svahnar import Svahnar
+from SVAHNAR import Svahnar
 
 client = Svahnar(
     api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
@@ -52,7 +52,7 @@ Simply import `AsyncSvahnar` instead of `Svahnar` and use `await` with each API 
 ```python
 import os
 import asyncio
-from svahnar import AsyncSvahnar
+from SVAHNAR import AsyncSvahnar
 
 client = AsyncSvahnar(
     api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
@@ -82,16 +82,16 @@ Typed requests and responses provide autocomplete and documentation within your 
 
 ## Handling errors
 
-When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `svahnar.APIConnectionError` is raised.
+When the library is unable to connect to the API (for example, due to network connection problems or a timeout), a subclass of `SVAHNAR.APIConnectionError` is raised.
 
 When the API returns a non-success status code (that is, 4xx or 5xx
-response), a subclass of `svahnar.APIStatusError` is raised, containing `status_code` and `response` properties.
+response), a subclass of `SVAHNAR.APIStatusError` is raised, containing `status_code` and `response` properties.
 
-All errors inherit from `svahnar.APIError`.
+All errors inherit from `SVAHNAR.APIError`.
 
 ```python
-import svahnar
-from svahnar import Svahnar
+import SVAHNAR
+from SVAHNAR import Svahnar
 
 client = Svahnar()
 
@@ -100,12 +100,12 @@ try:
         agent_id="agent_id",
         message="message",
     )
-except svahnar.APIConnectionError as e:
+except SVAHNAR.APIConnectionError as e:
     print("The server could not be reached")
     print(e.__cause__)  # an underlying Exception, likely raised within httpx.
-except svahnar.RateLimitError as e:
+except SVAHNAR.RateLimitError as e:
     print("A 429 status code was received; we should back off a bit.")
-except svahnar.APIStatusError as e:
+except SVAHNAR.APIStatusError as e:
     print("Another non-200-range status code was received")
     print(e.status_code)
     print(e.response)
@@ -133,7 +133,7 @@ Connection errors (for example, due to a network connectivity problem), 408 Requ
 You can use the `max_retries` option to configure or disable retry settings:
 
 ```python
-from svahnar import Svahnar
+from SVAHNAR import Svahnar
 
 # Configure the default for all requests:
 client = Svahnar(
@@ -154,7 +154,7 @@ By default requests time out after 1 minute. You can configure this with a `time
 which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
 
 ```python
-from svahnar import Svahnar
+from SVAHNAR import Svahnar
 
 # Configure the default for all requests:
 client = Svahnar(
@@ -209,7 +209,7 @@ if response.my_field is None:
 The "raw" Response object can be accessed by prefixing `.with_raw_response.` to any HTTP method call, e.g.,
 
 ```py
-from svahnar import Svahnar
+from SVAHNAR import Svahnar
 
 client = Svahnar()
 response = client.agents.with_raw_response.run(
@@ -222,9 +222,9 @@ agent = response.parse()  # get the object that `agents.run()` would have return
 print(agent)
 ```
 
-These methods return an [`APIResponse`](https://github.com/stainless-sdks/svahnar-python/tree/main/src/svahnar/_response.py) object.
+These methods return an [`APIResponse`](https://github.com/stainless-sdks/svahnar-python/tree/main/src/SVAHNAR/_response.py) object.
 
-The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/svahnar-python/tree/main/src/svahnar/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
+The async client returns an [`AsyncAPIResponse`](https://github.com/stainless-sdks/svahnar-python/tree/main/src/SVAHNAR/_response.py) with the same structure, the only difference being `await`able methods for reading the response content.
 
 #### `.with_streaming_response`
 
@@ -289,7 +289,7 @@ You can directly override the [httpx client](https://www.python-httpx.org/api/#c
 
 ```python
 import httpx
-from svahnar import Svahnar, DefaultHttpxClient
+from SVAHNAR import Svahnar, DefaultHttpxClient
 
 client = Svahnar(
     # Or use the `SVAHNAR_BASE_URL` env var
@@ -312,7 +312,7 @@ client.with_options(http_client=DefaultHttpxClient(...))
 By default the library closes underlying HTTP connections whenever the client is [garbage collected](https://docs.python.org/3/reference/datamodel.html#object.__del__). You can manually close the client using the `.close()` method if desired, or with a context manager that closes when exiting.
 
 ```py
-from svahnar import Svahnar
+from SVAHNAR import Svahnar
 
 with Svahnar() as client:
   # make requests here
@@ -340,8 +340,8 @@ If you've upgraded to the latest version but aren't seeing any new features you 
 You can determine the version that is being used at runtime with:
 
 ```py
-import svahnar
-print(svahnar.__version__)
+import SVAHNAR
+print(SVAHNAR.__version__)
 ```
 
 ## Requirements

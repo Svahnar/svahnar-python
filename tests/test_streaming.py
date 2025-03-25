@@ -5,8 +5,8 @@ from typing import Iterator, AsyncIterator
 import httpx
 import pytest
 
-from svahnar import Svahnar, AsyncSvahnar
-from svahnar._streaming import Stream, AsyncStream, ServerSentEvent
+from SVAHNAR import Svahnar, AsyncSvahnar
+from SVAHNAR._streaming import Stream, AsyncStream, ServerSentEvent
 
 
 @pytest.mark.asyncio

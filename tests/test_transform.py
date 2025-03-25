@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from svahnar._types import Base64FileInput
-from svahnar._utils import (
+from SVAHNAR._types import Base64FileInput
+from SVAHNAR._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from svahnar._compat import PYDANTIC_V2
-from svahnar._models import BaseModel
+from SVAHNAR._compat import PYDANTIC_V2
+from SVAHNAR._models import BaseModel
 
 _T = TypeVar("_T")
 

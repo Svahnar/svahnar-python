@@ -20,7 +20,7 @@ or products provided by Svahnar please follow the respective company's security 
 
 ### Svahnar Terms and Policies
 
-Please contact dev-feedback@svahnar.com for any questions or concerns regarding security of our services.
+Please contact contact@svahnar.com for any questions or concerns regarding security of our services.
 
 ---
 
