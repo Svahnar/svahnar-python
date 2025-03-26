@@ -6,8 +6,8 @@ import httpx
 import pytest
 import pydantic
 
-from SVAHNAR import Svahnar, BaseModel, AsyncSvahnar
-from SVAHNAR._response import (
+from svahnar import Svahnar, BaseModel, AsyncSvahnar
+from svahnar._response import (
     APIResponse,
     BaseAPIResponse,
     AsyncAPIResponse,
@@ -15,8 +15,8 @@ from SVAHNAR._response import (
     AsyncBinaryAPIResponse,
     extract_response_type,
 )
-from SVAHNAR._streaming import Stream
-from SVAHNAR._base_client import FinalRequestOptions
+from svahnar._streaming import Stream
+from svahnar._base_client import FinalRequestOptions
 
 
 class ConcreteBaseAPIResponse(APIResponse[bytes]): ...
@@ -37,7 +37,7 @@ def test_extract_response_type_direct_classes() -> None:
 def test_extract_response_type_direct_class_missing_type_arg() -> None:
     with pytest.raises(
         RuntimeError,
-        match="Expected type <class 'SVAHNAR._response.AsyncAPIResponse'> to have a type argument at index 0 but it did not",
+        match="Expected type <class 'svahnar._response.AsyncAPIResponse'> to have a type argument at index 0 but it did not",
     ):
         extract_response_type(AsyncAPIResponse)
 
@@ -68,7 +68,7 @@ def test_response_parse_mismatched_basemodel(client: Svahnar) -> None:
 
     with pytest.raises(
         TypeError,
-        match="Pydantic models must subclass our base model type, e.g. `from SVAHNAR import BaseModel`",
+        match="Pydantic models must subclass our base model type, e.g. `from svahnar import BaseModel`",
     ):
         response.parse(to=PydanticModel)
 
@@ -86,7 +86,7 @@ async def test_async_response_parse_mismatched_basemodel(async_client: AsyncSvah
 
     with pytest.raises(
         TypeError,
-        match="Pydantic models must subclass our base model type, e.g. `from SVAHNAR import BaseModel`",
+        match="Pydantic models must subclass our base model type, e.g. `from svahnar import BaseModel`",
     ):
         await response.parse(to=PydanticModel)
 

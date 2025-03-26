@@ -7,9 +7,9 @@ import pytest
 import pydantic
 from pydantic import Field
 
-from SVAHNAR._utils import PropertyInfo
-from SVAHNAR._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
-from SVAHNAR._models import BaseModel, construct_type
+from svahnar._utils import PropertyInfo
+from svahnar._compat import PYDANTIC_V2, parse_obj, model_dump, model_json
+from svahnar._models import BaseModel, construct_type
 
 
 class BasicModel(BaseModel):

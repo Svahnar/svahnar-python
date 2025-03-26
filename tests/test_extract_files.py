@@ -4,8 +4,8 @@ from typing import Sequence
 
 import pytest
 
-from SVAHNAR._types import FileTypes
-from SVAHNAR._utils import extract_files
+from svahnar._types import FileTypes
+from svahnar._utils import extract_files
 
 
 def test_removes_files_from_input() -> None:

@@ -25,7 +25,7 @@ from ._utils import (
     get_async_library,
 )
 from ._version import __version__
-from .resources import agents, health
+from .resources import agents
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
 from ._base_client import (
@@ -39,7 +39,6 @@ __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Svahnar", 
 
 class Svahnar(SyncAPIClient):
     agents: agents.AgentsResource
-    health: health.HealthResource
     with_raw_response: SvahnarWithRawResponse
     with_streaming_response: SvahnarWithStreamedResponse
 
@@ -94,7 +93,6 @@ class Svahnar(SyncAPIClient):
         )
 
         self.agents = agents.AgentsResource(self)
-        self.health = health.HealthResource(self)
         self.with_raw_response = SvahnarWithRawResponse(self)
         self.with_streaming_response = SvahnarWithStreamedResponse(self)
 
@@ -218,7 +216,6 @@ class Svahnar(SyncAPIClient):
 
 class AsyncSvahnar(AsyncAPIClient):
     agents: agents.AsyncAgentsResource
-    health: health.AsyncHealthResource
     with_raw_response: AsyncSvahnarWithRawResponse
     with_streaming_response: AsyncSvahnarWithStreamedResponse
 
@@ -273,7 +270,6 @@ class AsyncSvahnar(AsyncAPIClient):
         )
 
         self.agents = agents.AsyncAgentsResource(self)
-        self.health = health.AsyncHealthResource(self)
         self.with_raw_response = AsyncSvahnarWithRawResponse(self)
         self.with_streaming_response = AsyncSvahnarWithStreamedResponse(self)
 
@@ -398,25 +394,21 @@ class AsyncSvahnar(AsyncAPIClient):
 class SvahnarWithRawResponse:
     def __init__(self, client: Svahnar) -> None:
         self.agents = agents.AgentsResourceWithRawResponse(client.agents)
-        self.health = health.HealthResourceWithRawResponse(client.health)
 
 
 class AsyncSvahnarWithRawResponse:
     def __init__(self, client: AsyncSvahnar) -> None:
         self.agents = agents.AsyncAgentsResourceWithRawResponse(client.agents)
-        self.health = health.AsyncHealthResourceWithRawResponse(client.health)
 
 
 class SvahnarWithStreamedResponse:
     def __init__(self, client: Svahnar) -> None:
         self.agents = agents.AgentsResourceWithStreamingResponse(client.agents)
-        self.health = health.HealthResourceWithStreamingResponse(client.health)
 
 
 class AsyncSvahnarWithStreamedResponse:
     def __init__(self, client: AsyncSvahnar) -> None:
         self.agents = agents.AsyncAgentsResourceWithStreamingResponse(client.agents)
-        self.health = health.AsyncHealthResourceWithStreamingResponse(client.health)
 
 
 Client = Svahnar

@@ -8,14 +8,6 @@ from .agents import (
     AgentsResourceWithStreamingResponse,
     AsyncAgentsResourceWithStreamingResponse,
 )
-from .health import (
-    HealthResource,
-    AsyncHealthResource,
-    HealthResourceWithRawResponse,
-    AsyncHealthResourceWithRawResponse,
-    HealthResourceWithStreamingResponse,
-    AsyncHealthResourceWithStreamingResponse,
-)
 
 __all__ = [
     "AgentsResource",
@@ -24,10 +16,4 @@ __all__ = [
     "AsyncAgentsResourceWithRawResponse",
     "AgentsResourceWithStreamingResponse",
     "AsyncAgentsResourceWithStreamingResponse",
-    "HealthResource",
-    "AsyncHealthResource",
-    "HealthResourceWithRawResponse",
-    "AsyncHealthResourceWithRawResponse",
-    "HealthResourceWithStreamingResponse",
-    "AsyncHealthResourceWithStreamingResponse",
 ]

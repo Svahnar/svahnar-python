@@ -21,19 +21,19 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from SVAHNAR import Svahnar, AsyncSvahnar, APIResponseValidationError
-from SVAHNAR._types import Omit
-from SVAHNAR._utils import maybe_transform
-from SVAHNAR._models import BaseModel, FinalRequestOptions
-from SVAHNAR._constants import RAW_RESPONSE_HEADER
-from SVAHNAR._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
-from SVAHNAR._base_client import (
+from svahnar import Svahnar, AsyncSvahnar, APIResponseValidationError
+from svahnar._types import Omit
+from svahnar._utils import maybe_transform
+from svahnar._models import BaseModel, FinalRequestOptions
+from svahnar._constants import RAW_RESPONSE_HEADER
+from svahnar._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
+from svahnar._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
     make_request_options,
 )
-from SVAHNAR.types.agent_run_params import AgentRunParams
+from svahnar.types.agent_run_params import AgentRunParams
 
 from .utils import update_env
 
@@ -232,10 +232,10 @@ class TestSvahnar:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "SVAHNAR/_legacy_response.py",
-                        "SVAHNAR/_response.py",
+                        "svahnar/_legacy_response.py",
+                        "svahnar/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "SVAHNAR/_compat.py",
+                        "svahnar/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -718,7 +718,7 @@ class TestSvahnar:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/agents/run").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -733,7 +733,7 @@ class TestSvahnar:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/agents/run").mock(return_value=httpx.Response(500))
@@ -749,7 +749,7 @@ class TestSvahnar:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
@@ -780,7 +780,7 @@ class TestSvahnar:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
         self, client: Svahnar, failures_before_success: int, respx_mock: MockRouter
@@ -805,7 +805,7 @@ class TestSvahnar:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
         self, client: Svahnar, failures_before_success: int, respx_mock: MockRouter
@@ -1005,10 +1005,10 @@ class TestAsyncSvahnar:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "SVAHNAR/_legacy_response.py",
-                        "SVAHNAR/_response.py",
+                        "svahnar/_legacy_response.py",
+                        "svahnar/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "SVAHNAR/_compat.py",
+                        "svahnar/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1507,7 +1507,7 @@ class TestAsyncSvahnar:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/agents/run").mock(side_effect=httpx.TimeoutException("Test timeout error"))
@@ -1522,7 +1522,7 @@ class TestAsyncSvahnar:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
         respx_mock.post("/v1/agents/run").mock(return_value=httpx.Response(500))
@@ -1538,7 +1538,7 @@ class TestAsyncSvahnar:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
@@ -1570,7 +1570,7 @@ class TestAsyncSvahnar:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
@@ -1596,7 +1596,7 @@ class TestAsyncSvahnar:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("SVAHNAR._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
@@ -1632,8 +1632,8 @@ class TestAsyncSvahnar:
         import nest_asyncio
         import threading
 
-        from SVAHNAR._utils import asyncify
-        from SVAHNAR._base_client import get_platform 
+        from svahnar._utils import asyncify
+        from svahnar._base_client import get_platform 
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()
