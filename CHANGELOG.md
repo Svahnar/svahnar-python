@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.1 (2025-03-26)
+
+Full Changelog: [v0.0.1-alpha.1...v0.1.0-alpha.1](https://github.com/Svahnar/svahnar-python/compare/v0.0.1-alpha.1...v0.1.0-alpha.1)
+
+### Features
+
+* **api:** update via SDK Studio ([#5](https://github.com/Svahnar/svahnar-python/issues/5)) ([9adb118](https://github.com/Svahnar/svahnar-python/commit/9adb118b93546daab171919e7e05fba56e7cfdcd))
+
 ## 0.0.1-alpha.1 (2025-03-26)
 
 Full Changelog: [v0.0.1-alpha.0...v0.0.1-alpha.1](https://github.com/Svahnar/svahnar-python/compare/v0.0.1-alpha.0...v0.0.1-alpha.1)
