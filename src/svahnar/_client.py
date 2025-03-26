@@ -79,7 +79,7 @@ class Svahnar(SyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("SVAHNAR_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.example.com"
+            base_url = f"https://api.svahnar.com"
 
         super().__init__(
             version=__version__,
@@ -256,7 +256,7 @@ class AsyncSvahnar(AsyncAPIClient):
         if base_url is None:
             base_url = os.environ.get("SVAHNAR_BASE_URL")
         if base_url is None:
-            base_url = f"https://api.example.com"
+            base_url = f"https://api.svahnar.com"
 
         super().__init__(
             version=__version__,
