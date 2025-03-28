@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0 (2025-03-28)
+
+Full Changelog: [v0.1.0-alpha.1...v1.0.0](https://github.com/Svahnar/svahnar-python/compare/v0.1.0-alpha.1...v1.0.0)
+
+### Chores
+
+* fix typos ([#8](https://github.com/Svahnar/svahnar-python/issues/8)) ([a23c194](https://github.com/Svahnar/svahnar-python/commit/a23c194a27c3b1e0c63ed66cf3cc52b7d3f84b2a))
+
 ## 0.1.0-alpha.1 (2025-03-26)
 
 Full Changelog: [v0.0.1-alpha.1...v0.1.0-alpha.1](https://github.com/Svahnar/svahnar-python/compare/v0.0.1-alpha.1...v0.1.0-alpha.1)
