@@ -32,9 +32,10 @@ client = Svahnar(
 )
 
 response = client.agents.run(
-    agent_id="agent_id",
-    message="message",
+    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+    message="hi",
 )
+print(response.reply)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -58,9 +59,10 @@ client = AsyncSvahnar(
 
 async def main() -> None:
     response = await client.agents.run(
-        agent_id="agent_id",
-        message="message",
+        agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+        message="hi",
     )
+    print(response.reply)
 
 
 asyncio.run(main())
@@ -76,6 +78,26 @@ Nested request parameters are [TypedDicts](https://docs.python.org/3/library/typ
 - Converting to a dictionary, `model.to_dict()`
 
 Typed requests and responses provide autocomplete and documentation within your editor. If you would like to see type errors in VS Code to help catch bugs earlier, set `python.analysis.typeCheckingMode` to `basic`.
+
+## File uploads
+
+Request parameters that correspond to file uploads can be passed as `bytes`, a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance or a tuple of `(filename, contents, media type)`.
+
+```python
+from pathlib import Path
+from svahnar import Svahnar
+
+client = Svahnar()
+
+client.agents.create(
+    deploy_to="deploy_to",
+    description="description",
+    name="name",
+    yaml_content=Path("/path/to/file"),
+)
+```
+
+The async client uses the exact same interface. If you pass a [`PathLike`](https://docs.python.org/3/library/os.html#os.PathLike) instance, the file contents will be read asynchronously automatically.
 
 ## Handling errors
 
@@ -94,8 +116,8 @@ client = Svahnar()
 
 try:
     client.agents.run(
-        agent_id="agent_id",
-        message="message",
+        agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+        message="hi",
     )
 except svahnar.APIConnectionError as e:
     print("The server could not be reached")
@@ -140,8 +162,8 @@ client = Svahnar(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).agents.run(
-    agent_id="agent_id",
-    message="message",
+    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+    message="hi",
 )
 ```
 
@@ -166,8 +188,8 @@ client = Svahnar(
 
 # Override per-request:
 client.with_options(timeout=5.0).agents.run(
-    agent_id="agent_id",
-    message="message",
+    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+    message="hi",
 )
 ```
 
@@ -210,13 +232,13 @@ from svahnar import Svahnar
 
 client = Svahnar()
 response = client.agents.with_raw_response.run(
-    agent_id="agent_id",
-    message="message",
+    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+    message="hi",
 )
 print(response.headers.get('X-My-Header'))
 
 agent = response.parse()  # get the object that `agents.run()` would have returned
-print(agent)
+print(agent.reply)
 ```
 
 These methods return an [`APIResponse`](https://github.com/Svahnar/svahnar-python/tree/main/src/svahnar/_response.py) object.
@@ -231,8 +253,8 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.agents.with_streaming_response.run(
-    agent_id="agent_id",
-    message="message",
+    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+    message="hi",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
