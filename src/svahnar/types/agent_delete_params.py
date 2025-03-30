@@ -4,12 +4,9 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["AgentRunParams"]
+__all__ = ["AgentDeleteParams"]
 
 
-class AgentRunParams(TypedDict, total=False):
+class AgentDeleteParams(TypedDict, total=False):
     agent_id: Required[str]
-    """Unique identifier for the agent"""
-
-    message: Required[str]
-    """The message or command to be sent to the agent"""
+    """The ID of the agent to delete"""
