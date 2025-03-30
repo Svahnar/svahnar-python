@@ -16,7 +16,7 @@ The REST API documentation can be found on [docs.svahnar.com](https://docs.svahn
 
 ```sh
 # install from PyPI
-pip install --pre svahnar
+pip install svahnar
 ```
 
 ## Usage
