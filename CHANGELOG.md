@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.1 (2025-04-04)
+
+Full Changelog: [v1.0.0...v1.0.1](https://github.com/Svahnar/svahnar-python/compare/v1.0.0...v1.0.1)
+
+### Chores
+
+* **internal:** remove trailing character ([#12](https://github.com/Svahnar/svahnar-python/issues/12)) ([7c12256](https://github.com/Svahnar/svahnar-python/commit/7c12256d67a176fb25f1f3d3f6e7923eeb65c077))
+
 ## 1.0.0 (2025-03-30)
 
 Full Changelog: [v0.1.0-alpha.1...v1.0.0](https://github.com/Svahnar/svahnar-python/compare/v0.1.0-alpha.1...v1.0.0)
