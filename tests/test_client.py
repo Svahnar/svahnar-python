@@ -1663,7 +1663,7 @@ class TestAsyncSvahnar:
         import threading
 
         from svahnar._utils import asyncify
-        from svahnar._base_client import get_platform 
+        from svahnar._base_client import get_platform
 
         async def test_main() -> None:
             result = await asyncify(get_platform)()
