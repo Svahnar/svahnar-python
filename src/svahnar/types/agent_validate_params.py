@@ -2,10 +2,15 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing import Optional
+from typing_extensions import TypedDict
+
+from .._types import FileTypes
 
 __all__ = ["AgentValidateParams"]
 
 
 class AgentValidateParams(TypedDict, total=False):
-    body: Required[str]
+    yaml_string: Optional[str]
+
+    yaml_file: Optional[FileTypes]
