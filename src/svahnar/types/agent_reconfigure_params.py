@@ -11,7 +11,5 @@ __all__ = ["AgentReconfigureParams"]
 
 class AgentReconfigureParams(TypedDict, total=False):
     agent_id: Required[str]
-    """The ID of the agent to reconfigure."""
 
-    yaml_content: Required[FileTypes]
-    """The new YAML configuration file."""
+    yaml_file: Required[FileTypes]
