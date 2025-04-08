@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Mapping, cast
+from typing import List, Mapping, Optional, cast
 
 import httpx
 
@@ -67,7 +67,7 @@ class AgentsResource(SyncAPIResource):
         deploy_to: str,
         description: str,
         name: str,
-        yaml_content: FileTypes,
+        yaml_file: FileTypes,
         agent_icon: FileTypes | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -87,7 +87,7 @@ class AgentsResource(SyncAPIResource):
 
           name: The agent's name. Supports Unicode characters.
 
-          yaml_content: The YAML configuration for the agent.
+          yaml_file: The YAML configuration for the agent.
 
           extra_headers: Send extra headers
 
@@ -102,11 +102,11 @@ class AgentsResource(SyncAPIResource):
                 "deploy_to": deploy_to,
                 "description": description,
                 "name": name,
-                "yaml_content": yaml_content,
+                "yaml_file": yaml_file,
                 "agent_icon": agent_icon,
             }
         )
-        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_content"], ["agent_icon"]])
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"], ["agent_icon"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
@@ -305,7 +305,7 @@ class AgentsResource(SyncAPIResource):
         self,
         *,
         agent_id: str,
-        yaml_content: FileTypes,
+        yaml_file: FileTypes,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -314,13 +314,9 @@ class AgentsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
         """
-        Replace the YAML configuration file for the agent.
+        Reconfigure Agent
 
         Args:
-          agent_id: The ID of the agent to reconfigure.
-
-          yaml_content: The new YAML configuration file.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -332,10 +328,10 @@ class AgentsResource(SyncAPIResource):
         body = deepcopy_minimal(
             {
                 "agent_id": agent_id,
-                "yaml_content": yaml_content,
+                "yaml_file": yaml_file,
             }
         )
-        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_content"]])
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
@@ -448,17 +444,9 @@ class AgentsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
         """
-        Update agent information such as name, description, or deployment type.
+        Update Agent Info
 
         Args:
-          agent_id: The ID of the agent to update.
-
-          deploy_to: Change deployment to 'AgentStore' or 'Organization'.
-
-          description: The new description of the agent.
-
-          name: The new name of the agent.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -487,7 +475,8 @@ class AgentsResource(SyncAPIResource):
     def validate(
         self,
         *,
-        body: str,
+        yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
+        yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -495,10 +484,9 @@ class AgentsResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> AgentValidateResponse:
-        """Validates the agent network configuration provided as a YAML file.
-
-        Only files
-        with a .yaml or .yml extension are accepted.
+        """
+        Validates the agent network configuration provided as a YAML file or string.
+        Only files with a .yaml or .yml extension are accepted.
 
         Args:
           extra_headers: Send extra headers
@@ -509,11 +497,22 @@ class AgentsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        body = deepcopy_minimal({"yaml_file": yaml_file})
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
             "/v1/agents/validate",
             body=maybe_transform(body, agent_validate_params.AgentValidateParams),
+            files=files,
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"yaml_string": yaml_string}, agent_validate_params.AgentValidateParams),
             ),
             cast_to=AgentValidateResponse,
         )
@@ -545,7 +544,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         deploy_to: str,
         description: str,
         name: str,
-        yaml_content: FileTypes,
+        yaml_file: FileTypes,
         agent_icon: FileTypes | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -565,7 +564,7 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           name: The agent's name. Supports Unicode characters.
 
-          yaml_content: The YAML configuration for the agent.
+          yaml_file: The YAML configuration for the agent.
 
           extra_headers: Send extra headers
 
@@ -580,11 +579,11 @@ class AsyncAgentsResource(AsyncAPIResource):
                 "deploy_to": deploy_to,
                 "description": description,
                 "name": name,
-                "yaml_content": yaml_content,
+                "yaml_file": yaml_file,
                 "agent_icon": agent_icon,
             }
         )
-        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_content"], ["agent_icon"]])
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"], ["agent_icon"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
@@ -783,7 +782,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         self,
         *,
         agent_id: str,
-        yaml_content: FileTypes,
+        yaml_file: FileTypes,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -792,13 +791,9 @@ class AsyncAgentsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
         """
-        Replace the YAML configuration file for the agent.
+        Reconfigure Agent
 
         Args:
-          agent_id: The ID of the agent to reconfigure.
-
-          yaml_content: The new YAML configuration file.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -810,10 +805,10 @@ class AsyncAgentsResource(AsyncAPIResource):
         body = deepcopy_minimal(
             {
                 "agent_id": agent_id,
-                "yaml_content": yaml_content,
+                "yaml_file": yaml_file,
             }
         )
-        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_content"]])
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
         # It should be noted that the actual Content-Type header that will be
         # sent to the server will contain a `boundary` parameter, e.g.
         # multipart/form-data; boundary=---abc--
@@ -926,17 +921,9 @@ class AsyncAgentsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
         """
-        Update agent information such as name, description, or deployment type.
+        Update Agent Info
 
         Args:
-          agent_id: The ID of the agent to update.
-
-          deploy_to: Change deployment to 'AgentStore' or 'Organization'.
-
-          description: The new description of the agent.
-
-          name: The new name of the agent.
-
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -965,7 +952,8 @@ class AsyncAgentsResource(AsyncAPIResource):
     async def validate(
         self,
         *,
-        body: str,
+        yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
+        yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -973,10 +961,9 @@ class AsyncAgentsResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> AgentValidateResponse:
-        """Validates the agent network configuration provided as a YAML file.
-
-        Only files
-        with a .yaml or .yml extension are accepted.
+        """
+        Validates the agent network configuration provided as a YAML file or string.
+        Only files with a .yaml or .yml extension are accepted.
 
         Args:
           extra_headers: Send extra headers
@@ -987,11 +974,24 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        body = deepcopy_minimal({"yaml_file": yaml_file})
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
             "/v1/agents/validate",
             body=await async_maybe_transform(body, agent_validate_params.AgentValidateParams),
+            files=files,
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"yaml_string": yaml_string}, agent_validate_params.AgentValidateParams
+                ),
             ),
             cast_to=AgentValidateResponse,
         )

@@ -27,7 +27,7 @@ class TestAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         )
         assert_matches_type(object, agent, path=["response"])
 
@@ -38,7 +38,7 @@ class TestAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
             agent_icon=b"raw file contents",
         )
         assert_matches_type(object, agent, path=["response"])
@@ -50,7 +50,7 @@ class TestAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         )
 
         assert response.is_closed is True
@@ -65,7 +65,7 @@ class TestAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -253,7 +253,7 @@ class TestAgents:
     def test_method_reconfigure(self, client: Svahnar) -> None:
         agent = client.agents.reconfigure(
             agent_id="agent_id",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         )
         assert_matches_type(object, agent, path=["response"])
 
@@ -262,7 +262,7 @@ class TestAgents:
     def test_raw_response_reconfigure(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.reconfigure(
             agent_id="agent_id",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         )
 
         assert response.is_closed is True
@@ -275,7 +275,7 @@ class TestAgents:
     def test_streaming_response_reconfigure(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.reconfigure(
             agent_id="agent_id",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -407,17 +407,22 @@ class TestAgents:
     @pytest.mark.skip()
     @parametrize
     def test_method_validate(self, client: Svahnar) -> None:
+        agent = client.agents.validate()
+        assert_matches_type(AgentValidateResponse, agent, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_validate_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.validate(
-            body="body",
+            yaml_string="yaml_string",
+            yaml_file=b"raw file contents",
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     def test_raw_response_validate(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.validate(
-            body="body",
-        )
+        response = client.agents.with_raw_response.validate()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -427,9 +432,7 @@ class TestAgents:
     @pytest.mark.skip()
     @parametrize
     def test_streaming_response_validate(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.validate(
-            body="body",
-        ) as response:
+        with client.agents.with_streaming_response.validate() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -449,7 +452,7 @@ class TestAsyncAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         )
         assert_matches_type(object, agent, path=["response"])
 
@@ -460,7 +463,7 @@ class TestAsyncAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
             agent_icon=b"raw file contents",
         )
         assert_matches_type(object, agent, path=["response"])
@@ -472,7 +475,7 @@ class TestAsyncAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         )
 
         assert response.is_closed is True
@@ -487,7 +490,7 @@ class TestAsyncAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -675,7 +678,7 @@ class TestAsyncAgents:
     async def test_method_reconfigure(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.reconfigure(
             agent_id="agent_id",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         )
         assert_matches_type(object, agent, path=["response"])
 
@@ -684,7 +687,7 @@ class TestAsyncAgents:
     async def test_raw_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.reconfigure(
             agent_id="agent_id",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         )
 
         assert response.is_closed is True
@@ -697,7 +700,7 @@ class TestAsyncAgents:
     async def test_streaming_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.reconfigure(
             agent_id="agent_id",
-            yaml_content=b"raw file contents",
+            yaml_file=b"raw file contents",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -829,17 +832,22 @@ class TestAsyncAgents:
     @pytest.mark.skip()
     @parametrize
     async def test_method_validate(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.validate()
+        assert_matches_type(AgentValidateResponse, agent, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_validate_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.validate(
-            body="body",
+            yaml_string="yaml_string",
+            yaml_file=b"raw file contents",
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
     async def test_raw_response_validate(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.validate(
-            body="body",
-        )
+        response = await async_client.agents.with_raw_response.validate()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -849,9 +857,7 @@ class TestAsyncAgents:
     @pytest.mark.skip()
     @parametrize
     async def test_streaming_response_validate(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.validate(
-            body="body",
-        ) as response:
+        async with async_client.agents.with_streaming_response.validate() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

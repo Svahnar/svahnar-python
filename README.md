@@ -93,7 +93,7 @@ client.agents.create(
     deploy_to="deploy_to",
     description="description",
     name="name",
-    yaml_content=Path("/path/to/file"),
+    yaml_file=Path("/path/to/file"),
 )
 ```
 

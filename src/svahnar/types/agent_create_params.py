@@ -19,7 +19,7 @@ class AgentCreateParams(TypedDict, total=False):
     name: Required[str]
     """The agent's name. Supports Unicode characters."""
 
-    yaml_content: Required[FileTypes]
+    yaml_file: Required[FileTypes]
     """The YAML configuration for the agent."""
 
     agent_icon: FileTypes
