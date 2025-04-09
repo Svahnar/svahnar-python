@@ -407,8 +407,6 @@ class AgentsResource(SyncAPIResource):
         Run Agent
 
         Args:
-          yaml_file: YAML file to validate.
-
           yaml_string: YAML string to validate.
 
           extra_headers: Send extra headers
@@ -890,8 +888,6 @@ class AsyncAgentsResource(AsyncAPIResource):
         Run Agent
 
         Args:
-          yaml_file: YAML file to validate.
-
           yaml_string: YAML string to validate.
 
           extra_headers: Send extra headers
