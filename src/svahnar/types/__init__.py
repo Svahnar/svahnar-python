@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from .agent_run_params import AgentRunParams as AgentRunParams
 from .agent_list_params import AgentListParams as AgentListParams
-from .agent_test_params import AgentTestParams as AgentTestParams
 from .agent_run_response import AgentRunResponse as AgentRunResponse
 from .agent_create_params import AgentCreateParams as AgentCreateParams
 from .agent_delete_params import AgentDeleteParams as AgentDeleteParams
