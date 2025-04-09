@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.2.0 (2025-04-09)
+
+Full Changelog: [v1.1.0...v1.2.0](https://github.com/Svahnar/svahnar-python/compare/v1.1.0...v1.2.0)
+
+### Features
+
+* **api:** api update ([#14](https://github.com/Svahnar/svahnar-python/issues/14)) ([725168b](https://github.com/Svahnar/svahnar-python/commit/725168ba76812111a3d9713a437cb84ec32928c4))
+* **api:** api update ([#18](https://github.com/Svahnar/svahnar-python/issues/18)) ([8f0719b](https://github.com/Svahnar/svahnar-python/commit/8f0719b187e3170b69a5927035cfd45cb86edd8e))
+* **api:** manual updates ([#10](https://github.com/Svahnar/svahnar-python/issues/10)) ([3e61e54](https://github.com/Svahnar/svahnar-python/commit/3e61e54fc866fc4e9e995020c193657261b040f0))
+* **api:** update via SDK Studio ([#5](https://github.com/Svahnar/svahnar-python/issues/5)) ([9adb118](https://github.com/Svahnar/svahnar-python/commit/9adb118b93546daab171919e7e05fba56e7cfdcd))
+
+
+### Chores
+
+* fix typos ([#8](https://github.com/Svahnar/svahnar-python/issues/8)) ([a23c194](https://github.com/Svahnar/svahnar-python/commit/a23c194a27c3b1e0c63ed66cf3cc52b7d3f84b2a))
+* go live ([#1](https://github.com/Svahnar/svahnar-python/issues/1)) ([ec7ee3c](https://github.com/Svahnar/svahnar-python/commit/ec7ee3cffa0c4f3c5175c311a88079c31b2a29a8))
+* **internal:** remove trailing character ([#12](https://github.com/Svahnar/svahnar-python/issues/12)) ([7c12256](https://github.com/Svahnar/svahnar-python/commit/7c12256d67a176fb25f1f3d3f6e7923eeb65c077))
+* **internal:** slight transform perf improvement ([#15](https://github.com/Svahnar/svahnar-python/issues/15)) ([1fb0d08](https://github.com/Svahnar/svahnar-python/commit/1fb0d0840818f980c70c7fe07f6b6130ae51f983))
+* slight wording improvement in README ([#17](https://github.com/Svahnar/svahnar-python/issues/17)) ([d2178f2](https://github.com/Svahnar/svahnar-python/commit/d2178f220907a4faf582a06f809d0e6434639c94))
+* sync repo ([8508d3c](https://github.com/Svahnar/svahnar-python/commit/8508d3cc6cff7e92695af5b35a08ea06eabd1e13))
+* update SDK settings ([#3](https://github.com/Svahnar/svahnar-python/issues/3)) ([be2bc47](https://github.com/Svahnar/svahnar-python/commit/be2bc47c168157dca68cb92686fbafcc584d8f6a))
+
 ## 1.1.0 (2025-04-08)
 
 Full Changelog: [v1.0.0...v1.1.0](https://github.com/Svahnar/svahnar-python/compare/v1.0.0...v1.1.0)
