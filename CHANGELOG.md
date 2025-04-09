@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0 (2025-04-09)
+
+Full Changelog: [v1.3.0...v1.4.0](https://github.com/Svahnar/svahnar-python/compare/v1.3.0...v1.4.0)
+
+### Features
+
+* **api:** api update ([#21](https://github.com/Svahnar/svahnar-python/issues/21)) ([2feec6d](https://github.com/Svahnar/svahnar-python/commit/2feec6d5ce4cbba891f9bdd2d7bcbab4e9b41428))
+
 ## 1.3.0 (2025-04-09)
 
 Full Changelog: [v1.2.0...v1.3.0](https://github.com/Svahnar/svahnar-python/compare/v1.2.0...v1.3.0)
