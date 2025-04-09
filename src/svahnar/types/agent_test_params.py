@@ -14,7 +14,6 @@ class AgentTestParams(TypedDict, total=False):
     message: Required[str]
 
     yaml_file: Optional[FileTypes]
-    """YAML file to validate."""
 
     yaml_string: Optional[str]
     """YAML string to validate."""
