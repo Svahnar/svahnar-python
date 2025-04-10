@@ -9,6 +9,7 @@ import httpx
 from ..types import (
     agent_run_params,
     agent_list_params,
+    agent_test_params,
     agent_create_params,
     agent_delete_params,
     agent_download_params,
@@ -387,6 +388,49 @@ class AgentsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=AgentRunResponse,
+        )
+
+    def test(
+        self,
+        *,
+        message: str,
+        yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
+        yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> object:
+        """
+        Run Agent
+
+        Args:
+          yaml_string: YAML string to validate.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/agents/test",
+            body=maybe_transform(
+                {
+                    "message": message,
+                    "yaml_file": yaml_file,
+                    "yaml_string": yaml_string,
+                },
+                agent_test_params.AgentTestParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
         )
 
     def update_info(
@@ -827,6 +871,49 @@ class AsyncAgentsResource(AsyncAPIResource):
             cast_to=AgentRunResponse,
         )
 
+    async def test(
+        self,
+        *,
+        message: str,
+        yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
+        yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+    ) -> object:
+        """
+        Run Agent
+
+        Args:
+          yaml_string: YAML string to validate.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/agents/test",
+            body=await async_maybe_transform(
+                {
+                    "message": message,
+                    "yaml_file": yaml_file,
+                    "yaml_string": yaml_string,
+                },
+                agent_test_params.AgentTestParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
     async def update_info(
         self,
         *,
@@ -946,6 +1033,9 @@ class AgentsResourceWithRawResponse:
         self.run = to_raw_response_wrapper(
             agents.run,
         )
+        self.test = to_raw_response_wrapper(
+            agents.test,
+        )
         self.update_info = to_raw_response_wrapper(
             agents.update_info,
         )
@@ -981,6 +1071,9 @@ class AsyncAgentsResourceWithRawResponse:
         )
         self.run = async_to_raw_response_wrapper(
             agents.run,
+        )
+        self.test = async_to_raw_response_wrapper(
+            agents.test,
         )
         self.update_info = async_to_raw_response_wrapper(
             agents.update_info,
@@ -1018,6 +1111,9 @@ class AgentsResourceWithStreamingResponse:
         self.run = to_streamed_response_wrapper(
             agents.run,
         )
+        self.test = to_streamed_response_wrapper(
+            agents.test,
+        )
         self.update_info = to_streamed_response_wrapper(
             agents.update_info,
         )
@@ -1053,6 +1149,9 @@ class AsyncAgentsResourceWithStreamingResponse:
         )
         self.run = async_to_streamed_response_wrapper(
             agents.run,
+        )
+        self.test = async_to_streamed_response_wrapper(
+            agents.test,
         )
         self.update_info = async_to_streamed_response_wrapper(
             agents.update_info,
