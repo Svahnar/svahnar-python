@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.5.0 (2025-04-10)
+
+Full Changelog: [v1.4.0...v1.5.0](https://github.com/Svahnar/svahnar-python/compare/v1.4.0...v1.5.0)
+
+### Features
+
+* **api:** api update ([cf7508d](https://github.com/Svahnar/svahnar-python/commit/cf7508d01894f7eb8fc97c52d8cd183e191c49c5))
+
+
+### Chores
+
+* **internal:** expand CI branch coverage ([492bd0f](https://github.com/Svahnar/svahnar-python/commit/492bd0f1d969a16534e4cd2e379c5c9e75f73041))
+* **internal:** reduce CI branch coverage ([f666714](https://github.com/Svahnar/svahnar-python/commit/f666714ba48db9151b5f6fac0fc55318219a1483))
+
 ## 1.4.0 (2025-04-09)
 
 Full Changelog: [v1.3.0...v1.4.0](https://github.com/Svahnar/svahnar-python/compare/v1.3.0...v1.4.0)
