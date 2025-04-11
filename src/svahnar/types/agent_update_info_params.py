@@ -2,7 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import Required, TypedDict
+
+from .._types import FileTypes
 
 __all__ = ["AgentUpdateInfoParams"]
 
@@ -10,8 +13,10 @@ __all__ = ["AgentUpdateInfoParams"]
 class AgentUpdateInfoParams(TypedDict, total=False):
     agent_id: Required[str]
 
-    deploy_to: str
+    deploy_to: Optional[str]
 
-    description: str
+    description: Optional[str]
 
-    name: str
+    name: Optional[str]
+
+    agent_icon: Optional[FileTypes]
