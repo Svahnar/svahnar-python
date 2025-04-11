@@ -382,6 +382,7 @@ class TestAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
+            agent_icon=b"raw file contents",
         )
         assert_matches_type(object, agent, path=["response"])
 
@@ -421,8 +422,8 @@ class TestAgents:
     @parametrize
     def test_method_validate_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.validate(
-            yaml_string="yaml_string",
             yaml_file=b"raw file contents",
+            yaml_string="yaml_string",
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
@@ -814,6 +815,7 @@ class TestAsyncAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
+            agent_icon=b"raw file contents",
         )
         assert_matches_type(object, agent, path=["response"])
 
@@ -853,8 +855,8 @@ class TestAsyncAgents:
     @parametrize
     async def test_method_validate_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.validate(
-            yaml_string="yaml_string",
             yaml_file=b"raw file contents",
+            yaml_string="yaml_string",
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
