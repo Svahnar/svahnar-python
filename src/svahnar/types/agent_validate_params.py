@@ -11,6 +11,8 @@ __all__ = ["AgentValidateParams"]
 
 
 class AgentValidateParams(TypedDict, total=False):
-    yaml_string: Optional[str]
-
     yaml_file: Optional[FileTypes]
+    """YAML file to test the agent. Can be an UploadFile or a Path."""
+
+    yaml_string: Optional[str]
+    """YAML string to test the agent."""
