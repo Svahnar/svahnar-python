@@ -68,7 +68,7 @@ class AgentsResource(SyncAPIResource):
         description: str,
         name: str,
         yaml_file: FileTypes,
-        agent_icon: FileTypes | NotGiven = NOT_GIVEN,
+        agent_icon: Optional[FileTypes] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -505,7 +505,7 @@ class AgentsResource(SyncAPIResource):
         Only files with a .yaml or .yml extension are accepted.
 
         Args:
-          yaml_file: YAML file to test the agent. Can be an UploadFile or a Path.
+          yaml_file: YAML file to test the agent.
 
           yaml_string: YAML string to test the agent.
 
@@ -566,7 +566,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         description: str,
         name: str,
         yaml_file: FileTypes,
-        agent_icon: FileTypes | NotGiven = NOT_GIVEN,
+        agent_icon: Optional[FileTypes] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -1003,7 +1003,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         Only files with a .yaml or .yml extension are accepted.
 
         Args:
-          yaml_file: YAML file to test the agent. Can be an UploadFile or a Path.
+          yaml_file: YAML file to test the agent.
 
           yaml_string: YAML string to test the agent.
 
