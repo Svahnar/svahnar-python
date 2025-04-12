@@ -12,8 +12,10 @@ __all__ = ["AgentTestParams"]
 
 class AgentTestParams(TypedDict, total=False):
     message: Required[str]
+    """Message to send to the agent."""
 
     yaml_file: Optional[FileTypes]
+    """YAML file to test the agent."""
 
     yaml_string: Optional[str]
-    """YAML string to validate."""
+    """YAML string to test the agent."""

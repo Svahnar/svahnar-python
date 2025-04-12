@@ -407,7 +407,11 @@ class AgentsResource(SyncAPIResource):
         Run Agent
 
         Args:
-          yaml_string: YAML string to validate.
+          message: Message to send to the agent.
+
+          yaml_file: YAML file to test the agent.
+
+          yaml_string: YAML string to test the agent.
 
           extra_headers: Send extra headers
 
@@ -417,16 +421,22 @@ class AgentsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        body = deepcopy_minimal(
+            {
+                "message": message,
+                "yaml_file": yaml_file,
+                "yaml_string": yaml_string,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return self._post(
             "/v1/agents/test",
-            body=maybe_transform(
-                {
-                    "message": message,
-                    "yaml_file": yaml_file,
-                    "yaml_string": yaml_string,
-                },
-                agent_test_params.AgentTestParams,
-            ),
+            body=maybe_transform(body, agent_test_params.AgentTestParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -905,7 +915,11 @@ class AsyncAgentsResource(AsyncAPIResource):
         Run Agent
 
         Args:
-          yaml_string: YAML string to validate.
+          message: Message to send to the agent.
+
+          yaml_file: YAML file to test the agent.
+
+          yaml_string: YAML string to test the agent.
 
           extra_headers: Send extra headers
 
@@ -915,16 +929,22 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        body = deepcopy_minimal(
+            {
+                "message": message,
+                "yaml_file": yaml_file,
+                "yaml_string": yaml_string,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
         return await self._post(
             "/v1/agents/test",
-            body=await async_maybe_transform(
-                {
-                    "message": message,
-                    "yaml_file": yaml_file,
-                    "yaml_string": yaml_string,
-                },
-                agent_test_params.AgentTestParams,
-            ),
+            body=await async_maybe_transform(body, agent_test_params.AgentTestParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
