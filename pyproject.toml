@@ -1,6 +1,6 @@
 [project]
 name = "svahnar"
-version = "1.6.0"
+version = "1.6.1"
 description = "The official Python library for the SVAHNAR API"
 dynamic = ["readme"]
 license = "Apache-2.0"
