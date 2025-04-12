@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Optional
 from typing_extensions import Required, TypedDict
 
 from .._types import FileTypes
@@ -22,4 +23,4 @@ class AgentCreateParams(TypedDict, total=False):
     yaml_file: Required[FileTypes]
     """The YAML configuration for the agent."""
 
-    agent_icon: FileTypes
+    agent_icon: Optional[FileTypes]

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.6.1 (2025-04-12)
+
+Full Changelog: [v1.6.0...v1.6.1](https://github.com/Svahnar/svahnar-python/compare/v1.6.0...v1.6.1)
+
+### Features
+
+* **api:** api update ([2e0720d](https://github.com/Svahnar/svahnar-python/commit/2e0720dfb06e045bb5b7698387132c4882a87e15))
+
+
+### Bug Fixes
+
+* **perf:** optimize some hot paths ([0ebdfe3](https://github.com/Svahnar/svahnar-python/commit/0ebdfe3e4cb33fff5d14267e5b794501ad5eb758))
+* **perf:** skip traversing types for NotGiven values ([5d8817e](https://github.com/Svahnar/svahnar-python/commit/5d8817e30393fb3361c42eea1c4f2945d6c0bb9b))
+
 ## 1.6.0 (2025-04-11)
 
 Full Changelog: [v1.5.0...v1.6.0](https://github.com/Svahnar/svahnar-python/compare/v1.5.0...v1.6.0)
