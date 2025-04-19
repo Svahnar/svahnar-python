@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.6.3 (2025-04-19)
+
+Full Changelog: [v1.6.2...v1.6.3](https://github.com/Svahnar/svahnar-python/compare/v1.6.2...v1.6.3)
+
+### Chores
+
+* **client:** minor internal fixes ([d83ad2f](https://github.com/Svahnar/svahnar-python/commit/d83ad2fa93729ce55ff468907a87d522497c8c9b))
+* **internal:** base client updates ([e0c7337](https://github.com/Svahnar/svahnar-python/commit/e0c733726325939b58083bc78d08a5585608e0f9))
+* **internal:** bump pyright version ([9d6b518](https://github.com/Svahnar/svahnar-python/commit/9d6b518f2540325ad2e94a35230aa6dbf25070be))
+* **internal:** update models test ([958a582](https://github.com/Svahnar/svahnar-python/commit/958a5824f9b472b093f2005f28c48209ffd06ac7))
+* **internal:** update pyright settings ([3f2cf4b](https://github.com/Svahnar/svahnar-python/commit/3f2cf4ba117b151e9455982d1346550a8678655c))
+
 ## 1.6.2 (2025-04-12)
 
 Full Changelog: [v1.6.1...v1.6.2](https://github.com/Svahnar/svahnar-python/compare/v1.6.1...v1.6.2)
