@@ -24,12 +24,9 @@ pip install svahnar
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from svahnar import Svahnar
 
-client = Svahnar(
-    api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
-)
+client = Svahnar()
 
 response = client.agents.run(
     agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
@@ -48,13 +45,10 @@ so that your API Key is not stored in source control.
 Simply import `AsyncSvahnar` instead of `Svahnar` and use `await` with each API call:
 
 ```python
-import os
 import asyncio
 from svahnar import AsyncSvahnar
 
-client = AsyncSvahnar(
-    api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
-)
+client = AsyncSvahnar()
 
 
 async def main() -> None:
