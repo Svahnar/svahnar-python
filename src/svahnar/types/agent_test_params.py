@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import Iterable, Optional
 from typing_extensions import Required, TypedDict
 
 from .._types import FileTypes
@@ -12,7 +12,10 @@ __all__ = ["AgentTestParams"]
 
 class AgentTestParams(TypedDict, total=False):
     message: Required[str]
-    """Message to send to the agent."""
+    """The message or command to be sent to the agent"""
+
+    agent_history: Optional[Iterable[object]]
+    """List of prior messages; defaults to empty list"""
 
     yaml_file: Optional[FileTypes]
     """YAML file to test the agent."""

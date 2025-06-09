@@ -32,7 +32,6 @@ response = client.agents.run(
     agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
     message="hi",
 )
-print(response.reply)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -56,7 +55,6 @@ async def main() -> None:
         agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
         message="hi",
     )
-    print(response.reply)
 
 
 asyncio.run(main())
@@ -232,7 +230,7 @@ response = client.agents.with_raw_response.run(
 print(response.headers.get('X-My-Header'))
 
 agent = response.parse()  # get the object that `agents.run()` would have returned
-print(agent.reply)
+print(agent)
 ```
 
 These methods return an [`APIResponse`](https://github.com/Svahnar/svahnar-python/tree/main/src/svahnar/_response.py) object.

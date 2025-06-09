@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from typing import Iterable, Optional
 from typing_extensions import Required, TypedDict
 
 __all__ = ["AgentRunParams"]
@@ -13,3 +14,6 @@ class AgentRunParams(TypedDict, total=False):
 
     message: Required[str]
     """The message or command to be sent to the agent"""
+
+    agent_history: Optional[Iterable[object]]
+    """JSON‐encoded list of prior messages; defaults to empty list"""
