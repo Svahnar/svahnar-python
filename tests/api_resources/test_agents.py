@@ -10,7 +10,6 @@ import pytest
 from svahnar import Svahnar, AsyncSvahnar
 from tests.utils import assert_matches_type
 from svahnar.types import (
-    AgentRunResponse,
     AgentValidateResponse,
 )
 
@@ -292,7 +291,17 @@ class TestAgents:
             agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
             message="hi",
         )
-        assert_matches_type(AgentRunResponse, agent, path=["response"])
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    def test_method_run_with_all_params(self, client: Svahnar) -> None:
+        agent = client.agents.run(
+            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+            message="hi",
+            agent_history=[{}],
+        )
+        assert_matches_type(object, agent, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -305,7 +314,7 @@ class TestAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(AgentRunResponse, agent, path=["response"])
+        assert_matches_type(object, agent, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -318,7 +327,7 @@ class TestAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(AgentRunResponse, agent, path=["response"])
+            assert_matches_type(object, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -335,6 +344,7 @@ class TestAgents:
     def test_method_test_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.test(
             message="message",
+            agent_history=[{}],
             yaml_file=b"raw file contents",
             yaml_string="yaml_string",
         )
@@ -725,7 +735,17 @@ class TestAsyncAgents:
             agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
             message="hi",
         )
-        assert_matches_type(AgentRunResponse, agent, path=["response"])
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip()
+    @parametrize
+    async def test_method_run_with_all_params(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.run(
+            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+            message="hi",
+            agent_history=[{}],
+        )
+        assert_matches_type(object, agent, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -738,7 +758,7 @@ class TestAsyncAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(AgentRunResponse, agent, path=["response"])
+        assert_matches_type(object, agent, path=["response"])
 
     @pytest.mark.skip()
     @parametrize
@@ -751,7 +771,7 @@ class TestAsyncAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(AgentRunResponse, agent, path=["response"])
+            assert_matches_type(object, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -768,6 +788,7 @@ class TestAsyncAgents:
     async def test_method_test_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.test(
             message="message",
+            agent_history=[{}],
             yaml_file=b"raw file contents",
             yaml_string="yaml_string",
         )

@@ -1,5 +1,44 @@
 # Changelog
 
+## 1.6.3 (2025-06-09)
+
+Full Changelog: [v1.6.2...v1.6.3](https://github.com/Svahnar/svahnar-python/compare/v1.6.2...v1.6.3)
+
+### Features
+
+* **api:** api update ([6335cda](https://github.com/Svahnar/svahnar-python/commit/6335cda983093170cbb13ffe83132903d4bddcb7))
+* **client:** add follow_redirects request option ([e43906c](https://github.com/Svahnar/svahnar-python/commit/e43906cd67d964f8b14cf9f351193b3922fa1179))
+
+
+### Bug Fixes
+
+* **docs/api:** remove references to nonexistent types ([61619ee](https://github.com/Svahnar/svahnar-python/commit/61619eebecc05dff352a1300e3eab6af44d37f5c))
+* **package:** support direct resource imports ([c2cf20d](https://github.com/Svahnar/svahnar-python/commit/c2cf20d11bd2e57175e8a4653bf3a9f61411a7b8))
+* **pydantic v1:** more robust ModelField.annotation check ([161c228](https://github.com/Svahnar/svahnar-python/commit/161c228d12366f0be369cd7889a4f74ae2952f73))
+
+
+### Chores
+
+* broadly detect json family of content-type headers ([381bbec](https://github.com/Svahnar/svahnar-python/commit/381bbecdcb3c9627ef571d8c459de7c659fde4b2))
+* **ci:** add timeout thresholds for CI jobs ([fe147ba](https://github.com/Svahnar/svahnar-python/commit/fe147ba121b2eec5939d52bb955dac348beddcef))
+* **ci:** fix installation instructions ([6352602](https://github.com/Svahnar/svahnar-python/commit/6352602b66b2cb6da0fd5f5626b7cefc6e9be391))
+* **ci:** only use depot for staging repos ([406c2a0](https://github.com/Svahnar/svahnar-python/commit/406c2a0b8750150c0db83b36eb3305a183ed25e1))
+* **ci:** upload sdks to package manager ([1e8ccc0](https://github.com/Svahnar/svahnar-python/commit/1e8ccc07542134dcc808d54b9493e93a781ec48f))
+* **client:** minor internal fixes ([d83ad2f](https://github.com/Svahnar/svahnar-python/commit/d83ad2fa93729ce55ff468907a87d522497c8c9b))
+* configure new SDK language ([73d6aee](https://github.com/Svahnar/svahnar-python/commit/73d6aeec37b19d70a60a7803b6f192b8d4c4c037))
+* **docs:** grammar improvements ([ca7f1c9](https://github.com/Svahnar/svahnar-python/commit/ca7f1c992fc5ae1ca723a5a0f0829a6752e4dc40))
+* **docs:** remove reference to rye shell ([572d23f](https://github.com/Svahnar/svahnar-python/commit/572d23f0e63cbe43d5cb447de9d7a5462271af58))
+* **internal:** avoid errors for isinstance checks on proxies ([898ef79](https://github.com/Svahnar/svahnar-python/commit/898ef797d2847d9fab76d3cfb866b84b6b7b40e0))
+* **internal:** base client updates ([e0c7337](https://github.com/Svahnar/svahnar-python/commit/e0c733726325939b58083bc78d08a5585608e0f9))
+* **internal:** bump pyright version ([9d6b518](https://github.com/Svahnar/svahnar-python/commit/9d6b518f2540325ad2e94a35230aa6dbf25070be))
+* **internal:** codegen related update ([033da64](https://github.com/Svahnar/svahnar-python/commit/033da64c34f3049a394ba3c16f2d255c37f97246))
+* **internal:** codegen related update ([ef83211](https://github.com/Svahnar/svahnar-python/commit/ef83211bde2560432cdc6ceec6849b3f88e87dfa))
+* **internal:** fix list file params ([c281500](https://github.com/Svahnar/svahnar-python/commit/c281500a94291134c5b62d312e3c04b5487a0ac6))
+* **internal:** import reformatting ([513b53e](https://github.com/Svahnar/svahnar-python/commit/513b53e41b4f0de5241165f88797a323d55962d5))
+* **internal:** refactor retries to not use recursion ([5a8d385](https://github.com/Svahnar/svahnar-python/commit/5a8d38530b4ca21c7e6787d8421ca721053237f8))
+* **internal:** update models test ([958a582](https://github.com/Svahnar/svahnar-python/commit/958a5824f9b472b093f2005f28c48209ffd06ac7))
+* **internal:** update pyright settings ([3f2cf4b](https://github.com/Svahnar/svahnar-python/commit/3f2cf4ba117b151e9455982d1346550a8678655c))
+
 ## 1.6.2 (2025-04-12)
 
 Full Changelog: [v1.6.1...v1.6.2](https://github.com/Svahnar/svahnar-python/compare/v1.6.1...v1.6.2)

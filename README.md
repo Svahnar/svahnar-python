@@ -24,18 +24,14 @@ pip install svahnar
 The full API of this library can be found in [api.md](api.md).
 
 ```python
-import os
 from svahnar import Svahnar
 
-client = Svahnar(
-    api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
-)
+client = Svahnar()
 
 response = client.agents.run(
     agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
     message="hi",
 )
-print(response.reply)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -48,13 +44,10 @@ so that your API Key is not stored in source control.
 Simply import `AsyncSvahnar` instead of `Svahnar` and use `await` with each API call:
 
 ```python
-import os
 import asyncio
 from svahnar import AsyncSvahnar
 
-client = AsyncSvahnar(
-    api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
-)
+client = AsyncSvahnar()
 
 
 async def main() -> None:
@@ -62,7 +55,6 @@ async def main() -> None:
         agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
         message="hi",
     )
-    print(response.reply)
 
 
 asyncio.run(main())
@@ -238,7 +230,7 @@ response = client.agents.with_raw_response.run(
 print(response.headers.get('X-My-Header'))
 
 agent = response.parse()  # get the object that `agents.run()` would have returned
-print(agent.reply)
+print(agent)
 ```
 
 These methods return an [`APIResponse`](https://github.com/Svahnar/svahnar-python/tree/main/src/svahnar/_response.py) object.
