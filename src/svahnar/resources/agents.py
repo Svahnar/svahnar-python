@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Mapping, Optional, cast
+from typing import List, Mapping, Iterable, Optional, cast
 
 import httpx
 
@@ -30,7 +30,6 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.agent_run_response import AgentRunResponse
 from ..types.agent_validate_response import AgentValidateResponse
 
 __all__ = ["AgentsResource", "AsyncAgentsResource"]
@@ -346,13 +345,14 @@ class AgentsResource(SyncAPIResource):
         *,
         agent_id: str,
         message: str,
+        agent_history: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AgentRunResponse:
+    ) -> object:
         """
         Run an agent by sending the provided command to the agent service and returns a
         detailed nested response containing message, logs and metadata.
@@ -361,6 +361,8 @@ class AgentsResource(SyncAPIResource):
           agent_id: Unique identifier for the agent
 
           message: The message or command to be sent to the agent
+
+          agent_history: JSON‐encoded list of prior messages; defaults to empty list
 
           extra_headers: Send extra headers
 
@@ -376,19 +378,21 @@ class AgentsResource(SyncAPIResource):
                 {
                     "agent_id": agent_id,
                     "message": message,
+                    "agent_history": agent_history,
                 },
                 agent_run_params.AgentRunParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AgentRunResponse,
+            cast_to=object,
         )
 
     def test(
         self,
         *,
         message: str,
+        agent_history: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
         yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -399,10 +403,12 @@ class AgentsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
         """
-        Run Agent
+        Test Agent
 
         Args:
-          message: Message to send to the agent.
+          message: The message or command to be sent to the agent
+
+          agent_history: List of prior messages; defaults to empty list
 
           yaml_file: YAML file to test the agent.
 
@@ -419,6 +425,7 @@ class AgentsResource(SyncAPIResource):
         body = deepcopy_minimal(
             {
                 "message": message,
+                "agent_history": agent_history,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
             }
@@ -854,13 +861,14 @@ class AsyncAgentsResource(AsyncAPIResource):
         *,
         agent_id: str,
         message: str,
+        agent_history: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-    ) -> AgentRunResponse:
+    ) -> object:
         """
         Run an agent by sending the provided command to the agent service and returns a
         detailed nested response containing message, logs and metadata.
@@ -869,6 +877,8 @@ class AsyncAgentsResource(AsyncAPIResource):
           agent_id: Unique identifier for the agent
 
           message: The message or command to be sent to the agent
+
+          agent_history: JSON‐encoded list of prior messages; defaults to empty list
 
           extra_headers: Send extra headers
 
@@ -884,19 +894,21 @@ class AsyncAgentsResource(AsyncAPIResource):
                 {
                     "agent_id": agent_id,
                     "message": message,
+                    "agent_history": agent_history,
                 },
                 agent_run_params.AgentRunParams,
             ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AgentRunResponse,
+            cast_to=object,
         )
 
     async def test(
         self,
         *,
         message: str,
+        agent_history: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
         yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
         yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -907,10 +919,12 @@ class AsyncAgentsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
     ) -> object:
         """
-        Run Agent
+        Test Agent
 
         Args:
-          message: Message to send to the agent.
+          message: The message or command to be sent to the agent
+
+          agent_history: List of prior messages; defaults to empty list
 
           yaml_file: YAML file to test the agent.
 
@@ -927,6 +941,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         body = deepcopy_minimal(
             {
                 "message": message,
+                "agent_history": agent_history,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
             }
