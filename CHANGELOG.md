@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.6.4 (2025-06-13)
+
+Full Changelog: [v1.6.3...v1.6.4](https://github.com/Svahnar/svahnar-python/compare/v1.6.3...v1.6.4)
+
+### Bug Fixes
+
+* **client:** correctly parse binary response | stream ([4437ed8](https://github.com/Svahnar/svahnar-python/commit/4437ed80248c7aa7ff1a46eda78e7b817df9f2c3))
+
+
+### Chores
+
+* **tests:** run tests in parallel ([d8ace3e](https://github.com/Svahnar/svahnar-python/commit/d8ace3e3a83fdeebeb3211177abbcf72a061de6c))
+
 ## 1.6.3 (2025-06-09)
 
 Full Changelog: [v1.6.2...v1.6.3](https://github.com/Svahnar/svahnar-python/compare/v1.6.2...v1.6.3)
