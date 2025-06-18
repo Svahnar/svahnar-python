@@ -23,9 +23,7 @@ from pydantic import ValidationError
 
 from svahnar import Svahnar, AsyncSvahnar, APIResponseValidationError
 from svahnar._types import Omit
-from svahnar._utils import maybe_transform
 from svahnar._models import BaseModel, FinalRequestOptions
-from svahnar._constants import RAW_RESPONSE_HEADER
 from svahnar._exceptions import APIStatusError, APITimeoutError, APIResponseValidationError
 from svahnar._base_client import (
     DEFAULT_TIMEOUT,
@@ -35,7 +33,6 @@ from svahnar._base_client import (
     DefaultAsyncHttpxClient,
     make_request_options,
 )
-from svahnar.types.agent_run_params import AgentRunParams
 
 from .utils import update_env
 
@@ -722,42 +719,25 @@ class TestSvahnar:
 
     @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Svahnar) -> None:
         respx_mock.post("/v1/agents/run").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            self.client.post(
-                "/v1/agents/run",
-                body=cast(
-                    object,
-                    maybe_transform(
-                        dict(agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"), AgentRunParams
-                    ),
-                ),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
+            client.agents.with_streaming_response.run(
+                agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"
+            ).__enter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Svahnar) -> None:
         respx_mock.post("/v1/agents/run").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            self.client.post(
-                "/v1/agents/run",
-                body=cast(
-                    object,
-                    maybe_transform(
-                        dict(agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"), AgentRunParams
-                    ),
-                ),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
-
+            client.agents.with_streaming_response.run(
+                agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"
+            ).__enter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1574,42 +1554,27 @@ class TestAsyncSvahnar:
 
     @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    async def test_retrying_timeout_errors_doesnt_leak(
+        self, respx_mock: MockRouter, async_client: AsyncSvahnar
+    ) -> None:
         respx_mock.post("/v1/agents/run").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await self.client.post(
-                "/v1/agents/run",
-                body=cast(
-                    object,
-                    maybe_transform(
-                        dict(agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"), AgentRunParams
-                    ),
-                ),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
+            await async_client.agents.with_streaming_response.run(
+                agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"
+            ).__aenter__()
 
         assert _get_open_connections(self.client) == 0
 
     @mock.patch("svahnar._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter) -> None:
+    async def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, async_client: AsyncSvahnar) -> None:
         respx_mock.post("/v1/agents/run").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await self.client.post(
-                "/v1/agents/run",
-                body=cast(
-                    object,
-                    maybe_transform(
-                        dict(agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"), AgentRunParams
-                    ),
-                ),
-                cast_to=httpx.Response,
-                options={"headers": {RAW_RESPONSE_HEADER: "stream"}},
-            )
-
+            await async_client.agents.with_streaming_response.run(
+                agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"
+            ).__aenter__()
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
