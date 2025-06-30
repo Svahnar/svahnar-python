@@ -1,5 +1,37 @@
 # Changelog
 
+## 1.7.0 (2025-06-30)
+
+Full Changelog: [v1.6.3...v1.7.0](https://github.com/Svahnar/svahnar-python/compare/v1.6.3...v1.7.0)
+
+### Features
+
+* **client:** add support for aiohttp ([7b5d8c2](https://github.com/Svahnar/svahnar-python/commit/7b5d8c2f67d333ec155abac68971f447063d15a6))
+
+
+### Bug Fixes
+
+* **ci:** correct conditional ([b1a0049](https://github.com/Svahnar/svahnar-python/commit/b1a0049ae01ec1ec24c5b18aa4d49ae869a8cc2c))
+* **ci:** release-doctor — report correct token name ([b662a9d](https://github.com/Svahnar/svahnar-python/commit/b662a9db231d782441b7f1218c595e1ba3f6357c))
+* **client:** correctly parse binary response | stream ([4437ed8](https://github.com/Svahnar/svahnar-python/commit/4437ed80248c7aa7ff1a46eda78e7b817df9f2c3))
+* **tests:** fix: tests which call HTTP endpoints directly with the example parameters ([8b013a9](https://github.com/Svahnar/svahnar-python/commit/8b013a9b52dffe9756841e60dad6e135cfd4cff8))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([19c1179](https://github.com/Svahnar/svahnar-python/commit/19c1179c2bfa2d1a74020594beedd6f8e608b95d))
+* **ci:** only run for pushes and fork pull requests ([72e0f10](https://github.com/Svahnar/svahnar-python/commit/72e0f102b3d1e52922c2edea5d1415811f95c894))
+* **internal:** update conftest.py ([9eeb2eb](https://github.com/Svahnar/svahnar-python/commit/9eeb2ebae13d02ad2a3f6874032e0f80b65c5ab4))
+* **readme:** update badges ([8609971](https://github.com/Svahnar/svahnar-python/commit/8609971b1fa5fe41e628aa3f36af109d1809d504))
+* **tests:** add tests for httpx client instantiation & proxies ([eedd563](https://github.com/Svahnar/svahnar-python/commit/eedd5635cb52f6e46511f4507be71b4a8b19ff0c))
+* **tests:** run tests in parallel ([d8ace3e](https://github.com/Svahnar/svahnar-python/commit/d8ace3e3a83fdeebeb3211177abbcf72a061de6c))
+* **tests:** skip some failing tests on the latest python versions ([8541fdc](https://github.com/Svahnar/svahnar-python/commit/8541fdcd5b492577c4440cee28b006644befa591))
+
+
+### Documentation
+
+* **client:** fix httpx.Timeout documentation reference ([874610f](https://github.com/Svahnar/svahnar-python/commit/874610f150c9250943ed3e2a58d3f396e2ba0f60))
+
 ## 1.6.3 (2025-06-09)
 
 Full Changelog: [v1.6.2...v1.6.3](https://github.com/Svahnar/svahnar-python/compare/v1.6.2...v1.6.3)
