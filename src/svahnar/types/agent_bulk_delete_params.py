@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from typing import List
 from typing_extensions import Required, TypedDict
+
+from .._types import SequenceNotStr
 
 __all__ = ["AgentBulkDeleteParams"]
 
 
 class AgentBulkDeleteParams(TypedDict, total=False):
-    agent_ids: Required[List[str]]
+    agent_ids: Required[SequenceNotStr[str]]
     """The list of agent IDs to delete"""

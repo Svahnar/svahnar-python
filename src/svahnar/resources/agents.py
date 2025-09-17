@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Mapping, Iterable, Optional, cast
+from typing import Mapping, Iterable, Optional, cast
 
 import httpx
 
@@ -19,7 +19,7 @@ from ..types import (
     agent_reconfigure_params,
     agent_update_info_params,
 )
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes, SequenceNotStr
 from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -228,7 +228,7 @@ class AgentsResource(SyncAPIResource):
     def bulk_delete(
         self,
         *,
-        agent_ids: List[str],
+        agent_ids: SequenceNotStr[str],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -744,7 +744,7 @@ class AsyncAgentsResource(AsyncAPIResource):
     async def bulk_delete(
         self,
         *,
-        agent_ids: List[str],
+        agent_ids: SequenceNotStr[str],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
