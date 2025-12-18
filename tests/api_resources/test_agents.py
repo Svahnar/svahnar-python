@@ -249,6 +249,53 @@ class TestAgents:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
+    def test_method_generate_chat_history(self, client: Svahnar) -> None:
+        agent = client.agents.generate_chat_history(
+            query="query",
+            response="string",
+        )
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_generate_chat_history_with_all_params(self, client: Svahnar) -> None:
+        agent = client.agents.generate_chat_history(
+            query="query",
+            response="string",
+            chat_history=[{}],
+        )
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_generate_chat_history(self, client: Svahnar) -> None:
+        response = client.agents.with_raw_response.generate_chat_history(
+            query="query",
+            response="string",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        agent = response.parse()
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_generate_chat_history(self, client: Svahnar) -> None:
+        with client.agents.with_streaming_response.generate_chat_history(
+            query="query",
+            response="string",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            agent = response.parse()
+            assert_matches_type(object, agent, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
     def test_method_reconfigure(self, client: Svahnar) -> None:
         agent = client.agents.reconfigure(
             agent_id="agent_id",
@@ -684,6 +731,53 @@ class TestAsyncAgents:
     async def test_streaming_response_download(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.download(
             agent_id="agent_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            agent = await response.parse()
+            assert_matches_type(object, agent, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_generate_chat_history(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.generate_chat_history(
+            query="query",
+            response="string",
+        )
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_generate_chat_history_with_all_params(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.generate_chat_history(
+            query="query",
+            response="string",
+            chat_history=[{}],
+        )
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_generate_chat_history(self, async_client: AsyncSvahnar) -> None:
+        response = await async_client.agents.with_raw_response.generate_chat_history(
+            query="query",
+            response="string",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        agent = await response.parse()
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_generate_chat_history(self, async_client: AsyncSvahnar) -> None:
+        async with async_client.agents.with_streaming_response.generate_chat_history(
+            query="query",
+            response="string",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"

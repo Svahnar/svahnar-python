@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Mapping, Iterable, Optional, cast
+from typing import Union, Mapping, Iterable, Optional, cast
 
 import httpx
 
@@ -18,6 +18,7 @@ from ..types import (
     agent_bulk_delete_params,
     agent_reconfigure_params,
     agent_update_info_params,
+    agent_generate_chat_history_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
@@ -289,6 +290,53 @@ class AgentsResource(SyncAPIResource):
         return self._post(
             "/v1/agents/download-agent",
             body=maybe_transform({"agent_id": agent_id}, agent_download_params.AgentDownloadParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
+    def generate_chat_history(
+        self,
+        *,
+        query: str,
+        response: Union[str, object],
+        chat_history: Optional[Iterable[object]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Generate Chat History
+
+        Args:
+          query: The user's query
+
+          response: The raw response from the agent service
+
+          chat_history: Existing chat history
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/agents/generate-chat-history",
+            body=maybe_transform(
+                {
+                    "query": query,
+                    "response": response,
+                    "chat_history": chat_history,
+                },
+                agent_generate_chat_history_params.AgentGenerateChatHistoryParams,
+            ),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -811,6 +859,53 @@ class AsyncAgentsResource(AsyncAPIResource):
             cast_to=object,
         )
 
+    async def generate_chat_history(
+        self,
+        *,
+        query: str,
+        response: Union[str, object],
+        chat_history: Optional[Iterable[object]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Generate Chat History
+
+        Args:
+          query: The user's query
+
+          response: The raw response from the agent service
+
+          chat_history: Existing chat history
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/agents/generate-chat-history",
+            body=await async_maybe_transform(
+                {
+                    "query": query,
+                    "response": response,
+                    "chat_history": chat_history,
+                },
+                agent_generate_chat_history_params.AgentGenerateChatHistoryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
     async def reconfigure(
         self,
         *,
@@ -1089,6 +1184,9 @@ class AgentsResourceWithRawResponse:
         self.download = to_raw_response_wrapper(
             agents.download,
         )
+        self.generate_chat_history = to_raw_response_wrapper(
+            agents.generate_chat_history,
+        )
         self.reconfigure = to_raw_response_wrapper(
             agents.reconfigure,
         )
@@ -1127,6 +1225,9 @@ class AsyncAgentsResourceWithRawResponse:
         )
         self.download = async_to_raw_response_wrapper(
             agents.download,
+        )
+        self.generate_chat_history = async_to_raw_response_wrapper(
+            agents.generate_chat_history,
         )
         self.reconfigure = async_to_raw_response_wrapper(
             agents.reconfigure,
@@ -1167,6 +1268,9 @@ class AgentsResourceWithStreamingResponse:
         self.download = to_streamed_response_wrapper(
             agents.download,
         )
+        self.generate_chat_history = to_streamed_response_wrapper(
+            agents.generate_chat_history,
+        )
         self.reconfigure = to_streamed_response_wrapper(
             agents.reconfigure,
         )
@@ -1205,6 +1309,9 @@ class AsyncAgentsResourceWithStreamingResponse:
         )
         self.download = async_to_streamed_response_wrapper(
             agents.download,
+        )
+        self.generate_chat_history = async_to_streamed_response_wrapper(
+            agents.generate_chat_history,
         )
         self.reconfigure = async_to_streamed_response_wrapper(
             agents.reconfigure,

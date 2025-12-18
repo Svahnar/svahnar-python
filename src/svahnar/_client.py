@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Mapping
+from typing import TYPE_CHECKING, Any, Mapping
 from typing_extensions import Self, override
 
 import httpx
@@ -21,8 +21,8 @@ from ._types import (
     not_given,
 )
 from ._utils import is_given, get_async_library
+from ._compat import cached_property
 from ._version import __version__
-from .resources import agents
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import APIStatusError
 from ._base_client import (
@@ -31,14 +31,15 @@ from ._base_client import (
     AsyncAPIClient,
 )
 
+if TYPE_CHECKING:
+    from .resources import auth, agents
+    from .resources.auth import AuthResource, AsyncAuthResource
+    from .resources.agents import AgentsResource, AsyncAgentsResource
+
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Svahnar", "AsyncSvahnar", "Client", "AsyncClient"]
 
 
 class Svahnar(SyncAPIClient):
-    agents: agents.AgentsResource
-    with_raw_response: SvahnarWithRawResponse
-    with_streaming_response: SvahnarWithStreamedResponse
-
     # client options
     api_key: str | None
 
@@ -89,9 +90,25 @@ class Svahnar(SyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.agents = agents.AgentsResource(self)
-        self.with_raw_response = SvahnarWithRawResponse(self)
-        self.with_streaming_response = SvahnarWithStreamedResponse(self)
+    @cached_property
+    def agents(self) -> AgentsResource:
+        from .resources.agents import AgentsResource
+
+        return AgentsResource(self)
+
+    @cached_property
+    def auth(self) -> AuthResource:
+        from .resources.auth import AuthResource
+
+        return AuthResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> SvahnarWithRawResponse:
+        return SvahnarWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> SvahnarWithStreamedResponse:
+        return SvahnarWithStreamedResponse(self)
 
     @property
     @override
@@ -212,10 +229,6 @@ class Svahnar(SyncAPIClient):
 
 
 class AsyncSvahnar(AsyncAPIClient):
-    agents: agents.AsyncAgentsResource
-    with_raw_response: AsyncSvahnarWithRawResponse
-    with_streaming_response: AsyncSvahnarWithStreamedResponse
-
     # client options
     api_key: str | None
 
@@ -266,9 +279,25 @@ class AsyncSvahnar(AsyncAPIClient):
             _strict_response_validation=_strict_response_validation,
         )
 
-        self.agents = agents.AsyncAgentsResource(self)
-        self.with_raw_response = AsyncSvahnarWithRawResponse(self)
-        self.with_streaming_response = AsyncSvahnarWithStreamedResponse(self)
+    @cached_property
+    def agents(self) -> AsyncAgentsResource:
+        from .resources.agents import AsyncAgentsResource
+
+        return AsyncAgentsResource(self)
+
+    @cached_property
+    def auth(self) -> AsyncAuthResource:
+        from .resources.auth import AsyncAuthResource
+
+        return AsyncAuthResource(self)
+
+    @cached_property
+    def with_raw_response(self) -> AsyncSvahnarWithRawResponse:
+        return AsyncSvahnarWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncSvahnarWithStreamedResponse:
+        return AsyncSvahnarWithStreamedResponse(self)
 
     @property
     @override
@@ -389,23 +418,79 @@ class AsyncSvahnar(AsyncAPIClient):
 
 
 class SvahnarWithRawResponse:
+    _client: Svahnar
+
     def __init__(self, client: Svahnar) -> None:
-        self.agents = agents.AgentsResourceWithRawResponse(client.agents)
+        self._client = client
+
+    @cached_property
+    def agents(self) -> agents.AgentsResourceWithRawResponse:
+        from .resources.agents import AgentsResourceWithRawResponse
+
+        return AgentsResourceWithRawResponse(self._client.agents)
+
+    @cached_property
+    def auth(self) -> auth.AuthResourceWithRawResponse:
+        from .resources.auth import AuthResourceWithRawResponse
+
+        return AuthResourceWithRawResponse(self._client.auth)
 
 
 class AsyncSvahnarWithRawResponse:
+    _client: AsyncSvahnar
+
     def __init__(self, client: AsyncSvahnar) -> None:
-        self.agents = agents.AsyncAgentsResourceWithRawResponse(client.agents)
+        self._client = client
+
+    @cached_property
+    def agents(self) -> agents.AsyncAgentsResourceWithRawResponse:
+        from .resources.agents import AsyncAgentsResourceWithRawResponse
+
+        return AsyncAgentsResourceWithRawResponse(self._client.agents)
+
+    @cached_property
+    def auth(self) -> auth.AsyncAuthResourceWithRawResponse:
+        from .resources.auth import AsyncAuthResourceWithRawResponse
+
+        return AsyncAuthResourceWithRawResponse(self._client.auth)
 
 
 class SvahnarWithStreamedResponse:
+    _client: Svahnar
+
     def __init__(self, client: Svahnar) -> None:
-        self.agents = agents.AgentsResourceWithStreamingResponse(client.agents)
+        self._client = client
+
+    @cached_property
+    def agents(self) -> agents.AgentsResourceWithStreamingResponse:
+        from .resources.agents import AgentsResourceWithStreamingResponse
+
+        return AgentsResourceWithStreamingResponse(self._client.agents)
+
+    @cached_property
+    def auth(self) -> auth.AuthResourceWithStreamingResponse:
+        from .resources.auth import AuthResourceWithStreamingResponse
+
+        return AuthResourceWithStreamingResponse(self._client.auth)
 
 
 class AsyncSvahnarWithStreamedResponse:
+    _client: AsyncSvahnar
+
     def __init__(self, client: AsyncSvahnar) -> None:
-        self.agents = agents.AsyncAgentsResourceWithStreamingResponse(client.agents)
+        self._client = client
+
+    @cached_property
+    def agents(self) -> agents.AsyncAgentsResourceWithStreamingResponse:
+        from .resources.agents import AsyncAgentsResourceWithStreamingResponse
+
+        return AsyncAgentsResourceWithStreamingResponse(self._client.agents)
+
+    @cached_property
+    def auth(self) -> auth.AsyncAuthResourceWithStreamingResponse:
+        from .resources.auth import AsyncAuthResourceWithStreamingResponse
+
+        return AsyncAuthResourceWithStreamingResponse(self._client.auth)
 
 
 Client = Svahnar
