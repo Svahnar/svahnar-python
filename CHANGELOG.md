@@ -1,5 +1,61 @@
 # Changelog
 
+## 1.7.0 (2025-12-18)
+
+Full Changelog: [v1.6.3...v1.7.0](https://github.com/Svahnar/svahnar-python/compare/v1.6.3...v1.7.0)
+
+### Features
+
+* **api:** api update ([9c66147](https://github.com/Svahnar/svahnar-python/commit/9c6614720c5deb3311dc113d12813ec2046f9b41))
+* **api:** api update ([1ab6a45](https://github.com/Svahnar/svahnar-python/commit/1ab6a45d89df9dc3a2eef27a05bd7775b52482f6))
+* **api:** api update ([82bd402](https://github.com/Svahnar/svahnar-python/commit/82bd402fca5bca23e085c86b7781dab7868f74f4))
+* **api:** api update ([dce0896](https://github.com/Svahnar/svahnar-python/commit/dce08969c2d6be7eb1f0f9af35181e9b08ce3bf5))
+* **api:** api update ([c9970df](https://github.com/Svahnar/svahnar-python/commit/c9970df554a45973d5e9f33672940097a905a73d))
+* **api:** api update ([ee5e19f](https://github.com/Svahnar/svahnar-python/commit/ee5e19f93de383aec42faef34921743fcc88fe77))
+* **api:** api update ([10f0a1b](https://github.com/Svahnar/svahnar-python/commit/10f0a1b69f686cd59cb7efcef5a150970e174406))
+* **api:** api update ([eda1d26](https://github.com/Svahnar/svahnar-python/commit/eda1d26b56f3a2ec656d0ff5190b5e2791ec21e6))
+* **api:** api update ([07920c8](https://github.com/Svahnar/svahnar-python/commit/07920c8d3c4ed29b626e7eb9f3208b7c878d1675))
+* **client:** add support for aiohttp ([7b5d8c2](https://github.com/Svahnar/svahnar-python/commit/7b5d8c2f67d333ec155abac68971f447063d15a6))
+* **client:** support file upload requests ([36de12b](https://github.com/Svahnar/svahnar-python/commit/36de12b25dde49185bc2425eaec7dfd6a8e3c354))
+
+
+### Bug Fixes
+
+* **ci:** correct conditional ([b1a0049](https://github.com/Svahnar/svahnar-python/commit/b1a0049ae01ec1ec24c5b18aa4d49ae869a8cc2c))
+* **ci:** release-doctor — report correct token name ([b662a9d](https://github.com/Svahnar/svahnar-python/commit/b662a9db231d782441b7f1218c595e1ba3f6357c))
+* **client:** correctly parse binary response | stream ([4437ed8](https://github.com/Svahnar/svahnar-python/commit/4437ed80248c7aa7ff1a46eda78e7b817df9f2c3))
+* **client:** don't send Content-Type header on GET requests ([d878aa1](https://github.com/Svahnar/svahnar-python/commit/d878aa196a7e87b3b4075d16e6197e120250ed67))
+* **parsing:** correctly handle nested discriminated unions ([4607e47](https://github.com/Svahnar/svahnar-python/commit/4607e47dc035338fde541b5c4b0fcffc314f9751))
+* **parsing:** ignore empty metadata ([e2e5df9](https://github.com/Svahnar/svahnar-python/commit/e2e5df9f0239c4147e2d2153f8585e29717bec25))
+* **parsing:** parse extra field types ([6008bd2](https://github.com/Svahnar/svahnar-python/commit/6008bd21eaba27b4b46065549b0c5a385c231163))
+* **tests:** fix: tests which call HTTP endpoints directly with the example parameters ([8b013a9](https://github.com/Svahnar/svahnar-python/commit/8b013a9b52dffe9756841e60dad6e135cfd4cff8))
+
+
+### Chores
+
+* **ci:** change upload type ([78da907](https://github.com/Svahnar/svahnar-python/commit/78da90733f3b5a3b622664a1cd0bd959d9a191fb))
+* **ci:** enable for pull requests ([19c1179](https://github.com/Svahnar/svahnar-python/commit/19c1179c2bfa2d1a74020594beedd6f8e608b95d))
+* **ci:** only run for pushes and fork pull requests ([72e0f10](https://github.com/Svahnar/svahnar-python/commit/72e0f102b3d1e52922c2edea5d1415811f95c894))
+* **internal:** add missing files argument to base client ([d3719c3](https://github.com/Svahnar/svahnar-python/commit/d3719c3ad3808a0d3ef6a9bc7817a67ada658861))
+* **internal:** bump pinned h11 dep ([c21a35f](https://github.com/Svahnar/svahnar-python/commit/c21a35fe79f34d0fac4efe5ac3abfad877d5f37a))
+* **internal:** codegen related update ([b312610](https://github.com/Svahnar/svahnar-python/commit/b31261080db71fe3f5ad22ec69b5fb065b9c6f82))
+* **internal:** codegen related update ([8e4bd54](https://github.com/Svahnar/svahnar-python/commit/8e4bd544890576b35d7b320bdecccd8d882514ef))
+* **internal:** codegen related update ([661b856](https://github.com/Svahnar/svahnar-python/commit/661b85675816fa1e31ec6bbda5aa33576a042498))
+* **internal:** fix ruff target version ([1955b62](https://github.com/Svahnar/svahnar-python/commit/1955b62294d3884c30bfc4ce8e0fb0292ad8cf6d))
+* **internal:** update conftest.py ([9eeb2eb](https://github.com/Svahnar/svahnar-python/commit/9eeb2ebae13d02ad2a3f6874032e0f80b65c5ab4))
+* **package:** mark python 3.13 as supported ([a67f92a](https://github.com/Svahnar/svahnar-python/commit/a67f92afb6c7641655fecbd8701ea51a879f97a5))
+* **project:** add settings file for vscode ([b869d29](https://github.com/Svahnar/svahnar-python/commit/b869d2944c019d2757b5b6b9104316bf925723f7))
+* **readme:** fix version rendering on pypi ([c9cbe37](https://github.com/Svahnar/svahnar-python/commit/c9cbe377c666cf4ffabe95bc462be0fdb82b1a1a))
+* **readme:** update badges ([8609971](https://github.com/Svahnar/svahnar-python/commit/8609971b1fa5fe41e628aa3f36af109d1809d504))
+* **tests:** add tests for httpx client instantiation & proxies ([eedd563](https://github.com/Svahnar/svahnar-python/commit/eedd5635cb52f6e46511f4507be71b4a8b19ff0c))
+* **tests:** run tests in parallel ([d8ace3e](https://github.com/Svahnar/svahnar-python/commit/d8ace3e3a83fdeebeb3211177abbcf72a061de6c))
+* **tests:** skip some failing tests on the latest python versions ([8541fdc](https://github.com/Svahnar/svahnar-python/commit/8541fdcd5b492577c4440cee28b006644befa591))
+
+
+### Documentation
+
+* **client:** fix httpx.Timeout documentation reference ([874610f](https://github.com/Svahnar/svahnar-python/commit/874610f150c9250943ed3e2a58d3f396e2ba0f60))
+
 ## 1.6.3 (2025-06-09)
 
 Full Changelog: [v1.6.2...v1.6.3](https://github.com/Svahnar/svahnar-python/compare/v1.6.2...v1.6.3)

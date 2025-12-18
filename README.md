@@ -1,8 +1,9 @@
 # Svahnar Python API library
 
-[![PyPI version](https://img.shields.io/pypi/v/svahnar.svg)](https://pypi.org/project/svahnar/)
+<!-- prettier-ignore -->
+[![PyPI version](https://img.shields.io/pypi/v/svahnar.svg?label=pypi%20(stable))](https://pypi.org/project/svahnar/)
 
-The Svahnar Python library provides convenient access to the Svahnar REST API from any Python 3.8+
+The Svahnar Python library provides convenient access to the Svahnar REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -61,6 +62,38 @@ asyncio.run(main())
 ```
 
 Functionality between the synchronous and asynchronous clients is otherwise identical.
+
+### With aiohttp
+
+By default, the async client uses `httpx` for HTTP requests. However, for improved concurrency performance you may also use `aiohttp` as the HTTP backend.
+
+You can enable this by installing `aiohttp`:
+
+```sh
+# install from PyPI
+pip install svahnar[aiohttp]
+```
+
+Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
+
+```python
+import asyncio
+from svahnar import DefaultAioHttpClient
+from svahnar import AsyncSvahnar
+
+
+async def main() -> None:
+    async with AsyncSvahnar(
+        http_client=DefaultAioHttpClient(),
+    ) as client:
+        response = await client.agents.run(
+            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
+            message="hi",
+        )
+
+
+asyncio.run(main())
+```
 
 ## Using types
 
@@ -162,7 +195,7 @@ client.with_options(max_retries=5).agents.run(
 ### Timeouts
 
 By default requests time out after 1 minute. You can configure this with a `timeout` option,
-which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/#fine-tuning-the-configuration) object:
+which accepts a float or an [`httpx.Timeout`](https://www.python-httpx.org/advanced/timeouts/#fine-tuning-the-configuration) object:
 
 ```python
 from svahnar import Svahnar
@@ -357,7 +390,7 @@ print(svahnar.__version__)
 
 ## Requirements
 
-Python 3.8 or higher.
+Python 3.9 or higher.
 
 ## Contributing
 

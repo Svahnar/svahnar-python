@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Mapping, Iterable, Optional, cast
+from typing import Union, Mapping, Iterable, Optional, cast
 
 import httpx
 
@@ -18,8 +18,9 @@ from ..types import (
     agent_bulk_delete_params,
     agent_reconfigure_params,
     agent_update_info_params,
+    agent_generate_chat_history_params,
 )
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven, FileTypes
+from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -62,13 +63,13 @@ class AgentsResource(SyncAPIResource):
         description: str,
         name: str,
         yaml_file: FileTypes,
-        agent_icon: Optional[FileTypes] | NotGiven = NOT_GIVEN,
+        agent_icon: Optional[FileTypes] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Create Agent
 
@@ -124,7 +125,7 @@ class AgentsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Fetch agent details by agent_id and organization ID, and return the details in a
@@ -151,14 +152,14 @@ class AgentsResource(SyncAPIResource):
     def list(
         self,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        offset: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         List all agents for the organization and user, with optional pagination.
@@ -196,7 +197,7 @@ class AgentsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Delete an agent by its ID if it belongs to the same organization.
 
@@ -228,13 +229,13 @@ class AgentsResource(SyncAPIResource):
     def bulk_delete(
         self,
         *,
-        agent_ids: List[str],
+        agent_ids: SequenceNotStr[str],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Delete multiple agents by their IDs if they belong to the same organization.
@@ -271,7 +272,7 @@ class AgentsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Fetch agent details by agent_id, decode the YAML configuration, and return it as
@@ -295,6 +296,53 @@ class AgentsResource(SyncAPIResource):
             cast_to=object,
         )
 
+    def generate_chat_history(
+        self,
+        *,
+        query: str,
+        response: Union[str, object],
+        chat_history: Optional[Iterable[object]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Generate Chat History
+
+        Args:
+          query: The user's query
+
+          response: The raw response from the agent service
+
+          chat_history: Existing chat history
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/agents/generate-chat-history",
+            body=maybe_transform(
+                {
+                    "query": query,
+                    "response": response,
+                    "chat_history": chat_history,
+                },
+                agent_generate_chat_history_params.AgentGenerateChatHistoryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
     def reconfigure(
         self,
         *,
@@ -305,7 +353,7 @@ class AgentsResource(SyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Reconfigure Agent
@@ -345,13 +393,13 @@ class AgentsResource(SyncAPIResource):
         *,
         agent_id: str,
         message: str,
-        agent_history: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
+        agent_history: Optional[Iterable[object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Run an agent by sending the provided command to the agent service and returns a
@@ -392,15 +440,15 @@ class AgentsResource(SyncAPIResource):
         self,
         *,
         message: str,
-        agent_history: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
-        yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
-        yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
+        agent_history: Optional[Iterable[object]] | Omit = omit,
+        yaml_file: Optional[FileTypes] | Omit = omit,
+        yaml_string: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Test Agent
@@ -449,16 +497,16 @@ class AgentsResource(SyncAPIResource):
         self,
         *,
         agent_id: str,
-        deploy_to: Optional[str] | NotGiven = NOT_GIVEN,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        agent_icon: Optional[FileTypes] | NotGiven = NOT_GIVEN,
+        deploy_to: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        agent_icon: Optional[FileTypes] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Update Agent Info
@@ -503,14 +551,14 @@ class AgentsResource(SyncAPIResource):
     def validate(
         self,
         *,
-        yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
-        yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
+        yaml_file: Optional[FileTypes] | Omit = omit,
+        yaml_string: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentValidateResponse:
         """
         Validates the agent network configuration provided as a YAML file or string.
@@ -578,13 +626,13 @@ class AsyncAgentsResource(AsyncAPIResource):
         description: str,
         name: str,
         yaml_file: FileTypes,
-        agent_icon: Optional[FileTypes] | NotGiven = NOT_GIVEN,
+        agent_icon: Optional[FileTypes] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Create Agent
 
@@ -640,7 +688,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Fetch agent details by agent_id and organization ID, and return the details in a
@@ -667,14 +715,14 @@ class AsyncAgentsResource(AsyncAPIResource):
     async def list(
         self,
         *,
-        limit: int | NotGiven = NOT_GIVEN,
-        offset: int | NotGiven = NOT_GIVEN,
+        limit: int | Omit = omit,
+        offset: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         List all agents for the organization and user, with optional pagination.
@@ -712,7 +760,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """Delete an agent by its ID if it belongs to the same organization.
 
@@ -744,13 +792,13 @@ class AsyncAgentsResource(AsyncAPIResource):
     async def bulk_delete(
         self,
         *,
-        agent_ids: List[str],
+        agent_ids: SequenceNotStr[str],
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Delete multiple agents by their IDs if they belong to the same organization.
@@ -787,7 +835,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Fetch agent details by agent_id, decode the YAML configuration, and return it as
@@ -811,6 +859,53 @@ class AsyncAgentsResource(AsyncAPIResource):
             cast_to=object,
         )
 
+    async def generate_chat_history(
+        self,
+        *,
+        query: str,
+        response: Union[str, object],
+        chat_history: Optional[Iterable[object]] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """
+        Generate Chat History
+
+        Args:
+          query: The user's query
+
+          response: The raw response from the agent service
+
+          chat_history: Existing chat history
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/agents/generate-chat-history",
+            body=await async_maybe_transform(
+                {
+                    "query": query,
+                    "response": response,
+                    "chat_history": chat_history,
+                },
+                agent_generate_chat_history_params.AgentGenerateChatHistoryParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
+        )
+
     async def reconfigure(
         self,
         *,
@@ -821,7 +916,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Reconfigure Agent
@@ -861,13 +956,13 @@ class AsyncAgentsResource(AsyncAPIResource):
         *,
         agent_id: str,
         message: str,
-        agent_history: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
+        agent_history: Optional[Iterable[object]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Run an agent by sending the provided command to the agent service and returns a
@@ -908,15 +1003,15 @@ class AsyncAgentsResource(AsyncAPIResource):
         self,
         *,
         message: str,
-        agent_history: Optional[Iterable[object]] | NotGiven = NOT_GIVEN,
-        yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
-        yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
+        agent_history: Optional[Iterable[object]] | Omit = omit,
+        yaml_file: Optional[FileTypes] | Omit = omit,
+        yaml_string: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Test Agent
@@ -965,16 +1060,16 @@ class AsyncAgentsResource(AsyncAPIResource):
         self,
         *,
         agent_id: str,
-        deploy_to: Optional[str] | NotGiven = NOT_GIVEN,
-        description: Optional[str] | NotGiven = NOT_GIVEN,
-        name: Optional[str] | NotGiven = NOT_GIVEN,
-        agent_icon: Optional[FileTypes] | NotGiven = NOT_GIVEN,
+        deploy_to: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        agent_icon: Optional[FileTypes] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> object:
         """
         Update Agent Info
@@ -1019,14 +1114,14 @@ class AsyncAgentsResource(AsyncAPIResource):
     async def validate(
         self,
         *,
-        yaml_file: Optional[FileTypes] | NotGiven = NOT_GIVEN,
-        yaml_string: Optional[str] | NotGiven = NOT_GIVEN,
+        yaml_file: Optional[FileTypes] | Omit = omit,
+        yaml_string: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentValidateResponse:
         """
         Validates the agent network configuration provided as a YAML file or string.
@@ -1089,6 +1184,9 @@ class AgentsResourceWithRawResponse:
         self.download = to_raw_response_wrapper(
             agents.download,
         )
+        self.generate_chat_history = to_raw_response_wrapper(
+            agents.generate_chat_history,
+        )
         self.reconfigure = to_raw_response_wrapper(
             agents.reconfigure,
         )
@@ -1127,6 +1225,9 @@ class AsyncAgentsResourceWithRawResponse:
         )
         self.download = async_to_raw_response_wrapper(
             agents.download,
+        )
+        self.generate_chat_history = async_to_raw_response_wrapper(
+            agents.generate_chat_history,
         )
         self.reconfigure = async_to_raw_response_wrapper(
             agents.reconfigure,
@@ -1167,6 +1268,9 @@ class AgentsResourceWithStreamingResponse:
         self.download = to_streamed_response_wrapper(
             agents.download,
         )
+        self.generate_chat_history = to_streamed_response_wrapper(
+            agents.generate_chat_history,
+        )
         self.reconfigure = to_streamed_response_wrapper(
             agents.reconfigure,
         )
@@ -1205,6 +1309,9 @@ class AsyncAgentsResourceWithStreamingResponse:
         )
         self.download = async_to_streamed_response_wrapper(
             agents.download,
+        )
+        self.generate_chat_history = async_to_streamed_response_wrapper(
+            agents.generate_chat_history,
         )
         self.reconfigure = async_to_streamed_response_wrapper(
             agents.reconfigure,

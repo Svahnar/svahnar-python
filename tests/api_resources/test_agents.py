@@ -19,7 +19,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestAgents:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create(self, client: Svahnar) -> None:
         agent = client.agents.create(
@@ -30,7 +30,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.create(
@@ -42,7 +42,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.create(
@@ -57,7 +57,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.create(
@@ -74,7 +74,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_retrieve(self, client: Svahnar) -> None:
         agent = client.agents.retrieve(
@@ -82,7 +82,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_retrieve(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.retrieve(
@@ -94,7 +94,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_retrieve(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.retrieve(
@@ -108,13 +108,13 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list(self, client: Svahnar) -> None:
         agent = client.agents.list()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.list(
@@ -123,7 +123,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.list()
@@ -133,7 +133,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.list() as response:
@@ -145,7 +145,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_delete(self, client: Svahnar) -> None:
         agent = client.agents.delete(
@@ -153,7 +153,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.delete(
@@ -165,7 +165,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.delete(
@@ -179,7 +179,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_bulk_delete(self, client: Svahnar) -> None:
         agent = client.agents.bulk_delete(
@@ -187,7 +187,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_bulk_delete(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.bulk_delete(
@@ -199,7 +199,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_bulk_delete(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.bulk_delete(
@@ -213,7 +213,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_download(self, client: Svahnar) -> None:
         agent = client.agents.download(
@@ -221,7 +221,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_download(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.download(
@@ -233,7 +233,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_download(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.download(
@@ -247,7 +247,54 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_generate_chat_history(self, client: Svahnar) -> None:
+        agent = client.agents.generate_chat_history(
+            query="query",
+            response="string",
+        )
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_generate_chat_history_with_all_params(self, client: Svahnar) -> None:
+        agent = client.agents.generate_chat_history(
+            query="query",
+            response="string",
+            chat_history=[{}],
+        )
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_raw_response_generate_chat_history(self, client: Svahnar) -> None:
+        response = client.agents.with_raw_response.generate_chat_history(
+            query="query",
+            response="string",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        agent = response.parse()
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_streaming_response_generate_chat_history(self, client: Svahnar) -> None:
+        with client.agents.with_streaming_response.generate_chat_history(
+            query="query",
+            response="string",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            agent = response.parse()
+            assert_matches_type(object, agent, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_reconfigure(self, client: Svahnar) -> None:
         agent = client.agents.reconfigure(
@@ -256,7 +303,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_reconfigure(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.reconfigure(
@@ -269,7 +316,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_reconfigure(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.reconfigure(
@@ -284,7 +331,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_run(self, client: Svahnar) -> None:
         agent = client.agents.run(
@@ -293,7 +340,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_run_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.run(
@@ -303,7 +350,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_run(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.run(
@@ -316,7 +363,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_run(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.run(
@@ -331,7 +378,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_test(self, client: Svahnar) -> None:
         agent = client.agents.test(
@@ -339,7 +386,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_test_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.test(
@@ -350,7 +397,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_test(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.test(
@@ -362,7 +409,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_test(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.test(
@@ -376,7 +423,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_info(self, client: Svahnar) -> None:
         agent = client.agents.update_info(
@@ -384,7 +431,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_info_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.update_info(
@@ -396,7 +443,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_update_info(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.update_info(
@@ -408,7 +455,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_update_info(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.update_info(
@@ -422,13 +469,13 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_validate(self, client: Svahnar) -> None:
         agent = client.agents.validate()
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_validate_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.validate(
@@ -437,7 +484,7 @@ class TestAgents:
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_validate(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.validate()
@@ -447,7 +494,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_validate(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.validate() as response:
@@ -461,9 +508,11 @@ class TestAgents:
 
 
 class TestAsyncAgents:
-    parametrize = pytest.mark.parametrize("async_client", [False, True], indirect=True, ids=["loose", "strict"])
+    parametrize = pytest.mark.parametrize(
+        "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
+    )
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.create(
@@ -474,7 +523,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.create(
@@ -486,7 +535,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.create(
@@ -501,7 +550,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.create(
@@ -518,7 +567,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.retrieve(
@@ -526,7 +575,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.retrieve(
@@ -538,7 +587,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.retrieve(
@@ -552,13 +601,13 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.list()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.list(
@@ -567,7 +616,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.list()
@@ -577,7 +626,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.list() as response:
@@ -589,7 +638,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.delete(
@@ -597,7 +646,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.delete(
@@ -609,7 +658,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.delete(
@@ -623,7 +672,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_bulk_delete(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.bulk_delete(
@@ -631,7 +680,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_bulk_delete(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.bulk_delete(
@@ -643,7 +692,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_bulk_delete(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.bulk_delete(
@@ -657,7 +706,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_download(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.download(
@@ -665,7 +714,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_download(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.download(
@@ -677,7 +726,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_download(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.download(
@@ -691,7 +740,54 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_generate_chat_history(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.generate_chat_history(
+            query="query",
+            response="string",
+        )
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_generate_chat_history_with_all_params(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.generate_chat_history(
+            query="query",
+            response="string",
+            chat_history=[{}],
+        )
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_raw_response_generate_chat_history(self, async_client: AsyncSvahnar) -> None:
+        response = await async_client.agents.with_raw_response.generate_chat_history(
+            query="query",
+            response="string",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        agent = await response.parse()
+        assert_matches_type(object, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_streaming_response_generate_chat_history(self, async_client: AsyncSvahnar) -> None:
+        async with async_client.agents.with_streaming_response.generate_chat_history(
+            query="query",
+            response="string",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            agent = await response.parse()
+            assert_matches_type(object, agent, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_reconfigure(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.reconfigure(
@@ -700,7 +796,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.reconfigure(
@@ -713,7 +809,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.reconfigure(
@@ -728,7 +824,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_run(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
@@ -737,7 +833,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_run_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
@@ -747,7 +843,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_run(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.run(
@@ -760,7 +856,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_run(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.run(
@@ -775,7 +871,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_test(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.test(
@@ -783,7 +879,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_test_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.test(
@@ -794,7 +890,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_test(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.test(
@@ -806,7 +902,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_test(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.test(
@@ -820,7 +916,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_info(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.update_info(
@@ -828,7 +924,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_info_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.update_info(
@@ -840,7 +936,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_update_info(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.update_info(
@@ -852,7 +948,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_update_info(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.update_info(
@@ -866,13 +962,13 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_validate(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.validate()
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_validate_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.validate(
@@ -881,7 +977,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_validate(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.validate()
@@ -891,7 +987,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip()
+    @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_validate(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.validate() as response:
