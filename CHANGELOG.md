@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.7.1 (2025-12-19)
+
+Full Changelog: [v1.7.0...v1.7.1](https://github.com/Svahnar/svahnar-python/compare/v1.7.0...v1.7.1)
+
+### Chores
+
+* **internal:** add `--fix` argument to lint script ([d577a52](https://github.com/Svahnar/svahnar-python/commit/d577a52afffacedcf75baf99ebcfb0d87ef04e7d))
+
 ## 1.7.0 (2025-12-18)
 
 Full Changelog: [v1.6.3...v1.7.0](https://github.com/Svahnar/svahnar-python/compare/v1.6.3...v1.7.0)
