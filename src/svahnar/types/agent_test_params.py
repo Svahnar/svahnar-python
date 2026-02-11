@@ -12,10 +12,13 @@ __all__ = ["AgentTestParams"]
 
 class AgentTestParams(TypedDict, total=False):
     message: Required[str]
-    """The message or command to be sent to the agent"""
+    """The message or command to be sent to the agent."""
 
     agent_history: Optional[Iterable[object]]
-    """List of prior messages; defaults to empty list"""
+    """List of prior messages; defaults to empty list."""
+
+    thread_id: Optional[str]
+    """Unique identifier for the chat session."""
 
     yaml_file: Optional[FileTypes]
     """YAML file to test the agent."""

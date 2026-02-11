@@ -1,10 +1,10 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import Optional
+from typing import List, Optional
 
 from .._models import BaseModel
 
-__all__ = ["AgentValidateResponse", "RequestMetadata"]
+__all__ = ["AgentBulkDeleteResponse", "RequestMetadata"]
 
 
 class RequestMetadata(BaseModel):
@@ -14,15 +14,14 @@ class RequestMetadata(BaseModel):
     """Unique request identifier for tracing and support."""
 
 
-class AgentValidateResponse(BaseModel):
-    message: str
-    """Detailed message about the validation outcome."""
+class AgentBulkDeleteResponse(BaseModel):
+    """Response after deleting multiple agents."""
 
-    status: str
-    """The result status of the validation."""
+    message: str
+    """Summary of the deletion operation."""
+
+    deleted_ids: Optional[List[str]] = None
+    """IDs of the agents that were successfully deleted."""
 
     request_metadata: Optional[RequestMetadata] = None
     """Response metadata including timestamp and request ID."""
-
-    suggestion: Optional[str] = None
-    """Optional suggestion if any errors were found."""

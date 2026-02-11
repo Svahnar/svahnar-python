@@ -10,7 +10,13 @@ import pytest
 from svahnar import Svahnar, AsyncSvahnar
 from tests.utils import assert_matches_type
 from svahnar.types import (
+    AgentRunResponse,
+    AgentCreateResponse,
+    AgentDeleteResponse,
     AgentValidateResponse,
+    AgentBulkDeleteResponse,
+    AgentUpdateInfoResponse,
+    AgentReconfigureResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -28,7 +34,7 @@ class TestAgents:
             name="name",
             yaml_file=b"raw file contents",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -40,7 +46,7 @@ class TestAgents:
             yaml_file=b"raw file contents",
             agent_icon=b"raw file contents",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -55,7 +61,7 @@ class TestAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -70,78 +76,7 @@ class TestAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_retrieve(self, client: Svahnar) -> None:
-        agent = client.agents.retrieve(
-            agent_id="agent_id",
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_retrieve(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.retrieve(
-            agent_id="agent_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_retrieve(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.retrieve(
-            agent_id="agent_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_list(self, client: Svahnar) -> None:
-        agent = client.agents.list()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_list_with_all_params(self, client: Svahnar) -> None:
-        agent = client.agents.list(
-            limit=0,
-            offset=0,
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_list(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.list()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_list(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.list() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -151,7 +86,7 @@ class TestAgents:
         agent = client.agents.delete(
             agent_id="agent_id",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -163,7 +98,7 @@ class TestAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -175,7 +110,7 @@ class TestAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -185,7 +120,7 @@ class TestAgents:
         agent = client.agents.bulk_delete(
             agent_ids=["string"],
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -197,7 +132,7 @@ class TestAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -209,88 +144,7 @@ class TestAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_download(self, client: Svahnar) -> None:
-        agent = client.agents.download(
-            agent_id="agent_id",
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_download(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.download(
-            agent_id="agent_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_download(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.download(
-            agent_id="agent_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_generate_chat_history(self, client: Svahnar) -> None:
-        agent = client.agents.generate_chat_history(
-            query="query",
-            response="string",
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_generate_chat_history_with_all_params(self, client: Svahnar) -> None:
-        agent = client.agents.generate_chat_history(
-            query="query",
-            response="string",
-            chat_history=[{}],
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_generate_chat_history(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.generate_chat_history(
-            query="query",
-            response="string",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_generate_chat_history(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.generate_chat_history(
-            query="query",
-            response="string",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -301,7 +155,7 @@ class TestAgents:
             agent_id="agent_id",
             yaml_file=b"raw file contents",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -314,7 +168,7 @@ class TestAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -327,7 +181,7 @@ class TestAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -335,46 +189,47 @@ class TestAgents:
     @parametrize
     def test_method_run(self, client: Svahnar) -> None:
         agent = client.agents.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
+            agent_id="agent_id",
+            message="message",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentRunResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_run_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
+            agent_id="agent_id",
+            message="message",
             agent_history=[{}],
+            thread_id="thread_id",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentRunResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_run(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
+            agent_id="agent_id",
+            message="message",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentRunResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_run(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
+            agent_id="agent_id",
+            message="message",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentRunResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -392,6 +247,7 @@ class TestAgents:
         agent = client.agents.test(
             message="message",
             agent_history=[{}],
+            thread_id="thread_id",
             yaml_file=b"raw file contents",
             yaml_string="yaml_string",
         )
@@ -429,19 +285,19 @@ class TestAgents:
         agent = client.agents.update_info(
             agent_id="agent_id",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_update_info_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.update_info(
             agent_id="agent_id",
+            agent_icon=b"raw file contents",
             deploy_to="deploy_to",
             description="description",
             name="name",
-            agent_icon=b"raw file contents",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -453,7 +309,7 @@ class TestAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -465,7 +321,7 @@ class TestAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -521,7 +377,7 @@ class TestAsyncAgents:
             name="name",
             yaml_file=b"raw file contents",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -533,7 +389,7 @@ class TestAsyncAgents:
             yaml_file=b"raw file contents",
             agent_icon=b"raw file contents",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -548,7 +404,7 @@ class TestAsyncAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -563,78 +419,7 @@ class TestAsyncAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_retrieve(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.retrieve(
-            agent_id="agent_id",
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.retrieve(
-            agent_id="agent_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.retrieve(
-            agent_id="agent_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_list(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.list()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_list_with_all_params(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.list(
-            limit=0,
-            offset=0,
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_list(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.list()
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_list(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.list() as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -644,7 +429,7 @@ class TestAsyncAgents:
         agent = await async_client.agents.delete(
             agent_id="agent_id",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -656,7 +441,7 @@ class TestAsyncAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -668,7 +453,7 @@ class TestAsyncAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -678,7 +463,7 @@ class TestAsyncAgents:
         agent = await async_client.agents.bulk_delete(
             agent_ids=["string"],
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -690,7 +475,7 @@ class TestAsyncAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -702,88 +487,7 @@ class TestAsyncAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_download(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.download(
-            agent_id="agent_id",
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_download(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.download(
-            agent_id="agent_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_download(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.download(
-            agent_id="agent_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_generate_chat_history(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.generate_chat_history(
-            query="query",
-            response="string",
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_generate_chat_history_with_all_params(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.generate_chat_history(
-            query="query",
-            response="string",
-            chat_history=[{}],
-        )
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_generate_chat_history(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.generate_chat_history(
-            query="query",
-            response="string",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_generate_chat_history(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.generate_chat_history(
-            query="query",
-            response="string",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -794,7 +498,7 @@ class TestAsyncAgents:
             agent_id="agent_id",
             yaml_file=b"raw file contents",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -807,7 +511,7 @@ class TestAsyncAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -820,7 +524,7 @@ class TestAsyncAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -828,46 +532,47 @@ class TestAsyncAgents:
     @parametrize
     async def test_method_run(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
+            agent_id="agent_id",
+            message="message",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentRunResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_run_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
+            agent_id="agent_id",
+            message="message",
             agent_history=[{}],
+            thread_id="thread_id",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentRunResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_run(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
+            agent_id="agent_id",
+            message="message",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentRunResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_run(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
+            agent_id="agent_id",
+            message="message",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentRunResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -885,6 +590,7 @@ class TestAsyncAgents:
         agent = await async_client.agents.test(
             message="message",
             agent_history=[{}],
+            thread_id="thread_id",
             yaml_file=b"raw file contents",
             yaml_string="yaml_string",
         )
@@ -922,19 +628,19 @@ class TestAsyncAgents:
         agent = await async_client.agents.update_info(
             agent_id="agent_id",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_update_info_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.update_info(
             agent_id="agent_id",
+            agent_icon=b"raw file contents",
             deploy_to="deploy_to",
             description="description",
             name="name",
-            agent_icon=b"raw file contents",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -946,7 +652,7 @@ class TestAsyncAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -958,7 +664,7 @@ class TestAsyncAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

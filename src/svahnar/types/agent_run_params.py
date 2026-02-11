@@ -10,10 +10,13 @@ __all__ = ["AgentRunParams"]
 
 class AgentRunParams(TypedDict, total=False):
     agent_id: Required[str]
-    """Unique identifier for the agent"""
+    """Unique identifier for the agent."""
 
     message: Required[str]
-    """The message or command to be sent to the agent"""
+    """The message or command to be sent to the agent."""
 
     agent_history: Optional[Iterable[object]]
-    """JSON‐encoded list of prior messages; defaults to empty list"""
+    """List of prior messages; defaults to empty list."""
+
+    thread_id: Optional[str]
+    """Unique identifier for the chat session."""

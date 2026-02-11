@@ -12,7 +12,7 @@ __all__ = ["AgentValidateParams"]
 
 class AgentValidateParams(TypedDict, total=False):
     yaml_file: Optional[FileTypes]
-    """YAML file to test the agent."""
+    """YAML file to validate."""
 
     yaml_string: Optional[str]
-    """YAML string to test the agent."""
+    """YAML string to validate."""
