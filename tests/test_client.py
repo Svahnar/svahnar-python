@@ -861,9 +861,7 @@ class TestSvahnar:
         respx_mock.post("/v1/agents/run").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            client.agents.with_streaming_response.run(
-                agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"
-            ).__enter__()
+            client.agents.with_streaming_response.run(agent_id="agent_id", message="message").__enter__()
 
         assert _get_open_connections(client) == 0
 
@@ -873,9 +871,7 @@ class TestSvahnar:
         respx_mock.post("/v1/agents/run").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            client.agents.with_streaming_response.run(
-                agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"
-            ).__enter__()
+            client.agents.with_streaming_response.run(agent_id="agent_id", message="message").__enter__()
         assert _get_open_connections(client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -904,7 +900,7 @@ class TestSvahnar:
 
         respx_mock.post("/v1/agents/run").mock(side_effect=retry_handler)
 
-        response = client.agents.with_raw_response.run(agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi")
+        response = client.agents.with_raw_response.run(agent_id="agent_id", message="message")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -929,9 +925,7 @@ class TestSvahnar:
         respx_mock.post("/v1/agents/run").mock(side_effect=retry_handler)
 
         response = client.agents.with_raw_response.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
-            extra_headers={"x-stainless-retry-count": Omit()},
+            agent_id="agent_id", message="message", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -956,9 +950,7 @@ class TestSvahnar:
         respx_mock.post("/v1/agents/run").mock(side_effect=retry_handler)
 
         response = client.agents.with_raw_response.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
-            extra_headers={"x-stainless-retry-count": "42"},
+            agent_id="agent_id", message="message", extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
@@ -1782,9 +1774,7 @@ class TestAsyncSvahnar:
         respx_mock.post("/v1/agents/run").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
-            await async_client.agents.with_streaming_response.run(
-                agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"
-            ).__aenter__()
+            await async_client.agents.with_streaming_response.run(agent_id="agent_id", message="message").__aenter__()
 
         assert _get_open_connections(async_client) == 0
 
@@ -1794,9 +1784,7 @@ class TestAsyncSvahnar:
         respx_mock.post("/v1/agents/run").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
-            await async_client.agents.with_streaming_response.run(
-                agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"
-            ).__aenter__()
+            await async_client.agents.with_streaming_response.run(agent_id="agent_id", message="message").__aenter__()
         assert _get_open_connections(async_client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
@@ -1825,9 +1813,7 @@ class TestAsyncSvahnar:
 
         respx_mock.post("/v1/agents/run").mock(side_effect=retry_handler)
 
-        response = await client.agents.with_raw_response.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6", message="hi"
-        )
+        response = await client.agents.with_raw_response.run(agent_id="agent_id", message="message")
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1852,9 +1838,7 @@ class TestAsyncSvahnar:
         respx_mock.post("/v1/agents/run").mock(side_effect=retry_handler)
 
         response = await client.agents.with_raw_response.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
-            extra_headers={"x-stainless-retry-count": Omit()},
+            agent_id="agent_id", message="message", extra_headers={"x-stainless-retry-count": Omit()}
         )
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
@@ -1879,9 +1863,7 @@ class TestAsyncSvahnar:
         respx_mock.post("/v1/agents/run").mock(side_effect=retry_handler)
 
         response = await client.agents.with_raw_response.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
-            extra_headers={"x-stainless-retry-count": "42"},
+            agent_id="agent_id", message="message", extra_headers={"x-stainless-retry-count": "42"}
         )
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"

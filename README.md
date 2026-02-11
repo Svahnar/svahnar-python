@@ -30,9 +30,10 @@ from svahnar import Svahnar
 client = Svahnar()
 
 response = client.agents.run(
-    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-    message="hi",
+    agent_id="agent_id",
+    message="message",
 )
+print(response.additional_metadata)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -53,9 +54,10 @@ client = AsyncSvahnar()
 
 async def main() -> None:
     response = await client.agents.run(
-        agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-        message="hi",
+        agent_id="agent_id",
+        message="message",
     )
+    print(response.additional_metadata)
 
 
 asyncio.run(main())
@@ -87,9 +89,10 @@ async def main() -> None:
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.agents.run(
-            agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-            message="hi",
+            agent_id="agent_id",
+            message="message",
         )
+        print(response.additional_metadata)
 
 
 asyncio.run(main())
@@ -141,8 +144,8 @@ client = Svahnar()
 
 try:
     client.agents.run(
-        agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-        message="hi",
+        agent_id="agent_id",
+        message="message",
     )
 except svahnar.APIConnectionError as e:
     print("The server could not be reached")
@@ -187,8 +190,8 @@ client = Svahnar(
 
 # Or, configure per-request:
 client.with_options(max_retries=5).agents.run(
-    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-    message="hi",
+    agent_id="agent_id",
+    message="message",
 )
 ```
 
@@ -213,8 +216,8 @@ client = Svahnar(
 
 # Override per-request:
 client.with_options(timeout=5.0).agents.run(
-    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-    message="hi",
+    agent_id="agent_id",
+    message="message",
 )
 ```
 
@@ -257,13 +260,13 @@ from svahnar import Svahnar
 
 client = Svahnar()
 response = client.agents.with_raw_response.run(
-    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-    message="hi",
+    agent_id="agent_id",
+    message="message",
 )
 print(response.headers.get('X-My-Header'))
 
 agent = response.parse()  # get the object that `agents.run()` would have returned
-print(agent)
+print(agent.additional_metadata)
 ```
 
 These methods return an [`APIResponse`](https://github.com/Svahnar/svahnar-python/tree/main/src/svahnar/_response.py) object.
@@ -278,8 +281,8 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 
 ```python
 with client.agents.with_streaming_response.run(
-    agent_id="b06b8e39-51a7-4b6a-8474-e6340a6b9fa6",
-    message="hi",
+    agent_id="agent_id",
+    message="message",
 ) as response:
     print(response.headers.get("X-My-Header"))
 
