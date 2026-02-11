@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.8.0 (2026-02-10)
+
+Full Changelog: [v1.7.1...v1.8.0](https://github.com/Svahnar/svahnar-python/compare/v1.7.1...v1.8.0)
+
+### Features
+
+* **client:** add custom JSON encoder for extended type support ([9a7663a](https://github.com/Svahnar/svahnar-python/commit/9a7663a1df74a7afc0c7d943e3722702a30548ca))
+* **client:** add support for binary request streaming ([ebcc2bd](https://github.com/Svahnar/svahnar-python/commit/ebcc2bd5ed8f7f580c3579f1803bac92a026a499))
+
+
+### Bug Fixes
+
+* **client:** loosen auth header validation ([bf7896c](https://github.com/Svahnar/svahnar-python/commit/bf7896cf6386001d1002379eec1be24ef5ecc191))
+
+
+### Chores
+
+* **ci:** upgrade `actions/github-script` ([ed323b1](https://github.com/Svahnar/svahnar-python/commit/ed323b162e34b32bdcc60638235ee5a39e183f78))
+* **internal:** bump dependencies ([6b6556d](https://github.com/Svahnar/svahnar-python/commit/6b6556d3bc153dd1a68d5ec7c9828e6fe9b0ca91))
+* **internal:** codegen related update ([a0925ad](https://github.com/Svahnar/svahnar-python/commit/a0925adce1d20f31351a7820e1cafb39713bf58f))
+* **internal:** update `actions/checkout` version ([fb5a612](https://github.com/Svahnar/svahnar-python/commit/fb5a612dfb077ad1a95950971de326a3abafeace))
+
 ## 1.7.1 (2025-12-19)
 
 Full Changelog: [v1.7.0...v1.7.1](https://github.com/Svahnar/svahnar-python/compare/v1.7.0...v1.7.1)
