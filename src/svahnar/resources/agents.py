@@ -32,6 +32,7 @@ from ..types.agent_run_response import AgentRunResponse
 from ..types.agent_list_response import AgentListResponse
 from ..types.agent_create_response import AgentCreateResponse
 from ..types.agent_delete_response import AgentDeleteResponse
+from ..types.agent_retrieve_response import AgentRetrieveResponse
 from ..types.agent_validate_response import AgentValidateResponse
 from ..types.agent_bulk_delete_response import AgentBulkDeleteResponse
 from ..types.agent_reconfigure_response import AgentReconfigureResponse
@@ -119,6 +120,43 @@ class AgentsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=AgentCreateResponse,
+        )
+
+    def retrieve(
+        self,
+        agent_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentRetrieveResponse:
+        """Retrieve detailed information about a specific agent by its ID.
+
+        The user must
+        have access to the agent (via personal agents or team membership).
+
+        Args:
+          agent_id: The unique identifier of the agent.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return self._get(
+            f"/v1/agents/get-agent/{agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AgentRetrieveResponse,
         )
 
     def list(
@@ -239,6 +277,43 @@ class AgentsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=AgentBulkDeleteResponse,
+        )
+
+    def download(
+        self,
+        agent_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """Download the YAML configuration file for a specific agent.
+
+        Only the creator of
+        the agent can download the configuration.
+
+        Args:
+          agent_id: The unique identifier of the agent.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return self._get(
+            f"/v1/agents/download-agent/{agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
         )
 
     def reconfigure(
@@ -603,6 +678,43 @@ class AsyncAgentsResource(AsyncAPIResource):
             cast_to=AgentCreateResponse,
         )
 
+    async def retrieve(
+        self,
+        agent_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentRetrieveResponse:
+        """Retrieve detailed information about a specific agent by its ID.
+
+        The user must
+        have access to the agent (via personal agents or team membership).
+
+        Args:
+          agent_id: The unique identifier of the agent.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return await self._get(
+            f"/v1/agents/get-agent/{agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=AgentRetrieveResponse,
+        )
+
     async def list(
         self,
         *,
@@ -721,6 +833,43 @@ class AsyncAgentsResource(AsyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=AgentBulkDeleteResponse,
+        )
+
+    async def download(
+        self,
+        agent_id: str,
+        *,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> object:
+        """Download the YAML configuration file for a specific agent.
+
+        Only the creator of
+        the agent can download the configuration.
+
+        Args:
+          agent_id: The unique identifier of the agent.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return await self._get(
+            f"/v1/agents/download-agent/{agent_id}",
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=object,
         )
 
     async def reconfigure(
@@ -1011,6 +1160,9 @@ class AgentsResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             agents.create,
         )
+        self.retrieve = to_raw_response_wrapper(
+            agents.retrieve,
+        )
         self.list = to_raw_response_wrapper(
             agents.list,
         )
@@ -1019,6 +1171,9 @@ class AgentsResourceWithRawResponse:
         )
         self.bulk_delete = to_raw_response_wrapper(
             agents.bulk_delete,
+        )
+        self.download = to_raw_response_wrapper(
+            agents.download,
         )
         self.reconfigure = to_raw_response_wrapper(
             agents.reconfigure,
@@ -1044,6 +1199,9 @@ class AsyncAgentsResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             agents.create,
         )
+        self.retrieve = async_to_raw_response_wrapper(
+            agents.retrieve,
+        )
         self.list = async_to_raw_response_wrapper(
             agents.list,
         )
@@ -1052,6 +1210,9 @@ class AsyncAgentsResourceWithRawResponse:
         )
         self.bulk_delete = async_to_raw_response_wrapper(
             agents.bulk_delete,
+        )
+        self.download = async_to_raw_response_wrapper(
+            agents.download,
         )
         self.reconfigure = async_to_raw_response_wrapper(
             agents.reconfigure,
@@ -1077,6 +1238,9 @@ class AgentsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             agents.create,
         )
+        self.retrieve = to_streamed_response_wrapper(
+            agents.retrieve,
+        )
         self.list = to_streamed_response_wrapper(
             agents.list,
         )
@@ -1085,6 +1249,9 @@ class AgentsResourceWithStreamingResponse:
         )
         self.bulk_delete = to_streamed_response_wrapper(
             agents.bulk_delete,
+        )
+        self.download = to_streamed_response_wrapper(
+            agents.download,
         )
         self.reconfigure = to_streamed_response_wrapper(
             agents.reconfigure,
@@ -1110,6 +1277,9 @@ class AsyncAgentsResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             agents.create,
         )
+        self.retrieve = async_to_streamed_response_wrapper(
+            agents.retrieve,
+        )
         self.list = async_to_streamed_response_wrapper(
             agents.list,
         )
@@ -1118,6 +1288,9 @@ class AsyncAgentsResourceWithStreamingResponse:
         )
         self.bulk_delete = async_to_streamed_response_wrapper(
             agents.bulk_delete,
+        )
+        self.download = async_to_streamed_response_wrapper(
+            agents.download,
         )
         self.reconfigure = async_to_streamed_response_wrapper(
             agents.reconfigure,
