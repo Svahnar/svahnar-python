@@ -12,11 +12,16 @@ __all__ = ["AgentUpdateInfoParams"]
 
 class AgentUpdateInfoParams(TypedDict, total=False):
     agent_id: Required[str]
-
-    deploy_to: Optional[str]
-
-    description: Optional[str]
-
-    name: Optional[str]
+    """The ID of the agent to update."""
 
     agent_icon: Optional[FileTypes]
+    """New agent icon (512x512 pixels)."""
+
+    deploy_to: Optional[str]
+    """New deployment target: 'AgentStore' or 'Organization'."""
+
+    description: Optional[str]
+    """New description for the agent."""
+
+    name: Optional[str]
+    """New name for the agent."""

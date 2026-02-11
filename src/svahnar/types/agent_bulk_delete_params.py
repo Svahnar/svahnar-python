@@ -11,4 +11,4 @@ __all__ = ["AgentBulkDeleteParams"]
 
 class AgentBulkDeleteParams(TypedDict, total=False):
     agent_ids: Required[SequenceNotStr[str]]
-    """The list of agent IDs to delete"""
+    """The list of agent IDs to delete."""

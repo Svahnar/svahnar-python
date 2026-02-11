@@ -9,4 +9,4 @@ __all__ = ["AgentDeleteParams"]
 
 class AgentDeleteParams(TypedDict, total=False):
     agent_id: Required[str]
-    """The ID of the agent to delete"""
+    """The ID of the agent to delete."""

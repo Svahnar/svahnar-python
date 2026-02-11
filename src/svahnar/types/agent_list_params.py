@@ -9,5 +9,7 @@ __all__ = ["AgentListParams"]
 
 class AgentListParams(TypedDict, total=False):
     limit: int
+    """Maximum number of items to return."""
 
     offset: int
+    """Number of items to skip."""

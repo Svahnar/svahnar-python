@@ -4,7 +4,7 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["AgentValidateResponse", "RequestMetadata"]
+__all__ = ["AgentDeleteResponse", "RequestMetadata"]
 
 
 class RequestMetadata(BaseModel):
@@ -14,15 +14,14 @@ class RequestMetadata(BaseModel):
     """Unique request identifier for tracing and support."""
 
 
-class AgentValidateResponse(BaseModel):
-    message: str
-    """Detailed message about the validation outcome."""
+class AgentDeleteResponse(BaseModel):
+    """Response after deleting a single agent."""
 
-    status: str
-    """The result status of the validation."""
+    deleted_id: str
+    """ID of the agent that was successfully deleted."""
+
+    message: str
+    """Summary of the deletion operation."""
 
     request_metadata: Optional[RequestMetadata] = None
     """Response metadata including timestamp and request ID."""
-
-    suggestion: Optional[str] = None
-    """Optional suggestion if any errors were found."""
