@@ -8,6 +8,7 @@ import httpx
 
 from ..types import (
     agent_run_params,
+    agent_list_params,
     agent_test_params,
     agent_create_params,
     agent_delete_params,
@@ -28,6 +29,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.agent_run_response import AgentRunResponse
+from ..types.agent_list_response import AgentListResponse
 from ..types.agent_create_response import AgentCreateResponse
 from ..types.agent_delete_response import AgentDeleteResponse
 from ..types.agent_validate_response import AgentValidateResponse
@@ -117,6 +119,54 @@ class AgentsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=AgentCreateResponse,
+        )
+
+    def list(
+        self,
+        *,
+        limit: int | Omit = omit,
+        offset: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentListResponse:
+        """
+        List all agents the authenticated user has access to, including personal agents
+        and agents shared via teams. Supports pagination via offset and limit query
+        parameters.
+
+        Args:
+          limit: Maximum number of items to return.
+
+          offset: Number of items to skip.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get(
+            "/v1/agents/list-agents",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "limit": limit,
+                        "offset": offset,
+                    },
+                    agent_list_params.AgentListParams,
+                ),
+            ),
+            cast_to=AgentListResponse,
         )
 
     def delete(
@@ -553,6 +603,54 @@ class AsyncAgentsResource(AsyncAPIResource):
             cast_to=AgentCreateResponse,
         )
 
+    async def list(
+        self,
+        *,
+        limit: int | Omit = omit,
+        offset: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AgentListResponse:
+        """
+        List all agents the authenticated user has access to, including personal agents
+        and agents shared via teams. Supports pagination via offset and limit query
+        parameters.
+
+        Args:
+          limit: Maximum number of items to return.
+
+          offset: Number of items to skip.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._get(
+            "/v1/agents/list-agents",
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "limit": limit,
+                        "offset": offset,
+                    },
+                    agent_list_params.AgentListParams,
+                ),
+            ),
+            cast_to=AgentListResponse,
+        )
+
     async def delete(
         self,
         *,
@@ -913,6 +1011,9 @@ class AgentsResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             agents.create,
         )
+        self.list = to_raw_response_wrapper(
+            agents.list,
+        )
         self.delete = to_raw_response_wrapper(
             agents.delete,
         )
@@ -942,6 +1043,9 @@ class AsyncAgentsResourceWithRawResponse:
 
         self.create = async_to_raw_response_wrapper(
             agents.create,
+        )
+        self.list = async_to_raw_response_wrapper(
+            agents.list,
         )
         self.delete = async_to_raw_response_wrapper(
             agents.delete,
@@ -973,6 +1077,9 @@ class AgentsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             agents.create,
         )
+        self.list = to_streamed_response_wrapper(
+            agents.list,
+        )
         self.delete = to_streamed_response_wrapper(
             agents.delete,
         )
@@ -1002,6 +1109,9 @@ class AsyncAgentsResourceWithStreamingResponse:
 
         self.create = async_to_streamed_response_wrapper(
             agents.create,
+        )
+        self.list = async_to_streamed_response_wrapper(
+            agents.list,
         )
         self.delete = async_to_streamed_response_wrapper(
             agents.delete,
