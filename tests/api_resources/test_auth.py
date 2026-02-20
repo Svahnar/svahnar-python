@@ -16,13 +16,13 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestAuth:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_login(self, client: Svahnar) -> None:
         auth = client.auth.login()
         assert_matches_type(object, auth, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_login_with_all_params(self, client: Svahnar) -> None:
         auth = client.auth.login(
@@ -30,7 +30,7 @@ class TestAuth:
         )
         assert_matches_type(object, auth, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_login(self, client: Svahnar) -> None:
         response = client.auth.with_raw_response.login()
@@ -40,7 +40,7 @@ class TestAuth:
         auth = response.parse()
         assert_matches_type(object, auth, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_login(self, client: Svahnar) -> None:
         with client.auth.with_streaming_response.login() as response:
@@ -58,13 +58,13 @@ class TestAsyncAuth:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_login(self, async_client: AsyncSvahnar) -> None:
         auth = await async_client.auth.login()
         assert_matches_type(object, auth, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_login_with_all_params(self, async_client: AsyncSvahnar) -> None:
         auth = await async_client.auth.login(
@@ -72,7 +72,7 @@ class TestAsyncAuth:
         )
         assert_matches_type(object, auth, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_login(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.auth.with_raw_response.login()
@@ -82,7 +82,7 @@ class TestAsyncAuth:
         auth = await response.parse()
         assert_matches_type(object, auth, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_login(self, async_client: AsyncSvahnar) -> None:
         async with async_client.auth.with_streaming_response.login() as response:
