@@ -34,7 +34,7 @@ class TestAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
@@ -45,8 +45,8 @@ class TestAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
-            agent_icon=b"raw file contents",
+            yaml_file=b"Example data",
+            agent_icon=b"Example data",
         )
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
@@ -57,7 +57,7 @@ class TestAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -72,7 +72,7 @@ class TestAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -276,7 +276,7 @@ class TestAgents:
     def test_method_reconfigure(self, client: Svahnar) -> None:
         agent = client.agents.reconfigure(
             agent_id="agent_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
         assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
 
@@ -285,7 +285,7 @@ class TestAgents:
     def test_raw_response_reconfigure(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.reconfigure(
             agent_id="agent_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -298,7 +298,7 @@ class TestAgents:
     def test_streaming_response_reconfigure(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.reconfigure(
             agent_id="agent_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -371,7 +371,7 @@ class TestAgents:
             message="message",
             agent_history=[{}],
             thread_id="thread_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
         assert_matches_type(object, agent, path=["response"])
@@ -415,7 +415,7 @@ class TestAgents:
     def test_method_update_info_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.update_info(
             agent_id="agent_id",
-            agent_icon=b"raw file contents",
+            agent_icon=b"Example data",
             deploy_to="deploy_to",
             description="description",
             name="name",
@@ -458,7 +458,7 @@ class TestAgents:
     @parametrize
     def test_method_validate_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.validate(
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
@@ -498,7 +498,7 @@ class TestAsyncAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
@@ -509,8 +509,8 @@ class TestAsyncAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
-            agent_icon=b"raw file contents",
+            yaml_file=b"Example data",
+            agent_icon=b"Example data",
         )
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
@@ -521,7 +521,7 @@ class TestAsyncAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -536,7 +536,7 @@ class TestAsyncAgents:
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -740,7 +740,7 @@ class TestAsyncAgents:
     async def test_method_reconfigure(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.reconfigure(
             agent_id="agent_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
         assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
 
@@ -749,7 +749,7 @@ class TestAsyncAgents:
     async def test_raw_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.reconfigure(
             agent_id="agent_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -762,7 +762,7 @@ class TestAsyncAgents:
     async def test_streaming_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.reconfigure(
             agent_id="agent_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -835,7 +835,7 @@ class TestAsyncAgents:
             message="message",
             agent_history=[{}],
             thread_id="thread_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
         assert_matches_type(object, agent, path=["response"])
@@ -879,7 +879,7 @@ class TestAsyncAgents:
     async def test_method_update_info_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.update_info(
             agent_id="agent_id",
-            agent_icon=b"raw file contents",
+            agent_icon=b"Example data",
             deploy_to="deploy_to",
             description="description",
             name="name",
@@ -922,7 +922,7 @@ class TestAsyncAgents:
     @parametrize
     async def test_method_validate_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.validate(
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
