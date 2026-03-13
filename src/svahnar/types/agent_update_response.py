@@ -4,7 +4,7 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["AgentReconfigureResponse", "RequestMetadata"]
+__all__ = ["AgentUpdateResponse", "RequestMetadata"]
 
 
 class RequestMetadata(BaseModel):
@@ -14,7 +14,7 @@ class RequestMetadata(BaseModel):
     """Unique request identifier for tracing and support."""
 
 
-class AgentReconfigureResponse(BaseModel):
+class AgentUpdateResponse(BaseModel):
     """Simple response containing a message string."""
 
     message: str
