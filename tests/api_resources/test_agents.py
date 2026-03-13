@@ -10,15 +10,14 @@ import pytest
 from svahnar import Svahnar, AsyncSvahnar
 from tests.utils import assert_matches_type
 from svahnar.types import (
+    AgentGetResponse,
     AgentRunResponse,
     AgentListResponse,
     AgentCreateResponse,
     AgentDeleteResponse,
-    AgentRetrieveResponse,
+    AgentUpdateResponse,
     AgentValidateResponse,
     AgentBulkDeleteResponse,
-    AgentUpdateInfoResponse,
-    AgentReconfigureResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -84,45 +83,50 @@ class TestAgents:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: Svahnar) -> None:
-        agent = client.agents.retrieve(
-            "agent_id",
+    def test_method_update(self, client: Svahnar) -> None:
+        agent = client.agents.update(
+            agent_id="agent_id",
         )
-        assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.retrieve(
-            "agent_id",
+    def test_method_update_with_all_params(self, client: Svahnar) -> None:
+        agent = client.agents.update(
+            agent_id="agent_id",
+            agent_icon=b"Example data",
+            deploy_to="deploy_to",
+            description="description",
+            name="name",
+            yaml_file=b"Example data",
+        )
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_update(self, client: Svahnar) -> None:
+        response = client.agents.with_raw_response.update(
+            agent_id="agent_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.retrieve(
-            "agent_id",
+    def test_streaming_response_update(self, client: Svahnar) -> None:
+        with client.agents.with_streaming_response.update(
+            agent_id="agent_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+            assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_path_params_retrieve(self, client: Svahnar) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            client.agents.with_raw_response.retrieve(
-                "",
-            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -273,40 +277,45 @@ class TestAgents:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_reconfigure(self, client: Svahnar) -> None:
-        agent = client.agents.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"Example data",
+    def test_method_get(self, client: Svahnar) -> None:
+        agent = client.agents.get(
+            "agent_id",
         )
-        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+        assert_matches_type(AgentGetResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_raw_response_reconfigure(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"Example data",
+    def test_raw_response_get(self, client: Svahnar) -> None:
+        response = client.agents.with_raw_response.get(
+            "agent_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+        assert_matches_type(AgentGetResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_streaming_response_reconfigure(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"Example data",
+    def test_streaming_response_get(self, client: Svahnar) -> None:
+        with client.agents.with_streaming_response.get(
+            "agent_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+            assert_matches_type(AgentGetResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_get(self, client: Svahnar) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
+            client.agents.with_raw_response.get(
+                "",
+            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -399,52 +408,6 @@ class TestAgents:
 
             agent = response.parse()
             assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_update_info(self, client: Svahnar) -> None:
-        agent = client.agents.update_info(
-            agent_id="agent_id",
-        )
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_update_info_with_all_params(self, client: Svahnar) -> None:
-        agent = client.agents.update_info(
-            agent_id="agent_id",
-            agent_icon=b"Example data",
-            deploy_to="deploy_to",
-            description="description",
-            name="name",
-        )
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_update_info(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.update_info(
-            agent_id="agent_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = response.parse()
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_update_info(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.update_info(
-            agent_id="agent_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = response.parse()
-            assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -548,45 +511,50 @@ class TestAsyncAgents:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.retrieve(
-            "agent_id",
+    async def test_method_update(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.update(
+            agent_id="agent_id",
         )
-        assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.retrieve(
-            "agent_id",
+    async def test_method_update_with_all_params(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.update(
+            agent_id="agent_id",
+            agent_icon=b"Example data",
+            deploy_to="deploy_to",
+            description="description",
+            name="name",
+            yaml_file=b"Example data",
+        )
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_update(self, async_client: AsyncSvahnar) -> None:
+        response = await async_client.agents.with_raw_response.update(
+            agent_id="agent_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.retrieve(
-            "agent_id",
+    async def test_streaming_response_update(self, async_client: AsyncSvahnar) -> None:
+        async with async_client.agents.with_streaming_response.update(
+            agent_id="agent_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+            assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncSvahnar) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            await async_client.agents.with_raw_response.retrieve(
-                "",
-            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -737,40 +705,45 @@ class TestAsyncAgents:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_reconfigure(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"Example data",
+    async def test_method_get(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.get(
+            "agent_id",
         )
-        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+        assert_matches_type(AgentGetResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_raw_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"Example data",
+    async def test_raw_response_get(self, async_client: AsyncSvahnar) -> None:
+        response = await async_client.agents.with_raw_response.get(
+            "agent_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+        assert_matches_type(AgentGetResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_streaming_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"Example data",
+    async def test_streaming_response_get(self, async_client: AsyncSvahnar) -> None:
+        async with async_client.agents.with_streaming_response.get(
+            "agent_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+            assert_matches_type(AgentGetResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncSvahnar) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
+            await async_client.agents.with_raw_response.get(
+                "",
+            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -863,52 +836,6 @@ class TestAsyncAgents:
 
             agent = await response.parse()
             assert_matches_type(object, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_update_info(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.update_info(
-            agent_id="agent_id",
-        )
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_update_info_with_all_params(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.update_info(
-            agent_id="agent_id",
-            agent_icon=b"Example data",
-            deploy_to="deploy_to",
-            description="description",
-            name="name",
-        )
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_update_info(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.update_info(
-            agent_id="agent_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = await response.parse()
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_update_info(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.update_info(
-            agent_id="agent_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = await response.parse()
-            assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

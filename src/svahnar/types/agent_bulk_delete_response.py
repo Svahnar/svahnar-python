@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from .._models import BaseModel
 
@@ -22,6 +22,9 @@ class AgentBulkDeleteResponse(BaseModel):
 
     deleted_ids: Optional[List[str]] = None
     """IDs of the agents that were successfully deleted."""
+
+    error_details: Optional[List[Dict[str, str]]] = None
+    """Details of agents that failed to be deleted."""
 
     request_metadata: Optional[RequestMetadata] = None
     """Response metadata including timestamp and request ID."""
