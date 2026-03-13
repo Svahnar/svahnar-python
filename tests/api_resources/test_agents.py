@@ -10,15 +10,14 @@ import pytest
 from svahnar import Svahnar, AsyncSvahnar
 from tests.utils import assert_matches_type
 from svahnar.types import (
+    AgentGetResponse,
     AgentRunResponse,
     AgentListResponse,
     AgentCreateResponse,
     AgentDeleteResponse,
-    AgentRetrieveResponse,
+    AgentUpdateResponse,
     AgentValidateResponse,
     AgentBulkDeleteResponse,
-    AgentUpdateInfoResponse,
-    AgentReconfigureResponse,
 )
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
@@ -27,37 +26,37 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestAgents:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create(self, client: Svahnar) -> None:
         agent = client.agents.create(
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_create_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.create(
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
-            agent_icon=b"raw file contents",
+            yaml_file=b"Example data",
+            agent_icon=b"Example data",
         )
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_create(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.create(
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -65,14 +64,14 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_create(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.create(
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -82,55 +81,60 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: Svahnar) -> None:
-        agent = client.agents.retrieve(
-            "agent_id",
+    def test_method_update(self, client: Svahnar) -> None:
+        agent = client.agents.update(
+            agent_id="agent_id",
         )
-        assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.retrieve(
-            "agent_id",
+    def test_method_update_with_all_params(self, client: Svahnar) -> None:
+        agent = client.agents.update(
+            agent_id="agent_id",
+            agent_icon=b"Example data",
+            deploy_to="deploy_to",
+            description="description",
+            name="name",
+            yaml_file=b"Example data",
+        )
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_update(self, client: Svahnar) -> None:
+        response = client.agents.with_raw_response.update(
+            agent_id="agent_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.retrieve(
-            "agent_id",
+    def test_streaming_response_update(self, client: Svahnar) -> None:
+        with client.agents.with_streaming_response.update(
+            agent_id="agent_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+            assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_path_params_retrieve(self, client: Svahnar) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            client.agents.with_raw_response.retrieve(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: Svahnar) -> None:
         agent = client.agents.list()
         assert_matches_type(AgentListResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.list(
@@ -139,7 +143,7 @@ class TestAgents:
         )
         assert_matches_type(AgentListResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.list()
@@ -149,7 +153,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(AgentListResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.list() as response:
@@ -161,7 +165,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_delete(self, client: Svahnar) -> None:
         agent = client.agents.delete(
@@ -169,7 +173,7 @@ class TestAgents:
         )
         assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_delete(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.delete(
@@ -181,7 +185,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_delete(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.delete(
@@ -195,7 +199,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_bulk_delete(self, client: Svahnar) -> None:
         agent = client.agents.bulk_delete(
@@ -203,7 +207,7 @@ class TestAgents:
         )
         assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_bulk_delete(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.bulk_delete(
@@ -215,7 +219,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_bulk_delete(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.bulk_delete(
@@ -229,7 +233,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_download(self, client: Svahnar) -> None:
         agent = client.agents.download(
@@ -237,7 +241,7 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_download(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.download(
@@ -249,7 +253,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_download(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.download(
@@ -263,7 +267,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_download(self, client: Svahnar) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
@@ -271,44 +275,49 @@ class TestAgents:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_reconfigure(self, client: Svahnar) -> None:
-        agent = client.agents.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"raw file contents",
+    def test_method_get(self, client: Svahnar) -> None:
+        agent = client.agents.get(
+            "agent_id",
         )
-        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+        assert_matches_type(AgentGetResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_raw_response_reconfigure(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"raw file contents",
+    def test_raw_response_get(self, client: Svahnar) -> None:
+        response = client.agents.with_raw_response.get(
+            "agent_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+        assert_matches_type(AgentGetResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_streaming_response_reconfigure(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"raw file contents",
+    def test_streaming_response_get(self, client: Svahnar) -> None:
+        with client.agents.with_streaming_response.get(
+            "agent_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+            assert_matches_type(AgentGetResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_get(self, client: Svahnar) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
+            client.agents.with_raw_response.get(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_run(self, client: Svahnar) -> None:
         agent = client.agents.run(
@@ -317,7 +326,7 @@ class TestAgents:
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_run_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.run(
@@ -328,7 +337,7 @@ class TestAgents:
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_run(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.run(
@@ -341,7 +350,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_run(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.run(
@@ -356,7 +365,7 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_test(self, client: Svahnar) -> None:
         agent = client.agents.test(
@@ -364,19 +373,19 @@ class TestAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_test_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.test(
             message="message",
             agent_history=[{}],
             thread_id="thread_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_test(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.test(
@@ -388,7 +397,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_test(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.test(
@@ -402,68 +411,22 @@ class TestAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_update_info(self, client: Svahnar) -> None:
-        agent = client.agents.update_info(
-            agent_id="agent_id",
-        )
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_method_update_info_with_all_params(self, client: Svahnar) -> None:
-        agent = client.agents.update_info(
-            agent_id="agent_id",
-            agent_icon=b"raw file contents",
-            deploy_to="deploy_to",
-            description="description",
-            name="name",
-        )
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_raw_response_update_info(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.update_info(
-            agent_id="agent_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = response.parse()
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    def test_streaming_response_update_info(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.update_info(
-            agent_id="agent_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = response.parse()
-            assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_validate(self, client: Svahnar) -> None:
         agent = client.agents.validate()
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_validate_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.validate(
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_validate(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.validate()
@@ -473,7 +436,7 @@ class TestAgents:
         agent = response.parse()
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_validate(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.validate() as response:
@@ -491,37 +454,37 @@ class TestAsyncAgents:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.create(
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.create(
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
-            agent_icon=b"raw file contents",
+            yaml_file=b"Example data",
+            agent_icon=b"Example data",
         )
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_create(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.create(
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         )
 
         assert response.is_closed is True
@@ -529,14 +492,14 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(AgentCreateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_create(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.create(
             deploy_to="deploy_to",
             description="description",
             name="name",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -546,55 +509,60 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.retrieve(
-            "agent_id",
+    async def test_method_update(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.update(
+            agent_id="agent_id",
         )
-        assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.retrieve(
-            "agent_id",
+    async def test_method_update_with_all_params(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.update(
+            agent_id="agent_id",
+            agent_icon=b"Example data",
+            deploy_to="deploy_to",
+            description="description",
+            name="name",
+            yaml_file=b"Example data",
+        )
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_update(self, async_client: AsyncSvahnar) -> None:
+        response = await async_client.agents.with_raw_response.update(
+            agent_id="agent_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+        assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.retrieve(
-            "agent_id",
+    async def test_streaming_response_update(self, async_client: AsyncSvahnar) -> None:
+        async with async_client.agents.with_streaming_response.update(
+            agent_id="agent_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(AgentRetrieveResponse, agent, path=["response"])
+            assert_matches_type(AgentUpdateResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_path_params_retrieve(self, async_client: AsyncSvahnar) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
-            await async_client.agents.with_raw_response.retrieve(
-                "",
-            )
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.list()
         assert_matches_type(AgentListResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.list(
@@ -603,7 +571,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(AgentListResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.list()
@@ -613,7 +581,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(AgentListResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.list() as response:
@@ -625,7 +593,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_delete(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.delete(
@@ -633,7 +601,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_delete(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.delete(
@@ -645,7 +613,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(AgentDeleteResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_delete(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.delete(
@@ -659,7 +627,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_bulk_delete(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.bulk_delete(
@@ -667,7 +635,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_bulk_delete(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.bulk_delete(
@@ -679,7 +647,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(AgentBulkDeleteResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_bulk_delete(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.bulk_delete(
@@ -693,7 +661,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_download(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.download(
@@ -701,7 +669,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_download(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.download(
@@ -713,7 +681,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_download(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.download(
@@ -727,7 +695,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_download(self, async_client: AsyncSvahnar) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
@@ -735,44 +703,49 @@ class TestAsyncAgents:
                 "",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_reconfigure(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"raw file contents",
+    async def test_method_get(self, async_client: AsyncSvahnar) -> None:
+        agent = await async_client.agents.get(
+            "agent_id",
         )
-        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+        assert_matches_type(AgentGetResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_raw_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"raw file contents",
+    async def test_raw_response_get(self, async_client: AsyncSvahnar) -> None:
+        response = await async_client.agents.with_raw_response.get(
+            "agent_id",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+        assert_matches_type(AgentGetResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_streaming_response_reconfigure(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.reconfigure(
-            agent_id="agent_id",
-            yaml_file=b"raw file contents",
+    async def test_streaming_response_get(self, async_client: AsyncSvahnar) -> None:
+        async with async_client.agents.with_streaming_response.get(
+            "agent_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(AgentReconfigureResponse, agent, path=["response"])
+            assert_matches_type(AgentGetResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_get(self, async_client: AsyncSvahnar) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `agent_id` but received ''"):
+            await async_client.agents.with_raw_response.get(
+                "",
+            )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_run(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
@@ -781,7 +754,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_run_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
@@ -792,7 +765,7 @@ class TestAsyncAgents:
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_run(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.run(
@@ -805,7 +778,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_run(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.run(
@@ -820,7 +793,7 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_test(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.test(
@@ -828,19 +801,19 @@ class TestAsyncAgents:
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_test_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.test(
             message="message",
             agent_history=[{}],
             thread_id="thread_id",
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_test(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.test(
@@ -852,7 +825,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(object, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_test(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.test(
@@ -866,68 +839,22 @@ class TestAsyncAgents:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_update_info(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.update_info(
-            agent_id="agent_id",
-        )
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_method_update_info_with_all_params(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.update_info(
-            agent_id="agent_id",
-            agent_icon=b"raw file contents",
-            deploy_to="deploy_to",
-            description="description",
-            name="name",
-        )
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_raw_response_update_info(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.update_info(
-            agent_id="agent_id",
-        )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        agent = await response.parse()
-        assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
-    @parametrize
-    async def test_streaming_response_update_info(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.update_info(
-            agent_id="agent_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-            agent = await response.parse()
-            assert_matches_type(AgentUpdateInfoResponse, agent, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_validate(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.validate()
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_validate_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.validate(
-            yaml_file=b"raw file contents",
+            yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_validate(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.validate()
@@ -937,7 +864,7 @@ class TestAsyncAgents:
         agent = await response.parse()
         assert_matches_type(AgentValidateResponse, agent, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_validate(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.validate() as response:

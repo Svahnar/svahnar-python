@@ -7,15 +7,15 @@ from typing_extensions import Required, TypedDict
 
 from .._types import FileTypes
 
-__all__ = ["AgentUpdateInfoParams"]
+__all__ = ["AgentUpdateParams"]
 
 
-class AgentUpdateInfoParams(TypedDict, total=False):
+class AgentUpdateParams(TypedDict, total=False):
     agent_id: Required[str]
     """The ID of the agent to update."""
 
     agent_icon: Optional[FileTypes]
-    """New agent icon (512x512 pixels)."""
+    """New agent icon."""
 
     deploy_to: Optional[str]
     """New deployment target: 'AgentStore' or 'Organization'."""
@@ -25,3 +25,6 @@ class AgentUpdateInfoParams(TypedDict, total=False):
 
     name: Optional[str]
     """New name for the agent."""
+
+    yaml_file: Optional[FileTypes]
+    """The new YAML configuration file."""

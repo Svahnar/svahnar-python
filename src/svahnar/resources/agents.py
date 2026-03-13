@@ -12,10 +12,9 @@ from ..types import (
     agent_test_params,
     agent_create_params,
     agent_delete_params,
+    agent_update_params,
     agent_validate_params,
     agent_bulk_delete_params,
-    agent_reconfigure_params,
-    agent_update_info_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
 from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
@@ -28,15 +27,14 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.agent_get_response import AgentGetResponse
 from ..types.agent_run_response import AgentRunResponse
 from ..types.agent_list_response import AgentListResponse
 from ..types.agent_create_response import AgentCreateResponse
 from ..types.agent_delete_response import AgentDeleteResponse
-from ..types.agent_retrieve_response import AgentRetrieveResponse
+from ..types.agent_update_response import AgentUpdateResponse
 from ..types.agent_validate_response import AgentValidateResponse
 from ..types.agent_bulk_delete_response import AgentBulkDeleteResponse
-from ..types.agent_reconfigure_response import AgentReconfigureResponse
-from ..types.agent_update_info_response import AgentUpdateInfoResponse
 
 __all__ = ["AgentsResource", "AsyncAgentsResource"]
 
@@ -122,24 +120,39 @@ class AgentsResource(SyncAPIResource):
             cast_to=AgentCreateResponse,
         )
 
-    def retrieve(
+    def update(
         self,
-        agent_id: str,
         *,
+        agent_id: str,
+        agent_icon: Optional[FileTypes] | Omit = omit,
+        deploy_to: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        yaml_file: Optional[FileTypes] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentRetrieveResponse:
-        """Retrieve detailed information about a specific agent by its ID.
-
-        The user must
-        have access to the agent (via personal agents or team membership).
+    ) -> AgentUpdateResponse:
+        """
+        Update an agent's name, description, deployment target, icon, generated
+        questions, or reconfigure its YAML. Only the creator of the agent can perform
+        this operation.
 
         Args:
-          agent_id: The unique identifier of the agent.
+          agent_id: The ID of the agent to update.
+
+          agent_icon: New agent icon.
+
+          deploy_to: New deployment target: 'AgentStore' or 'Organization'.
+
+          description: New description for the agent.
+
+          name: New name for the agent.
+
+          yaml_file: The new YAML configuration file.
 
           extra_headers: Send extra headers
 
@@ -149,14 +162,29 @@ class AgentsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not agent_id:
-            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
-        return self._get(
-            f"/v1/agents/get-agent/{agent_id}",
+        body = deepcopy_minimal(
+            {
+                "agent_id": agent_id,
+                "agent_icon": agent_icon,
+                "deploy_to": deploy_to,
+                "description": description,
+                "name": name,
+                "yaml_file": yaml_file,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"], ["agent_icon"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return self._put(
+            "/v1/agents/update",
+            body=maybe_transform(body, agent_update_params.AgentUpdateParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AgentRetrieveResponse,
+            cast_to=AgentUpdateResponse,
         )
 
     def list(
@@ -172,9 +200,9 @@ class AgentsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentListResponse:
         """
-        List all agents the authenticated user has access to, including personal agents
-        and agents shared via teams. Supports pagination via offset and limit query
-        parameters.
+        List all agents the authenticated user has access to, including personal agents,
+        agents shared via teams, and agents created by the user. Supports pagination via
+        offset and limit query parameters.
 
         Args:
           limit: Maximum number of items to return.
@@ -220,8 +248,7 @@ class AgentsResource(SyncAPIResource):
     ) -> AgentDeleteResponse:
         """Delete a single agent by its ID.
 
-        The agent must belong to the requesting user's
-        organization.
+        Only the creator can delete their agents.
 
         Args:
           agent_id: The ID of the agent to delete.
@@ -256,8 +283,7 @@ class AgentsResource(SyncAPIResource):
     ) -> AgentBulkDeleteResponse:
         """Delete multiple agents by their IDs.
 
-        Only agents belonging to the requesting
-        user's organization will be deleted.
+        Only the creator can delete their agents.
 
         Args:
           agent_ids: The list of agent IDs to delete.
@@ -316,27 +342,24 @@ class AgentsResource(SyncAPIResource):
             cast_to=object,
         )
 
-    def reconfigure(
+    def get(
         self,
-        *,
         agent_id: str,
-        yaml_file: FileTypes,
+        *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentReconfigureResponse:
-        """Replace the YAML configuration for an existing agent.
+    ) -> AgentGetResponse:
+        """Retrieve detailed information about a specific agent by its ID.
 
-        Only the creator of the
-        agent can perform this operation.
+        The user must
+        have access to the agent (via personal agents or team membership).
 
         Args:
-          agent_id: The ID of the agent to reconfigure.
-
-          yaml_file: The new YAML configuration file.
+          agent_id: The unique identifier of the agent.
 
           extra_headers: Send extra headers
 
@@ -346,25 +369,14 @@ class AgentsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
-            {
-                "agent_id": agent_id,
-                "yaml_file": yaml_file,
-            }
-        )
-        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
-        return self._put(
-            "/v1/agents/reconfigure-agent",
-            body=maybe_transform(body, agent_reconfigure_params.AgentReconfigureParams),
-            files=files,
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return self._get(
+            f"/v1/agents/get-agent/{agent_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AgentReconfigureResponse,
+            cast_to=AgentGetResponse,
         )
 
     def run(
@@ -481,69 +493,6 @@ class AgentsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=object,
-        )
-
-    def update_info(
-        self,
-        *,
-        agent_id: str,
-        agent_icon: Optional[FileTypes] | Omit = omit,
-        deploy_to: Optional[str] | Omit = omit,
-        description: Optional[str] | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentUpdateInfoResponse:
-        """Update an agent's name, description, deployment target, or icon.
-
-        Only the
-        creator of the agent can perform this operation.
-
-        Args:
-          agent_id: The ID of the agent to update.
-
-          agent_icon: New agent icon (512x512 pixels).
-
-          deploy_to: New deployment target: 'AgentStore' or 'Organization'.
-
-          description: New description for the agent.
-
-          name: New name for the agent.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        body = deepcopy_minimal(
-            {
-                "agent_id": agent_id,
-                "agent_icon": agent_icon,
-                "deploy_to": deploy_to,
-                "description": description,
-                "name": name,
-            }
-        )
-        files = extract_files(cast(Mapping[str, object], body), paths=[["agent_icon"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
-        return self._put(
-            "/v1/agents/update-agent-info",
-            body=maybe_transform(body, agent_update_info_params.AgentUpdateInfoParams),
-            files=files,
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AgentUpdateInfoResponse,
         )
 
     def validate(
@@ -678,24 +627,39 @@ class AsyncAgentsResource(AsyncAPIResource):
             cast_to=AgentCreateResponse,
         )
 
-    async def retrieve(
+    async def update(
         self,
-        agent_id: str,
         *,
+        agent_id: str,
+        agent_icon: Optional[FileTypes] | Omit = omit,
+        deploy_to: Optional[str] | Omit = omit,
+        description: Optional[str] | Omit = omit,
+        name: Optional[str] | Omit = omit,
+        yaml_file: Optional[FileTypes] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentRetrieveResponse:
-        """Retrieve detailed information about a specific agent by its ID.
-
-        The user must
-        have access to the agent (via personal agents or team membership).
+    ) -> AgentUpdateResponse:
+        """
+        Update an agent's name, description, deployment target, icon, generated
+        questions, or reconfigure its YAML. Only the creator of the agent can perform
+        this operation.
 
         Args:
-          agent_id: The unique identifier of the agent.
+          agent_id: The ID of the agent to update.
+
+          agent_icon: New agent icon.
+
+          deploy_to: New deployment target: 'AgentStore' or 'Organization'.
+
+          description: New description for the agent.
+
+          name: New name for the agent.
+
+          yaml_file: The new YAML configuration file.
 
           extra_headers: Send extra headers
 
@@ -705,14 +669,29 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not agent_id:
-            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
-        return await self._get(
-            f"/v1/agents/get-agent/{agent_id}",
+        body = deepcopy_minimal(
+            {
+                "agent_id": agent_id,
+                "agent_icon": agent_icon,
+                "deploy_to": deploy_to,
+                "description": description,
+                "name": name,
+                "yaml_file": yaml_file,
+            }
+        )
+        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"], ["agent_icon"]])
+        # It should be noted that the actual Content-Type header that will be
+        # sent to the server will contain a `boundary` parameter, e.g.
+        # multipart/form-data; boundary=---abc--
+        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
+        return await self._put(
+            "/v1/agents/update",
+            body=await async_maybe_transform(body, agent_update_params.AgentUpdateParams),
+            files=files,
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AgentRetrieveResponse,
+            cast_to=AgentUpdateResponse,
         )
 
     async def list(
@@ -728,9 +707,9 @@ class AsyncAgentsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AgentListResponse:
         """
-        List all agents the authenticated user has access to, including personal agents
-        and agents shared via teams. Supports pagination via offset and limit query
-        parameters.
+        List all agents the authenticated user has access to, including personal agents,
+        agents shared via teams, and agents created by the user. Supports pagination via
+        offset and limit query parameters.
 
         Args:
           limit: Maximum number of items to return.
@@ -776,8 +755,7 @@ class AsyncAgentsResource(AsyncAPIResource):
     ) -> AgentDeleteResponse:
         """Delete a single agent by its ID.
 
-        The agent must belong to the requesting user's
-        organization.
+        Only the creator can delete their agents.
 
         Args:
           agent_id: The ID of the agent to delete.
@@ -812,8 +790,7 @@ class AsyncAgentsResource(AsyncAPIResource):
     ) -> AgentBulkDeleteResponse:
         """Delete multiple agents by their IDs.
 
-        Only agents belonging to the requesting
-        user's organization will be deleted.
+        Only the creator can delete their agents.
 
         Args:
           agent_ids: The list of agent IDs to delete.
@@ -872,27 +849,24 @@ class AsyncAgentsResource(AsyncAPIResource):
             cast_to=object,
         )
 
-    async def reconfigure(
+    async def get(
         self,
-        *,
         agent_id: str,
-        yaml_file: FileTypes,
+        *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentReconfigureResponse:
-        """Replace the YAML configuration for an existing agent.
+    ) -> AgentGetResponse:
+        """Retrieve detailed information about a specific agent by its ID.
 
-        Only the creator of the
-        agent can perform this operation.
+        The user must
+        have access to the agent (via personal agents or team membership).
 
         Args:
-          agent_id: The ID of the agent to reconfigure.
-
-          yaml_file: The new YAML configuration file.
+          agent_id: The unique identifier of the agent.
 
           extra_headers: Send extra headers
 
@@ -902,25 +876,14 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
-            {
-                "agent_id": agent_id,
-                "yaml_file": yaml_file,
-            }
-        )
-        files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
-        return await self._put(
-            "/v1/agents/reconfigure-agent",
-            body=await async_maybe_transform(body, agent_reconfigure_params.AgentReconfigureParams),
-            files=files,
+        if not agent_id:
+            raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
+        return await self._get(
+            f"/v1/agents/get-agent/{agent_id}",
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=AgentReconfigureResponse,
+            cast_to=AgentGetResponse,
         )
 
     async def run(
@@ -1039,69 +1002,6 @@ class AsyncAgentsResource(AsyncAPIResource):
             cast_to=object,
         )
 
-    async def update_info(
-        self,
-        *,
-        agent_id: str,
-        agent_icon: Optional[FileTypes] | Omit = omit,
-        deploy_to: Optional[str] | Omit = omit,
-        description: Optional[str] | Omit = omit,
-        name: Optional[str] | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AgentUpdateInfoResponse:
-        """Update an agent's name, description, deployment target, or icon.
-
-        Only the
-        creator of the agent can perform this operation.
-
-        Args:
-          agent_id: The ID of the agent to update.
-
-          agent_icon: New agent icon (512x512 pixels).
-
-          deploy_to: New deployment target: 'AgentStore' or 'Organization'.
-
-          description: New description for the agent.
-
-          name: New name for the agent.
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        body = deepcopy_minimal(
-            {
-                "agent_id": agent_id,
-                "agent_icon": agent_icon,
-                "deploy_to": deploy_to,
-                "description": description,
-                "name": name,
-            }
-        )
-        files = extract_files(cast(Mapping[str, object], body), paths=[["agent_icon"]])
-        # It should be noted that the actual Content-Type header that will be
-        # sent to the server will contain a `boundary` parameter, e.g.
-        # multipart/form-data; boundary=---abc--
-        extra_headers = {"Content-Type": "multipart/form-data", **(extra_headers or {})}
-        return await self._put(
-            "/v1/agents/update-agent-info",
-            body=await async_maybe_transform(body, agent_update_info_params.AgentUpdateInfoParams),
-            files=files,
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=AgentUpdateInfoResponse,
-        )
-
     async def validate(
         self,
         *,
@@ -1160,8 +1060,8 @@ class AgentsResourceWithRawResponse:
         self.create = to_raw_response_wrapper(
             agents.create,
         )
-        self.retrieve = to_raw_response_wrapper(
-            agents.retrieve,
+        self.update = to_raw_response_wrapper(
+            agents.update,
         )
         self.list = to_raw_response_wrapper(
             agents.list,
@@ -1175,17 +1075,14 @@ class AgentsResourceWithRawResponse:
         self.download = to_raw_response_wrapper(
             agents.download,
         )
-        self.reconfigure = to_raw_response_wrapper(
-            agents.reconfigure,
+        self.get = to_raw_response_wrapper(
+            agents.get,
         )
         self.run = to_raw_response_wrapper(
             agents.run,
         )
         self.test = to_raw_response_wrapper(
             agents.test,
-        )
-        self.update_info = to_raw_response_wrapper(
-            agents.update_info,
         )
         self.validate = to_raw_response_wrapper(
             agents.validate,
@@ -1199,8 +1096,8 @@ class AsyncAgentsResourceWithRawResponse:
         self.create = async_to_raw_response_wrapper(
             agents.create,
         )
-        self.retrieve = async_to_raw_response_wrapper(
-            agents.retrieve,
+        self.update = async_to_raw_response_wrapper(
+            agents.update,
         )
         self.list = async_to_raw_response_wrapper(
             agents.list,
@@ -1214,17 +1111,14 @@ class AsyncAgentsResourceWithRawResponse:
         self.download = async_to_raw_response_wrapper(
             agents.download,
         )
-        self.reconfigure = async_to_raw_response_wrapper(
-            agents.reconfigure,
+        self.get = async_to_raw_response_wrapper(
+            agents.get,
         )
         self.run = async_to_raw_response_wrapper(
             agents.run,
         )
         self.test = async_to_raw_response_wrapper(
             agents.test,
-        )
-        self.update_info = async_to_raw_response_wrapper(
-            agents.update_info,
         )
         self.validate = async_to_raw_response_wrapper(
             agents.validate,
@@ -1238,8 +1132,8 @@ class AgentsResourceWithStreamingResponse:
         self.create = to_streamed_response_wrapper(
             agents.create,
         )
-        self.retrieve = to_streamed_response_wrapper(
-            agents.retrieve,
+        self.update = to_streamed_response_wrapper(
+            agents.update,
         )
         self.list = to_streamed_response_wrapper(
             agents.list,
@@ -1253,17 +1147,14 @@ class AgentsResourceWithStreamingResponse:
         self.download = to_streamed_response_wrapper(
             agents.download,
         )
-        self.reconfigure = to_streamed_response_wrapper(
-            agents.reconfigure,
+        self.get = to_streamed_response_wrapper(
+            agents.get,
         )
         self.run = to_streamed_response_wrapper(
             agents.run,
         )
         self.test = to_streamed_response_wrapper(
             agents.test,
-        )
-        self.update_info = to_streamed_response_wrapper(
-            agents.update_info,
         )
         self.validate = to_streamed_response_wrapper(
             agents.validate,
@@ -1277,8 +1168,8 @@ class AsyncAgentsResourceWithStreamingResponse:
         self.create = async_to_streamed_response_wrapper(
             agents.create,
         )
-        self.retrieve = async_to_streamed_response_wrapper(
-            agents.retrieve,
+        self.update = async_to_streamed_response_wrapper(
+            agents.update,
         )
         self.list = async_to_streamed_response_wrapper(
             agents.list,
@@ -1292,17 +1183,14 @@ class AsyncAgentsResourceWithStreamingResponse:
         self.download = async_to_streamed_response_wrapper(
             agents.download,
         )
-        self.reconfigure = async_to_streamed_response_wrapper(
-            agents.reconfigure,
+        self.get = async_to_streamed_response_wrapper(
+            agents.get,
         )
         self.run = async_to_streamed_response_wrapper(
             agents.run,
         )
         self.test = async_to_streamed_response_wrapper(
             agents.test,
-        )
-        self.update_info = async_to_streamed_response_wrapper(
-            agents.update_info,
         )
         self.validate = async_to_streamed_response_wrapper(
             agents.validate,

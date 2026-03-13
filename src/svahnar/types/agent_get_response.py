@@ -4,7 +4,7 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["AgentRetrieveResponse", "UploadedBy", "RequestMetadata"]
+__all__ = ["AgentGetResponse", "UploadedBy", "RequestMetadata"]
 
 
 class UploadedBy(BaseModel):
@@ -24,7 +24,7 @@ class RequestMetadata(BaseModel):
     """Unique request identifier for tracing and support."""
 
 
-class AgentRetrieveResponse(BaseModel):
+class AgentGetResponse(BaseModel):
     """
     Agent detail returned by the get-agent endpoint, includes a note about YAML config.
     """
