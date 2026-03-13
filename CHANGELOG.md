@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.11.0 (2026-03-13)
+
+Full Changelog: [v1.10.0...v1.11.0](https://github.com/Svahnar/svahnar-python/compare/v1.10.0...v1.11.0)
+
+### Features
+
+* **api:** api update ([7b69994](https://github.com/Svahnar/svahnar-python/commit/7b6999425fcdd0c3ce8cc9fe6ed132191247d847))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([af34c16](https://github.com/Svahnar/svahnar-python/commit/af34c162a6021989afad86f46ca7670c5c83f76b))
+* format all `api.md` files ([dbd536e](https://github.com/Svahnar/svahnar-python/commit/dbd536edc43cdd7bf6f42625d598f975156a1739))
+* **internal:** add request options to SSE classes ([45a54bd](https://github.com/Svahnar/svahnar-python/commit/45a54bd795f0f405167e420244e6c3f6a9495f0b))
+* **internal:** fix lint error on Python 3.14 ([071df38](https://github.com/Svahnar/svahnar-python/commit/071df38cde9ed145b5cac553a7e23f3bbf61327d))
+* **internal:** make `test_proxy_environment_variables` more resilient ([a9b306e](https://github.com/Svahnar/svahnar-python/commit/a9b306e5e4f70c56978a86af5a60a187188892d8))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([a461f2e](https://github.com/Svahnar/svahnar-python/commit/a461f2ee3da0134896014eacf2633290adf89f41))
+* **internal:** remove mock server code ([2c00f26](https://github.com/Svahnar/svahnar-python/commit/2c00f26c509a720da32ba963d8eabc7294b2c9e1))
+* update mock server docs ([6182aab](https://github.com/Svahnar/svahnar-python/commit/6182aabbb75934fdfd10827505c4585187d1621e))
+* update placeholder string ([5946dc0](https://github.com/Svahnar/svahnar-python/commit/5946dc0c320099ac175d5b3376e20ca34c800d23))
+
 ## 1.10.0 (2026-02-11)
 
 Full Changelog: [v1.9.0...v1.10.0](https://github.com/Svahnar/svahnar-python/compare/v1.9.0...v1.10.0)
