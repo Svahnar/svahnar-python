@@ -16,6 +16,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.auth_login_response import AuthLoginResponse
 
 __all__ = ["AuthResource", "AsyncAuthResource"]
 
@@ -50,9 +51,9 @@ class AuthResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> AuthLoginResponse:
         """
-        Auth Login
+        Login to the API
 
         Args:
           extra_headers: Send extra headers
@@ -72,7 +73,7 @@ class AuthResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform({"include_ids": include_ids}, auth_login_params.AuthLoginParams),
             ),
-            cast_to=object,
+            cast_to=AuthLoginResponse,
         )
 
 
@@ -106,9 +107,9 @@ class AsyncAuthResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> AuthLoginResponse:
         """
-        Auth Login
+        Login to the API
 
         Args:
           extra_headers: Send extra headers
@@ -128,7 +129,7 @@ class AsyncAuthResource(AsyncAPIResource):
                 timeout=timeout,
                 query=await async_maybe_transform({"include_ids": include_ids}, auth_login_params.AuthLoginParams),
             ),
-            cast_to=object,
+            cast_to=AuthLoginResponse,
         )
 
 

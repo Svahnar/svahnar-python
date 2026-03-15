@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Mapping, Iterable, Optional, cast
+from typing_extensions import Literal
 
 import httpx
 
@@ -30,6 +31,7 @@ from .._base_client import make_request_options
 from ..types.agent_get_response import AgentGetResponse
 from ..types.agent_run_response import AgentRunResponse
 from ..types.agent_list_response import AgentListResponse
+from ..types.agent_test_response import AgentTestResponse
 from ..types.agent_create_response import AgentCreateResponse
 from ..types.agent_delete_response import AgentDeleteResponse
 from ..types.agent_update_response import AgentUpdateResponse
@@ -383,8 +385,9 @@ class AgentsResource(SyncAPIResource):
         self,
         *,
         agent_id: str,
-        message: str,
+        message: object,
         agent_history: Optional[Iterable[object]] | Omit = omit,
+        hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -405,6 +408,8 @@ class AgentsResource(SyncAPIResource):
 
           agent_history: List of prior messages; defaults to empty list.
 
+          hitl_decision: Human-in-the-loop decision for the agent.
+
           thread_id: Unique identifier for the chat session.
 
           extra_headers: Send extra headers
@@ -422,6 +427,7 @@ class AgentsResource(SyncAPIResource):
                     "agent_id": agent_id,
                     "message": message,
                     "agent_history": agent_history,
+                    "hitl_decision": hitl_decision,
                     "thread_id": thread_id,
                 },
                 agent_run_params.AgentRunParams,
@@ -436,7 +442,8 @@ class AgentsResource(SyncAPIResource):
         self,
         *,
         message: str,
-        agent_history: Optional[Iterable[object]] | Omit = omit,
+        agent_history: str | Omit = omit,
+        hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
         yaml_file: Optional[FileTypes] | Omit = omit,
         yaml_string: Optional[str] | Omit = omit,
@@ -446,7 +453,7 @@ class AgentsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> AgentTestResponse:
         """
         Test an agent by providing a YAML configuration (as a file or string) along with
         a message. The agent processes the message and returns a response without
@@ -456,6 +463,8 @@ class AgentsResource(SyncAPIResource):
           message: The message or command to be sent to the agent.
 
           agent_history: List of prior messages; defaults to empty list.
+
+          hitl_decision: Human-in-the-loop decision.
 
           thread_id: Unique identifier for the chat session.
 
@@ -475,6 +484,7 @@ class AgentsResource(SyncAPIResource):
             {
                 "message": message,
                 "agent_history": agent_history,
+                "hitl_decision": hitl_decision,
                 "thread_id": thread_id,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
@@ -492,7 +502,7 @@ class AgentsResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=AgentTestResponse,
         )
 
     def validate(
@@ -890,8 +900,9 @@ class AsyncAgentsResource(AsyncAPIResource):
         self,
         *,
         agent_id: str,
-        message: str,
+        message: object,
         agent_history: Optional[Iterable[object]] | Omit = omit,
+        hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -912,6 +923,8 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           agent_history: List of prior messages; defaults to empty list.
 
+          hitl_decision: Human-in-the-loop decision for the agent.
+
           thread_id: Unique identifier for the chat session.
 
           extra_headers: Send extra headers
@@ -929,6 +942,7 @@ class AsyncAgentsResource(AsyncAPIResource):
                     "agent_id": agent_id,
                     "message": message,
                     "agent_history": agent_history,
+                    "hitl_decision": hitl_decision,
                     "thread_id": thread_id,
                 },
                 agent_run_params.AgentRunParams,
@@ -943,7 +957,8 @@ class AsyncAgentsResource(AsyncAPIResource):
         self,
         *,
         message: str,
-        agent_history: Optional[Iterable[object]] | Omit = omit,
+        agent_history: str | Omit = omit,
+        hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
         yaml_file: Optional[FileTypes] | Omit = omit,
         yaml_string: Optional[str] | Omit = omit,
@@ -953,7 +968,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
+    ) -> AgentTestResponse:
         """
         Test an agent by providing a YAML configuration (as a file or string) along with
         a message. The agent processes the message and returns a response without
@@ -963,6 +978,8 @@ class AsyncAgentsResource(AsyncAPIResource):
           message: The message or command to be sent to the agent.
 
           agent_history: List of prior messages; defaults to empty list.
+
+          hitl_decision: Human-in-the-loop decision.
 
           thread_id: Unique identifier for the chat session.
 
@@ -982,6 +999,7 @@ class AsyncAgentsResource(AsyncAPIResource):
             {
                 "message": message,
                 "agent_history": agent_history,
+                "hitl_decision": hitl_decision,
                 "thread_id": thread_id,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
@@ -999,7 +1017,7 @@ class AsyncAgentsResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=object,
+            cast_to=AgentTestResponse,
         )
 
     async def validate(

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from typing import Iterable, Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["AgentRunParams"]
 
@@ -12,11 +12,14 @@ class AgentRunParams(TypedDict, total=False):
     agent_id: Required[str]
     """Unique identifier for the agent."""
 
-    message: Required[str]
+    message: Required[object]
     """The message or command to be sent to the agent."""
 
     agent_history: Optional[Iterable[object]]
     """List of prior messages; defaults to empty list."""
+
+    hitl_decision: Optional[Literal["approve", "edit", "reject"]]
+    """Human-in-the-loop decision for the agent."""
 
     thread_id: Optional[str]
     """Unique identifier for the chat session."""

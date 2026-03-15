@@ -16,6 +16,14 @@ from .agents import (
     AgentsResourceWithStreamingResponse,
     AsyncAgentsResourceWithStreamingResponse,
 )
+from .credits import (
+    CreditsResource,
+    AsyncCreditsResource,
+    CreditsResourceWithRawResponse,
+    AsyncCreditsResourceWithRawResponse,
+    CreditsResourceWithStreamingResponse,
+    AsyncCreditsResourceWithStreamingResponse,
+)
 
 __all__ = [
     "AgentsResource",
@@ -30,4 +38,10 @@ __all__ = [
     "AsyncAuthResourceWithRawResponse",
     "AuthResourceWithStreamingResponse",
     "AsyncAuthResourceWithStreamingResponse",
+    "CreditsResource",
+    "AsyncCreditsResource",
+    "CreditsResourceWithRawResponse",
+    "AsyncCreditsResourceWithRawResponse",
+    "CreditsResourceWithStreamingResponse",
+    "AsyncCreditsResourceWithStreamingResponse",
 ]
