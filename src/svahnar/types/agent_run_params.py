@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Iterable, Optional
+from typing import Dict, Union, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["AgentRunParams"]
@@ -12,7 +12,7 @@ class AgentRunParams(TypedDict, total=False):
     agent_id: Required[str]
     """Unique identifier for the agent."""
 
-    message: Required[object]
+    message: Required[Union[str, Dict[str, object], None]]
     """The message or command to be sent to the agent."""
 
     agent_history: Optional[Iterable[object]]
