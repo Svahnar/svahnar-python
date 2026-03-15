@@ -17,7 +17,7 @@ class AgentTestParams(TypedDict, total=False):
     hitl_decision: Optional[Literal["approve", "edit", "reject"]]
     """Human-in-the-loop decision."""
 
-    message: Union[str, Dict[str, object]]
+    message: Union[str, Dict[str, object], None]
     """The message or command to be sent to the agent."""
 
     thread_id: Optional[str]
