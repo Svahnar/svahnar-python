@@ -5,7 +5,7 @@ from typing import Dict, List, Union, Optional
 from .._models import BaseModel
 
 __all__ = [
-    "AgentRunResponse",
+    "AgentTestResponse",
     "AdditionalMetadata",
     "ResponseResponseItem",
     "ResponseResponseItemToolcall",
@@ -60,7 +60,7 @@ class RequestMetadata(BaseModel):
     """Unique request identifier for tracing and support."""
 
 
-class AgentRunResponse(BaseModel):
+class AgentTestResponse(BaseModel):
     additional_metadata: AdditionalMetadata
 
     response: List[Dict[str, ResponseResponseItem]]

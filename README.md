@@ -31,7 +31,7 @@ client = Svahnar()
 
 response = client.agents.run(
     agent_id="agent_id",
-    message="message",
+    message={},
 )
 print(response.additional_metadata)
 ```
@@ -55,7 +55,7 @@ client = AsyncSvahnar()
 async def main() -> None:
     response = await client.agents.run(
         agent_id="agent_id",
-        message="message",
+        message={},
     )
     print(response.additional_metadata)
 
@@ -90,7 +90,7 @@ async def main() -> None:
     ) as client:
         response = await client.agents.run(
             agent_id="agent_id",
-            message="message",
+            message={},
         )
         print(response.additional_metadata)
 
@@ -145,7 +145,7 @@ client = Svahnar()
 try:
     client.agents.run(
         agent_id="agent_id",
-        message="message",
+        message={},
     )
 except svahnar.APIConnectionError as e:
     print("The server could not be reached")
@@ -191,7 +191,7 @@ client = Svahnar(
 # Or, configure per-request:
 client.with_options(max_retries=5).agents.run(
     agent_id="agent_id",
-    message="message",
+    message={},
 )
 ```
 
@@ -217,7 +217,7 @@ client = Svahnar(
 # Override per-request:
 client.with_options(timeout=5.0).agents.run(
     agent_id="agent_id",
-    message="message",
+    message={},
 )
 ```
 
@@ -261,7 +261,7 @@ from svahnar import Svahnar
 client = Svahnar()
 response = client.agents.with_raw_response.run(
     agent_id="agent_id",
-    message="message",
+    message={},
 )
 print(response.headers.get('X-My-Header'))
 
@@ -282,7 +282,7 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 ```python
 with client.agents.with_streaming_response.run(
     agent_id="agent_id",
-    message="message",
+    message={},
 ) as response:
     print(response.headers.get("X-My-Header"))
 

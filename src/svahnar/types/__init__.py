@@ -11,7 +11,10 @@ from .agent_run_response import AgentRunResponse as AgentRunResponse
 from .agent_create_params import AgentCreateParams as AgentCreateParams
 from .agent_delete_params import AgentDeleteParams as AgentDeleteParams
 from .agent_list_response import AgentListResponse as AgentListResponse
+from .agent_test_response import AgentTestResponse as AgentTestResponse
 from .agent_update_params import AgentUpdateParams as AgentUpdateParams
+from .auth_login_response import AuthLoginResponse as AuthLoginResponse
+from .credit_get_response import CreditGetResponse as CreditGetResponse
 from .agent_create_response import AgentCreateResponse as AgentCreateResponse
 from .agent_delete_response import AgentDeleteResponse as AgentDeleteResponse
 from .agent_update_response import AgentUpdateResponse as AgentUpdateResponse
