@@ -32,9 +32,10 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import auth, agents
+    from .resources import auth, agents, credits
     from .resources.auth import AuthResource, AsyncAuthResource
     from .resources.agents import AgentsResource, AsyncAgentsResource
+    from .resources.credits import CreditsResource, AsyncCreditsResource
 
 __all__ = ["Timeout", "Transport", "ProxiesTypes", "RequestOptions", "Svahnar", "AsyncSvahnar", "Client", "AsyncClient"]
 
@@ -101,6 +102,12 @@ class Svahnar(SyncAPIClient):
         from .resources.auth import AuthResource
 
         return AuthResource(self)
+
+    @cached_property
+    def credits(self) -> CreditsResource:
+        from .resources.credits import CreditsResource
+
+        return CreditsResource(self)
 
     @cached_property
     def with_raw_response(self) -> SvahnarWithRawResponse:
@@ -290,6 +297,12 @@ class AsyncSvahnar(AsyncAPIClient):
         return AsyncAuthResource(self)
 
     @cached_property
+    def credits(self) -> AsyncCreditsResource:
+        from .resources.credits import AsyncCreditsResource
+
+        return AsyncCreditsResource(self)
+
+    @cached_property
     def with_raw_response(self) -> AsyncSvahnarWithRawResponse:
         return AsyncSvahnarWithRawResponse(self)
 
@@ -431,6 +444,12 @@ class SvahnarWithRawResponse:
 
         return AuthResourceWithRawResponse(self._client.auth)
 
+    @cached_property
+    def credits(self) -> credits.CreditsResourceWithRawResponse:
+        from .resources.credits import CreditsResourceWithRawResponse
+
+        return CreditsResourceWithRawResponse(self._client.credits)
+
 
 class AsyncSvahnarWithRawResponse:
     _client: AsyncSvahnar
@@ -449,6 +468,12 @@ class AsyncSvahnarWithRawResponse:
         from .resources.auth import AsyncAuthResourceWithRawResponse
 
         return AsyncAuthResourceWithRawResponse(self._client.auth)
+
+    @cached_property
+    def credits(self) -> credits.AsyncCreditsResourceWithRawResponse:
+        from .resources.credits import AsyncCreditsResourceWithRawResponse
+
+        return AsyncCreditsResourceWithRawResponse(self._client.credits)
 
 
 class SvahnarWithStreamedResponse:
@@ -469,6 +494,12 @@ class SvahnarWithStreamedResponse:
 
         return AuthResourceWithStreamingResponse(self._client.auth)
 
+    @cached_property
+    def credits(self) -> credits.CreditsResourceWithStreamingResponse:
+        from .resources.credits import CreditsResourceWithStreamingResponse
+
+        return CreditsResourceWithStreamingResponse(self._client.credits)
+
 
 class AsyncSvahnarWithStreamedResponse:
     _client: AsyncSvahnar
@@ -487,6 +518,12 @@ class AsyncSvahnarWithStreamedResponse:
         from .resources.auth import AsyncAuthResourceWithStreamingResponse
 
         return AsyncAuthResourceWithStreamingResponse(self._client.auth)
+
+    @cached_property
+    def credits(self) -> credits.AsyncCreditsResourceWithStreamingResponse:
+        from .resources.credits import AsyncCreditsResourceWithStreamingResponse
+
+        return AsyncCreditsResourceWithStreamingResponse(self._client.credits)
 
 
 Client = Svahnar

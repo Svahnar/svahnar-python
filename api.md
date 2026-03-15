@@ -11,6 +11,7 @@ from svahnar.types import (
     AgentBulkDeleteResponse,
     AgentGetResponse,
     AgentRunResponse,
+    AgentTestResponse,
     AgentValidateResponse,
 )
 ```
@@ -25,11 +26,29 @@ Methods:
 - <code title="get /v1/agents/download-agent/{agent_id}">client.agents.<a href="./src/svahnar/resources/agents.py">download</a>(agent_id) -> object</code>
 - <code title="get /v1/agents/get-agent/{agent_id}">client.agents.<a href="./src/svahnar/resources/agents.py">get</a>(agent_id) -> <a href="./src/svahnar/types/agent_get_response.py">AgentGetResponse</a></code>
 - <code title="post /v1/agents/run">client.agents.<a href="./src/svahnar/resources/agents.py">run</a>(\*\*<a href="src/svahnar/types/agent_run_params.py">params</a>) -> <a href="./src/svahnar/types/agent_run_response.py">AgentRunResponse</a></code>
-- <code title="post /v1/agents/test">client.agents.<a href="./src/svahnar/resources/agents.py">test</a>(\*\*<a href="src/svahnar/types/agent_test_params.py">params</a>) -> object</code>
+- <code title="post /v1/agents/test">client.agents.<a href="./src/svahnar/resources/agents.py">test</a>(\*\*<a href="src/svahnar/types/agent_test_params.py">params</a>) -> <a href="./src/svahnar/types/agent_test_response.py">AgentTestResponse</a></code>
 - <code title="post /v1/agents/validate">client.agents.<a href="./src/svahnar/resources/agents.py">validate</a>(\*\*<a href="src/svahnar/types/agent_validate_params.py">params</a>) -> <a href="./src/svahnar/types/agent_validate_response.py">AgentValidateResponse</a></code>
 
 # Auth
 
+Types:
+
+```python
+from svahnar.types import AuthLoginResponse
+```
+
 Methods:
 
-- <code title="post /v1/auth/login">client.auth.<a href="./src/svahnar/resources/auth.py">login</a>(\*\*<a href="src/svahnar/types/auth_login_params.py">params</a>) -> object</code>
+- <code title="post /v1/auth/login">client.auth.<a href="./src/svahnar/resources/auth.py">login</a>(\*\*<a href="src/svahnar/types/auth_login_params.py">params</a>) -> <a href="./src/svahnar/types/auth_login_response.py">AuthLoginResponse</a></code>
+
+# Credits
+
+Types:
+
+```python
+from svahnar.types import CreditGetResponse
+```
+
+Methods:
+
+- <code title="get /v1/credits/get">client.credits.<a href="./src/svahnar/resources/credits.py">get</a>() -> <a href="./src/svahnar/types/credit_get_response.py">CreditGetResponse</a></code>

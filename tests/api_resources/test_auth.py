@@ -9,6 +9,7 @@ import pytest
 
 from svahnar import Svahnar, AsyncSvahnar
 from tests.utils import assert_matches_type
+from svahnar.types import AuthLoginResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -20,7 +21,7 @@ class TestAuth:
     @parametrize
     def test_method_login(self, client: Svahnar) -> None:
         auth = client.auth.login()
-        assert_matches_type(object, auth, path=["response"])
+        assert_matches_type(AuthLoginResponse, auth, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -28,7 +29,7 @@ class TestAuth:
         auth = client.auth.login(
             include_ids=True,
         )
-        assert_matches_type(object, auth, path=["response"])
+        assert_matches_type(AuthLoginResponse, auth, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -38,7 +39,7 @@ class TestAuth:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         auth = response.parse()
-        assert_matches_type(object, auth, path=["response"])
+        assert_matches_type(AuthLoginResponse, auth, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -48,7 +49,7 @@ class TestAuth:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             auth = response.parse()
-            assert_matches_type(object, auth, path=["response"])
+            assert_matches_type(AuthLoginResponse, auth, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -62,7 +63,7 @@ class TestAsyncAuth:
     @parametrize
     async def test_method_login(self, async_client: AsyncSvahnar) -> None:
         auth = await async_client.auth.login()
-        assert_matches_type(object, auth, path=["response"])
+        assert_matches_type(AuthLoginResponse, auth, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -70,7 +71,7 @@ class TestAsyncAuth:
         auth = await async_client.auth.login(
             include_ids=True,
         )
-        assert_matches_type(object, auth, path=["response"])
+        assert_matches_type(AuthLoginResponse, auth, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -80,7 +81,7 @@ class TestAsyncAuth:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         auth = await response.parse()
-        assert_matches_type(object, auth, path=["response"])
+        assert_matches_type(AuthLoginResponse, auth, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -90,6 +91,6 @@ class TestAsyncAuth:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             auth = await response.parse()
-            assert_matches_type(object, auth, path=["response"])
+            assert_matches_type(AuthLoginResponse, auth, path=["response"])
 
         assert cast(Any, response.is_closed) is True

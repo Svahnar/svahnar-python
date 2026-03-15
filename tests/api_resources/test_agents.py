@@ -13,6 +13,7 @@ from svahnar.types import (
     AgentGetResponse,
     AgentRunResponse,
     AgentListResponse,
+    AgentTestResponse,
     AgentCreateResponse,
     AgentDeleteResponse,
     AgentUpdateResponse,
@@ -322,7 +323,7 @@ class TestAgents:
     def test_method_run(self, client: Svahnar) -> None:
         agent = client.agents.run(
             agent_id="agent_id",
-            message="message",
+            message={},
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
@@ -331,8 +332,9 @@ class TestAgents:
     def test_method_run_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.run(
             agent_id="agent_id",
-            message="message",
+            message={},
             agent_history=[{}],
+            hitl_decision="approve",
             thread_id="thread_id",
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
@@ -342,7 +344,7 @@ class TestAgents:
     def test_raw_response_run(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.run(
             agent_id="agent_id",
-            message="message",
+            message={},
         )
 
         assert response.is_closed is True
@@ -355,7 +357,7 @@ class TestAgents:
     def test_streaming_response_run(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.run(
             agent_id="agent_id",
-            message="message",
+            message={},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -371,19 +373,20 @@ class TestAgents:
         agent = client.agents.test(
             message="message",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentTestResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_test_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.test(
             message="message",
-            agent_history=[{}],
+            agent_history="agent_history",
+            hitl_decision="approve",
             thread_id="thread_id",
             yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentTestResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -395,7 +398,7 @@ class TestAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentTestResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -407,7 +410,7 @@ class TestAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentTestResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -750,7 +753,7 @@ class TestAsyncAgents:
     async def test_method_run(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
             agent_id="agent_id",
-            message="message",
+            message={},
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
@@ -759,8 +762,9 @@ class TestAsyncAgents:
     async def test_method_run_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
             agent_id="agent_id",
-            message="message",
+            message={},
             agent_history=[{}],
+            hitl_decision="approve",
             thread_id="thread_id",
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
@@ -770,7 +774,7 @@ class TestAsyncAgents:
     async def test_raw_response_run(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.run(
             agent_id="agent_id",
-            message="message",
+            message={},
         )
 
         assert response.is_closed is True
@@ -783,7 +787,7 @@ class TestAsyncAgents:
     async def test_streaming_response_run(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.run(
             agent_id="agent_id",
-            message="message",
+            message={},
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -799,19 +803,20 @@ class TestAsyncAgents:
         agent = await async_client.agents.test(
             message="message",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentTestResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_test_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.test(
             message="message",
-            agent_history=[{}],
+            agent_history="agent_history",
+            hitl_decision="approve",
             thread_id="thread_id",
             yaml_file=b"Example data",
             yaml_string="yaml_string",
         )
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentTestResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -823,7 +828,7 @@ class TestAsyncAgents:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         agent = await response.parse()
-        assert_matches_type(object, agent, path=["response"])
+        assert_matches_type(AgentTestResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -835,7 +840,7 @@ class TestAsyncAgents:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             agent = await response.parse()
-            assert_matches_type(object, agent, path=["response"])
+            assert_matches_type(AgentTestResponse, agent, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
