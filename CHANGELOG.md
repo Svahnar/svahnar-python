@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.12.0 (2026-03-15)
+
+Full Changelog: [v1.11.0...v1.12.0](https://github.com/Svahnar/svahnar-python/compare/v1.11.0...v1.12.0)
+
+### Features
+
+* **api:** api update ([db7b03a](https://github.com/Svahnar/svahnar-python/commit/db7b03a44688831cdc301ec60f2c8b6011aad9bb))
+
 ## 1.11.0 (2026-03-13)
 
 Full Changelog: [v1.10.0...v1.11.0](https://github.com/Svahnar/svahnar-python/compare/v1.10.0...v1.11.0)
