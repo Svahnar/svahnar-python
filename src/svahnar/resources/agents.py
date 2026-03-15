@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Mapping, Iterable, Optional, cast
+from typing import Dict, Union, Mapping, Iterable, Optional, cast
 from typing_extensions import Literal
 
 import httpx
@@ -441,9 +441,9 @@ class AgentsResource(SyncAPIResource):
     def test(
         self,
         *,
-        message: str,
         agent_history: str | Omit = omit,
         hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
+        message: Union[str, Dict[str, object]] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
         yaml_file: Optional[FileTypes] | Omit = omit,
         yaml_string: Optional[str] | Omit = omit,
@@ -460,11 +460,11 @@ class AgentsResource(SyncAPIResource):
         creating a persistent agent.
 
         Args:
-          message: The message or command to be sent to the agent.
-
           agent_history: List of prior messages; defaults to empty list.
 
           hitl_decision: Human-in-the-loop decision.
+
+          message: The message or command to be sent to the agent.
 
           thread_id: Unique identifier for the chat session.
 
@@ -482,9 +482,9 @@ class AgentsResource(SyncAPIResource):
         """
         body = deepcopy_minimal(
             {
-                "message": message,
                 "agent_history": agent_history,
                 "hitl_decision": hitl_decision,
+                "message": message,
                 "thread_id": thread_id,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
@@ -956,9 +956,9 @@ class AsyncAgentsResource(AsyncAPIResource):
     async def test(
         self,
         *,
-        message: str,
         agent_history: str | Omit = omit,
         hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
+        message: Union[str, Dict[str, object]] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
         yaml_file: Optional[FileTypes] | Omit = omit,
         yaml_string: Optional[str] | Omit = omit,
@@ -975,11 +975,11 @@ class AsyncAgentsResource(AsyncAPIResource):
         creating a persistent agent.
 
         Args:
-          message: The message or command to be sent to the agent.
-
           agent_history: List of prior messages; defaults to empty list.
 
           hitl_decision: Human-in-the-loop decision.
+
+          message: The message or command to be sent to the agent.
 
           thread_id: Unique identifier for the chat session.
 
@@ -997,9 +997,9 @@ class AsyncAgentsResource(AsyncAPIResource):
         """
         body = deepcopy_minimal(
             {
-                "message": message,
                 "agent_history": agent_history,
                 "hitl_decision": hitl_decision,
+                "message": message,
                 "thread_id": thread_id,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
