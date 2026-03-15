@@ -1,4 +1,4 @@
 configured_endpoints: 12
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/svahnar%2Fsvahnar-3517ca6a2c04b7792e6df7b6ca020705d61554e1806f73adb26a33147fb724a6.yml
-openapi_spec_hash: 25347fdeffb1c48b24092f909820c92c
-config_hash: 41ec2dd96ef70706ea56d98afea4061c
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/svahnar%2Fsvahnar-02cca47c900a2ffd28e3da1334b9c46f9da25463ee6b0e25994c4d7021f66e0b.yml
+openapi_spec_hash: e153fb339b187d44e875dd92bd51150c
+config_hash: 386dbc872c11f91ec283fc2dcf728010

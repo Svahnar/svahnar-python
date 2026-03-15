@@ -25,9 +25,12 @@ pip install svahnar
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from svahnar import Svahnar
 
-client = Svahnar()
+client = Svahnar(
+    api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
+)
 
 response = client.agents.run(
     agent_id="agent_id",
@@ -46,10 +49,13 @@ so that your API Key is not stored in source control.
 Simply import `AsyncSvahnar` instead of `Svahnar` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from svahnar import AsyncSvahnar
 
-client = AsyncSvahnar()
+client = AsyncSvahnar(
+    api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
+)
 
 
 async def main() -> None:
@@ -79,6 +85,7 @@ pip install svahnar[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from svahnar import DefaultAioHttpClient
 from svahnar import AsyncSvahnar
@@ -86,6 +93,7 @@ from svahnar import AsyncSvahnar
 
 async def main() -> None:
     async with AsyncSvahnar(
+        api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.agents.run(
