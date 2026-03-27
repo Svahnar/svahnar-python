@@ -323,7 +323,7 @@ class TestAgents:
     def test_method_run(self, client: Svahnar) -> None:
         agent = client.agents.run(
             agent_id="agent_id",
-            message={},
+            message="string",
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
@@ -332,7 +332,7 @@ class TestAgents:
     def test_method_run_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.run(
             agent_id="agent_id",
-            message={},
+            message="string",
             agent_history=[{}],
             hitl_decision="approve",
             thread_id="thread_id",
@@ -344,7 +344,7 @@ class TestAgents:
     def test_raw_response_run(self, client: Svahnar) -> None:
         response = client.agents.with_raw_response.run(
             agent_id="agent_id",
-            message={},
+            message="string",
         )
 
         assert response.is_closed is True
@@ -357,7 +357,7 @@ class TestAgents:
     def test_streaming_response_run(self, client: Svahnar) -> None:
         with client.agents.with_streaming_response.run(
             agent_id="agent_id",
-            message={},
+            message="string",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -370,18 +370,16 @@ class TestAgents:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_test(self, client: Svahnar) -> None:
-        agent = client.agents.test(
-            message="message",
-        )
+        agent = client.agents.test()
         assert_matches_type(AgentTestResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_test_with_all_params(self, client: Svahnar) -> None:
         agent = client.agents.test(
-            message="message",
             agent_history="agent_history",
             hitl_decision="approve",
+            message="string",
             thread_id="thread_id",
             yaml_file=b"Example data",
             yaml_string="yaml_string",
@@ -391,9 +389,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_test(self, client: Svahnar) -> None:
-        response = client.agents.with_raw_response.test(
-            message="message",
-        )
+        response = client.agents.with_raw_response.test()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -403,9 +399,7 @@ class TestAgents:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_test(self, client: Svahnar) -> None:
-        with client.agents.with_streaming_response.test(
-            message="message",
-        ) as response:
+        with client.agents.with_streaming_response.test() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
@@ -753,7 +747,7 @@ class TestAsyncAgents:
     async def test_method_run(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
             agent_id="agent_id",
-            message={},
+            message="string",
         )
         assert_matches_type(AgentRunResponse, agent, path=["response"])
 
@@ -762,7 +756,7 @@ class TestAsyncAgents:
     async def test_method_run_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.run(
             agent_id="agent_id",
-            message={},
+            message="string",
             agent_history=[{}],
             hitl_decision="approve",
             thread_id="thread_id",
@@ -774,7 +768,7 @@ class TestAsyncAgents:
     async def test_raw_response_run(self, async_client: AsyncSvahnar) -> None:
         response = await async_client.agents.with_raw_response.run(
             agent_id="agent_id",
-            message={},
+            message="string",
         )
 
         assert response.is_closed is True
@@ -787,7 +781,7 @@ class TestAsyncAgents:
     async def test_streaming_response_run(self, async_client: AsyncSvahnar) -> None:
         async with async_client.agents.with_streaming_response.run(
             agent_id="agent_id",
-            message={},
+            message="string",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -800,18 +794,16 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_test(self, async_client: AsyncSvahnar) -> None:
-        agent = await async_client.agents.test(
-            message="message",
-        )
+        agent = await async_client.agents.test()
         assert_matches_type(AgentTestResponse, agent, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_test_with_all_params(self, async_client: AsyncSvahnar) -> None:
         agent = await async_client.agents.test(
-            message="message",
             agent_history="agent_history",
             hitl_decision="approve",
+            message="string",
             thread_id="thread_id",
             yaml_file=b"Example data",
             yaml_string="yaml_string",
@@ -821,9 +813,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_test(self, async_client: AsyncSvahnar) -> None:
-        response = await async_client.agents.with_raw_response.test(
-            message="message",
-        )
+        response = await async_client.agents.with_raw_response.test()
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -833,9 +823,7 @@ class TestAsyncAgents:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_test(self, async_client: AsyncSvahnar) -> None:
-        async with async_client.agents.with_streaming_response.test(
-            message="message",
-        ) as response:
+        async with async_client.agents.with_streaming_response.test() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 

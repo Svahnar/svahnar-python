@@ -25,13 +25,16 @@ pip install svahnar
 The full API of this library can be found in [api.md](api.md).
 
 ```python
+import os
 from svahnar import Svahnar
 
-client = Svahnar()
+client = Svahnar(
+    api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
+)
 
 response = client.agents.run(
     agent_id="agent_id",
-    message={},
+    message="string",
 )
 print(response.additional_metadata)
 ```
@@ -46,16 +49,19 @@ so that your API Key is not stored in source control.
 Simply import `AsyncSvahnar` instead of `Svahnar` and use `await` with each API call:
 
 ```python
+import os
 import asyncio
 from svahnar import AsyncSvahnar
 
-client = AsyncSvahnar()
+client = AsyncSvahnar(
+    api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
+)
 
 
 async def main() -> None:
     response = await client.agents.run(
         agent_id="agent_id",
-        message={},
+        message="string",
     )
     print(response.additional_metadata)
 
@@ -79,6 +85,7 @@ pip install svahnar[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from svahnar import DefaultAioHttpClient
 from svahnar import AsyncSvahnar
@@ -86,11 +93,12 @@ from svahnar import AsyncSvahnar
 
 async def main() -> None:
     async with AsyncSvahnar(
+        api_key=os.environ.get("SVAHNAR_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         response = await client.agents.run(
             agent_id="agent_id",
-            message={},
+            message="string",
         )
         print(response.additional_metadata)
 
@@ -145,7 +153,7 @@ client = Svahnar()
 try:
     client.agents.run(
         agent_id="agent_id",
-        message={},
+        message="string",
     )
 except svahnar.APIConnectionError as e:
     print("The server could not be reached")
@@ -191,7 +199,7 @@ client = Svahnar(
 # Or, configure per-request:
 client.with_options(max_retries=5).agents.run(
     agent_id="agent_id",
-    message={},
+    message="string",
 )
 ```
 
@@ -217,7 +225,7 @@ client = Svahnar(
 # Override per-request:
 client.with_options(timeout=5.0).agents.run(
     agent_id="agent_id",
-    message={},
+    message="string",
 )
 ```
 
@@ -261,7 +269,7 @@ from svahnar import Svahnar
 client = Svahnar()
 response = client.agents.with_raw_response.run(
     agent_id="agent_id",
-    message={},
+    message="string",
 )
 print(response.headers.get('X-My-Header'))
 
@@ -282,7 +290,7 @@ To stream the response body, use `.with_streaming_response` instead, which requi
 ```python
 with client.agents.with_streaming_response.run(
     agent_id="agent_id",
-    message={},
+    message="string",
 ) as response:
     print(response.headers.get("X-My-Header"))
 

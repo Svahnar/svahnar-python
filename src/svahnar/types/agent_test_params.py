@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Optional
-from typing_extensions import Literal, Required, TypedDict
+from typing import Dict, Union, Optional
+from typing_extensions import Literal, TypedDict
 
 from .._types import FileTypes
 
@@ -11,14 +11,14 @@ __all__ = ["AgentTestParams"]
 
 
 class AgentTestParams(TypedDict, total=False):
-    message: Required[str]
-    """The message or command to be sent to the agent."""
-
     agent_history: str
     """List of prior messages; defaults to empty list."""
 
     hitl_decision: Optional[Literal["approve", "edit", "reject"]]
     """Human-in-the-loop decision."""
+
+    message: Union[str, Dict[str, object], None]
+    """The message or command to be sent to the agent."""
 
     thread_id: Optional[str]
     """Unique identifier for the chat session."""
