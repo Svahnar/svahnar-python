@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Mapping, Iterable, Optional, cast
+from typing import Dict, Union, Mapping, Iterable, Optional, cast
 from typing_extensions import Literal
 
 import httpx
@@ -18,7 +18,7 @@ from ..types import (
     agent_bulk_delete_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
-from .._utils import extract_files, maybe_transform, deepcopy_minimal, async_maybe_transform
+from .._utils import extract_files, path_template, maybe_transform, deepcopy_minimal, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -337,7 +337,7 @@ class AgentsResource(SyncAPIResource):
         if not agent_id:
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         return self._get(
-            f"/v1/agents/download-agent/{agent_id}",
+            path_template("/v1/agents/download-agent/{agent_id}", agent_id=agent_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -374,7 +374,7 @@ class AgentsResource(SyncAPIResource):
         if not agent_id:
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         return self._get(
-            f"/v1/agents/get-agent/{agent_id}",
+            path_template("/v1/agents/get-agent/{agent_id}", agent_id=agent_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -385,7 +385,7 @@ class AgentsResource(SyncAPIResource):
         self,
         *,
         agent_id: str,
-        message: object,
+        message: Union[str, Dict[str, object], None],
         agent_history: Optional[Iterable[object]] | Omit = omit,
         hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
@@ -441,9 +441,9 @@ class AgentsResource(SyncAPIResource):
     def test(
         self,
         *,
-        message: str,
         agent_history: str | Omit = omit,
         hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
+        message: Union[str, Dict[str, object], None] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
         yaml_file: Optional[FileTypes] | Omit = omit,
         yaml_string: Optional[str] | Omit = omit,
@@ -460,11 +460,11 @@ class AgentsResource(SyncAPIResource):
         creating a persistent agent.
 
         Args:
-          message: The message or command to be sent to the agent.
-
           agent_history: List of prior messages; defaults to empty list.
 
           hitl_decision: Human-in-the-loop decision.
+
+          message: The message or command to be sent to the agent.
 
           thread_id: Unique identifier for the chat session.
 
@@ -482,9 +482,9 @@ class AgentsResource(SyncAPIResource):
         """
         body = deepcopy_minimal(
             {
-                "message": message,
                 "agent_history": agent_history,
                 "hitl_decision": hitl_decision,
+                "message": message,
                 "thread_id": thread_id,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
@@ -852,7 +852,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         if not agent_id:
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         return await self._get(
-            f"/v1/agents/download-agent/{agent_id}",
+            path_template("/v1/agents/download-agent/{agent_id}", agent_id=agent_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -889,7 +889,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         if not agent_id:
             raise ValueError(f"Expected a non-empty value for `agent_id` but received {agent_id!r}")
         return await self._get(
-            f"/v1/agents/get-agent/{agent_id}",
+            path_template("/v1/agents/get-agent/{agent_id}", agent_id=agent_id),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
@@ -900,7 +900,7 @@ class AsyncAgentsResource(AsyncAPIResource):
         self,
         *,
         agent_id: str,
-        message: object,
+        message: Union[str, Dict[str, object], None],
         agent_history: Optional[Iterable[object]] | Omit = omit,
         hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
@@ -956,9 +956,9 @@ class AsyncAgentsResource(AsyncAPIResource):
     async def test(
         self,
         *,
-        message: str,
         agent_history: str | Omit = omit,
         hitl_decision: Optional[Literal["approve", "edit", "reject"]] | Omit = omit,
+        message: Union[str, Dict[str, object], None] | Omit = omit,
         thread_id: Optional[str] | Omit = omit,
         yaml_file: Optional[FileTypes] | Omit = omit,
         yaml_string: Optional[str] | Omit = omit,
@@ -975,11 +975,11 @@ class AsyncAgentsResource(AsyncAPIResource):
         creating a persistent agent.
 
         Args:
-          message: The message or command to be sent to the agent.
-
           agent_history: List of prior messages; defaults to empty list.
 
           hitl_decision: Human-in-the-loop decision.
+
+          message: The message or command to be sent to the agent.
 
           thread_id: Unique identifier for the chat session.
 
@@ -997,9 +997,9 @@ class AsyncAgentsResource(AsyncAPIResource):
         """
         body = deepcopy_minimal(
             {
-                "message": message,
                 "agent_history": agent_history,
                 "hitl_decision": hitl_decision,
+                "message": message,
                 "thread_id": thread_id,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
