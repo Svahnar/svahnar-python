@@ -17,8 +17,9 @@ from ..types import (
     agent_validate_params,
     agent_bulk_delete_params,
 )
+from .._files import deepcopy_with_paths
 from .._types import Body, Omit, Query, Headers, NotGiven, FileTypes, SequenceNotStr, omit, not_given
-from .._utils import extract_files, path_template, maybe_transform, deepcopy_minimal, async_maybe_transform
+from .._utils import extract_files, path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -98,14 +99,15 @@ class AgentsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "deploy_to": deploy_to,
                 "description": description,
                 "name": name,
                 "yaml_file": yaml_file,
                 "agent_icon": agent_icon,
-            }
+            },
+            [["yaml_file"], ["agent_icon"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"], ["agent_icon"]])
         # It should be noted that the actual Content-Type header that will be
@@ -164,7 +166,7 @@ class AgentsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "agent_id": agent_id,
                 "agent_icon": agent_icon,
@@ -172,7 +174,8 @@ class AgentsResource(SyncAPIResource):
                 "description": description,
                 "name": name,
                 "yaml_file": yaml_file,
-            }
+            },
+            [["yaml_file"], ["agent_icon"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"], ["agent_icon"]])
         # It should be noted that the actual Content-Type header that will be
@@ -480,7 +483,7 @@ class AgentsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "agent_history": agent_history,
                 "hitl_decision": hitl_decision,
@@ -488,7 +491,8 @@ class AgentsResource(SyncAPIResource):
                 "thread_id": thread_id,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
-            }
+            },
+            [["yaml_file"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
         # It should be noted that the actual Content-Type header that will be
@@ -534,11 +538,12 @@ class AgentsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
-            }
+            },
+            [["yaml_file"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
         # It should be noted that the actual Content-Type header that will be
@@ -613,14 +618,15 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "deploy_to": deploy_to,
                 "description": description,
                 "name": name,
                 "yaml_file": yaml_file,
                 "agent_icon": agent_icon,
-            }
+            },
+            [["yaml_file"], ["agent_icon"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"], ["agent_icon"]])
         # It should be noted that the actual Content-Type header that will be
@@ -679,7 +685,7 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "agent_id": agent_id,
                 "agent_icon": agent_icon,
@@ -687,7 +693,8 @@ class AsyncAgentsResource(AsyncAPIResource):
                 "description": description,
                 "name": name,
                 "yaml_file": yaml_file,
-            }
+            },
+            [["yaml_file"], ["agent_icon"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"], ["agent_icon"]])
         # It should be noted that the actual Content-Type header that will be
@@ -995,7 +1002,7 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "agent_history": agent_history,
                 "hitl_decision": hitl_decision,
@@ -1003,7 +1010,8 @@ class AsyncAgentsResource(AsyncAPIResource):
                 "thread_id": thread_id,
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
-            }
+            },
+            [["yaml_file"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
         # It should be noted that the actual Content-Type header that will be
@@ -1049,11 +1057,12 @@ class AsyncAgentsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        body = deepcopy_minimal(
+        body = deepcopy_with_paths(
             {
                 "yaml_file": yaml_file,
                 "yaml_string": yaml_string,
-            }
+            },
+            [["yaml_file"]],
         )
         files = extract_files(cast(Mapping[str, object], body), paths=[["yaml_file"]])
         # It should be noted that the actual Content-Type header that will be
