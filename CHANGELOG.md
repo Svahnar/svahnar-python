@@ -1,5 +1,34 @@
 # Changelog
 
+## 1.14.0 (2026-07-18)
+
+Full Changelog: [v1.13.0...v1.14.0](https://github.com/Svahnar/svahnar-python/compare/v1.13.0...v1.14.0)
+
+### Features
+
+* **internal/types:** support eagerly validating pydantic iterators ([19bc48e](https://github.com/Svahnar/svahnar-python/commit/19bc48eb7a292596f071a0259fecc30b9e7e9b76))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([12c8e95](https://github.com/Svahnar/svahnar-python/commit/12c8e957a34ee53525a1fb9d302719b995b6fac8))
+* support setting headers via env ([831f43e](https://github.com/Svahnar/svahnar-python/commit/831f43e52a3c97f6fff8f9fdd23948d76b0292d9))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([c9c6201](https://github.com/Svahnar/svahnar-python/commit/c9c620183f5ed5f8bfa22c2e8cd3de8167c18628))
+* **client:** preserve hardcoded query params when merging with user params ([6695677](https://github.com/Svahnar/svahnar-python/commit/66956773fa6daa801cc69fdf9633a1ab2b937110))
+* ensure file data are only sent as 1 parameter ([7c6eb80](https://github.com/Svahnar/svahnar-python/commit/7c6eb807d99f46c205f8314470a1d0e9d5979095))
+* use correct field name format for multipart file arrays ([dec3555](https://github.com/Svahnar/svahnar-python/commit/dec3555352c9f0bd2202f9f74406ee95b9b2fbd6))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([3bd9923](https://github.com/Svahnar/svahnar-python/commit/3bd9923ec08248d64d9d02add80cd06c1fcfbe2b))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([218b8a3](https://github.com/Svahnar/svahnar-python/commit/218b8a36e86194d5b4634d24140196fde4194d50))
+* **internal:** reformat pyproject.toml ([528030d](https://github.com/Svahnar/svahnar-python/commit/528030d66476b143599e6a7e8e2f0defd6ec3c6e))
+
 ## 1.13.0 (2026-03-27)
 
 Full Changelog: [v1.12.0...v1.13.0](https://github.com/Svahnar/svahnar-python/compare/v1.12.0...v1.13.0)
